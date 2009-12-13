@@ -71,3 +71,17 @@ div.erreurbox {
     font-weight: bold;
     padding: 10px;
 }
+
+a.demande_ouvert {
+    color: #6666FF;
+}
+
+a.demande_ferme {
+    color: #6666FF;
+    text-decoration: line-through;
+}
+
+li.zero_demandes {
+    list-style-type: none;
+    font-style: oblique;
+}

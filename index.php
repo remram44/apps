@@ -7,6 +7,20 @@ include 'inc/conf.inc.php';
 if(file_exists('data/conf.php'))
     include 'data/conf.php';
 
+// Connection à MySQL
+if(!@mysql_connect($conf['db_serveur'], $conf['db_user'], $conf['db_passwd'])
+ || !@mysql_select_db($conf['db_database']))
+{
+    $template = new Template('data/templates/' . $conf['default_template']);
+    $template->set_filenames(array('erreur' => 'erreur.tpl'));
+    $template->assign_var('TITRE', $conf['titre']);
+    $template->assign_var('TEMPLATE_URL', 'data/templates/' . $conf['default_template']);
+    $template->assign_var('ERREUR_DESCR', 'Erreur : impossible de se connecter à la base de données !<br/>
+MySQL a répondu : ' . mysql_error());
+    $template->pparse('erreur');
+    exit(1);
+}
+
 // Identification de l'utilisateur
 $utilisateur = new Utilisateur;
 
@@ -30,7 +44,6 @@ $template->set_filenames(array(
 // Variables globales, ie communes à tous les modules
 $template->assign_var('TITRE', $conf['titre']);
 $template->assign_var('TEMPLATE_URL', 'data/templates/' . $utilisateur->template());
-$template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
 // Menu
 $template->assign_block_vars('MENU', array(
     'LIEN' => 'index.php?mod=index',

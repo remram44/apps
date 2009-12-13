@@ -24,8 +24,12 @@
         <h3>Suivi des demandes</h3>
         <p>Dernières activités sur les demandes :</p>
         <ul>
-          <li>Demande inutile</li>
-          <li>Bug inutile</li>
+<!-- BEGIN DEMANDE -->
+          <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.DESCR}</li>
+<!-- END DEMANDE -->
+<!-- BEGIN ZERO_DEMANDES -->
+          <li class="zero_demandes">{ZERO_DEMANDES.MSG}</li>
+<!-- END ZERO_DEMANDES -->
         </ul>
       </div>
     </div>
