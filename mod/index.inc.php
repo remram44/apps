@@ -1,5 +1,5 @@
 <?php
 
-$template->assign_var('TITRE', $conf['titre']);
+// TODO : mod/index.inc.php : Page d'accueil, liste des projets, dernières modifications
 
 ?>
