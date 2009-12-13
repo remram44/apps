@@ -39,8 +39,12 @@
         <h3>Membres</h3>
         <p>Les utilisateurs participants à ce projet sont :</p>
         <ul>
-          <li>Quelqu'un</li>
-          <li>Quelqu'un d'autre</li>
+<!-- BEGIN MEMBRE -->
+          <li>{MEMBRE.PSEUDO} ({MEMBRE.NOM}, promo {MEMBRE.PROMOTION})</li>
+<!-- END MEMBRE -->
+<!-- BEGIN ZERO_MEMBRES -->
+          <li class="zero_demandes">{ZERO_MEMBRES.MSG}</li>
+<!-- END ZERO_MEMBRES -->
         </ul>
       </div>
       <div class="box">

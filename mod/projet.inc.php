@@ -8,7 +8,8 @@ if(!isset($_GET['id']) || intval($_GET['id']) <= 0)
 }
 else
 {
-    $res = mysql_query('SELECT * FROM projets WHERE id=' . intval($_GET['id']) . ';');
+    $projet = intval($_GET['id']);
+    $res = mysql_query('SELECT * FROM projets WHERE id=' . $projet . ';');
     if($row = mysql_fetch_array($res))
     {
         $template->assign_vars(array(
@@ -17,7 +18,7 @@ else
 
         // Dernières demandes
         {
-            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . intval($_GET['id']) . ' ORDER BY id DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
+            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
             if(mysql_num_rows($res) == 0)
             {
                 $template->assign_block_vars('ZERO_DEMANDES', array(
@@ -37,7 +38,27 @@ else
             }
         }
 
-        // TODO : Liste des membres
+        // Liste des membres
+        {
+            $res = mysql_query('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u, association_utilisateurs_projets a WHERE a.projet=' . $projet . ' AND u.id = a.utilisateur;');
+            if(mysql_num_rows($res) == 0)
+            {
+                $template->assign_block_vars('ZERO_MEMBRES', array(
+                    'MSG' => 'Ce projet n\'a aucun membre.'));
+            }
+            else
+            {
+                while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                {
+                    $template->assign_block_vars('MEMBRE', array(
+                        'PSEUDO' => $row['pseudo'],
+                        'NOM' => $row['nom'],
+                        'PROMOTION' => $row['promotion']));
+                }
+            }
+        }
+
+        // TODO : Dernières modifications (commits)
     }
     else
     {
