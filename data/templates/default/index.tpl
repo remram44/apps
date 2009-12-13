@@ -3,8 +3,50 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
     <title>{TITRE}</title>
+    <link href="{TEMPLATE_URL}/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>{TITRE}</h1>
+    <div id="header">
+      <div id="menu">
+        <ul>
+<!-- BEGIN MENU -->
+          <li><a href="{MENU.LIEN}">{MENU.TEXTE}</a></li>
+<!-- END MENU -->
+        </ul>
+      </div>
+      <h1>{TITRE}</h1>
+    </div>
+    <div class="mainsplit">
+      <div class="box">
+{HTML_DESCRIPTION}
+      </div>
+      <div class="box">
+        <h3>Suivi des demandes</h3>
+        <p>Dernières activités sur les demandes :</p>
+        <ul>
+          <li>Demande inutile</li>
+          <li>Bug inutile</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mainsplit">
+      <div class="box">
+        <h3>Utilisateurs actifs</h3>
+        <p>Texte qui ne sert à rien</p>
+        <ul>
+          <li>Demande inutile</li>
+          <li>Bug inutile</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Projets actifs</h3>
+        <p>Texte qui ne sert à rien</p>
+        <ul>
+          <li>Demande inutile</li>
+          <li>Bug inutile</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="clear" />
   </body>
 </html>

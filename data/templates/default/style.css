@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #9999FF;
+}
+
+#header {
+    background-color: #5555CC;
+    padding: 0 0 2px 0;
+    color: #FFFFFF;
+}
+
+#header h1 {
+    margin-left: 1em;
+}
+
+#menu {
+    background-color: #2222AA;
+    height: 1.5em;
+    padding: 0;
+    margin: 0;
+}
+
+#menu ul {
+    padding: 0;
+    margin: 0;
+}
+
+#menu ul li {
+    float: left;
+    list-style-type: none;
+    margin: 0 8px 0 4px;
+}
+
+#menu a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#menu a:hover, #menu a:active {
+    color: #FF4444;
+}
+
+div.mainsplit {
+    width: 49%;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+div.box {
+    border: 1px solid grey;
+    float: top;
+    margin: 10px;
+    margin-right: 0;
+    background-color: #FFFFFF;
+    padding: 0.4em;
+}
+
+hr.clear {
+    clear: both;
+    visibility: hidden;
+}
+
+div.erreurbox {
+    border: 2px solid #FF0000;
+    background-color: #DD8888;
+    color: #FF0000;
+    margin: 10px;
+    font-weight: bold;
+    padding: 10px;
+}
