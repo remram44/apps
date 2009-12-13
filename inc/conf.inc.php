@@ -10,5 +10,6 @@ $conf['db_user'] = 'root';
 $conf['db_passwd'] = '';
 $conf['db_database'] = 'apps';
 $conf['index_nb_demandes'] = 8;
+$conf['projet_nb_demandes'] = 8;
 
 ?>

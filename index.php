@@ -34,12 +34,22 @@ else
 $template = new Template('data/templates/' . $utilisateur->template());
 $template->set_filenames(array(
     'index' => 'index.tpl',
-    'projets' => 'projets.tpl',
-    'liste_demandes' => 'liste_demandes.tpl',
+    'projet' => 'projet.tpl',
+    'liste_projets' => 'liste_projets.tpl',
     'demande' => 'demande.tpl',
+    'liste_demandes' => 'liste_demandes.tpl',
     'versions' => 'versions.tpl',
     'erreur' => 'erreur.tpl'
     ));
+
+// Fonction d'erreur utilisant le template
+$erreur = false;
+function erreur_fatale($msg)
+{
+    global $template;
+    $template->assign_var('ERREUR_DESCR', $msg); $template->pparse('erreur');
+    exit(0);
+}
 
 // Variables globales, ie communes à tous les modules
 $template->assign_var('TITRE', $conf['titre']);
@@ -49,10 +59,10 @@ $template->assign_block_vars('MENU', array(
     'LIEN' => 'index.php?mod=index',
     'TEXTE' => 'Accueil'));
 $template->assign_block_vars('MENU', array(
-    'LIEN' => 'index.php?mod=projets',
+    'LIEN' => 'index.php?mod=liste_projets',
     'TEXTE' => 'Projets'));
 
-if(in_array($mod, array('index', 'projets', 'demande', 'liste_demandes', 'versions')))
+if(in_array($mod, array('index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions')))
 {
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';
@@ -61,8 +71,7 @@ if(in_array($mod, array('index', 'projets', 'demande', 'liste_demandes', 'versio
 else
 {
     // Erreur : pas de module de ce nom
-    $template->assign_var('ERREUR_DESCR', 'Erreur : Module invalide !');
-    $template->pparse('erreur');
+    erreur_fatale('Erreur : Module invalide !');
 }
 
 ?>

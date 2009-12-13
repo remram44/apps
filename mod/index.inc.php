@@ -17,7 +17,6 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
     {
         while($row = mysql_fetch_array($res, MYSQL_ASSOC))
         {
-            var_dump($row);
             $template->assign_block_vars('DEMANDE', array(
                 'ID' => $row['id'],
                 'TITRE' => $row['titre'],
