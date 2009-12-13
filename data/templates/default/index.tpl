@@ -28,7 +28,7 @@
           <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.DESCR}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
-          <li class="zero_demandes">{ZERO_DEMANDES.MSG}</li>
+          <li class="liste_vide">{ZERO_DEMANDES.MSG}</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
       </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
-    <title>{TITRE}</title>
+    <title>{TITRE} - {PROJ_TITRE}</title>
     <link href="{TEMPLATE_URL}/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -14,11 +14,11 @@
 <!-- END MENU -->
         </ul>
       </div>
-      <h1>{TITRE} - {PROJ_TITRE}</h1>
+      <h1>{TITRE}</h1>
     </div>
     <div class="mainsplit">
       <div class="box">
-        <h1>Description</h1>
+        <h1>{PROJ_TITRE} - description</h1>
 {PROJ_DESCR}
       </div>
       <div class="box">
@@ -29,7 +29,7 @@
           <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.DESCR}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
-          <li class="zero_demandes">{ZERO_DEMANDES.MSG}</li>
+          <li class="liste_vide">{ZERO_DEMANDES.MSG}</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
       </div>
@@ -43,7 +43,7 @@
           <li>{MEMBRE.PSEUDO} ({MEMBRE.NOM}, promo {MEMBRE.PROMOTION})</li>
 <!-- END MEMBRE -->
 <!-- BEGIN ZERO_MEMBRES -->
-          <li class="zero_demandes">{ZERO_MEMBRES.MSG}</li>
+          <li class="liste_vide">{ZERO_MEMBRES.MSG}</li>
 <!-- END ZERO_MEMBRES -->
         </ul>
       </div>

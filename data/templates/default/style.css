@@ -51,9 +51,15 @@ div.mainsplit {
 
 div.box {
     border: 1px solid grey;
-    float: top;
     margin: 10px;
     margin-right: 0;
+    background-color: #FFFFFF;
+    padding: 0.4em;
+}
+
+div.box_recherche {
+    border: 2px dashed #0000FF;
+    margin: 10px;
     background-color: #FFFFFF;
     padding: 0.4em;
 }
@@ -72,6 +78,24 @@ div.erreurbox {
     padding: 10px;
 }
 
+div.box_prev_page {
+    border: 1px solid grey;
+    margin: 10px;
+    margin-right: 0;
+    background-color: #FFFFFF;
+    padding: 0.4em;
+    float: left;
+}
+
+div.box_next_page {
+    border: 1px solid grey;
+    margin: 10px;
+    margin-right: 0;
+    background-color: #FFFFFF;
+    padding: 0.4em;
+    float: right;
+}
+
 a.demande_ouvert {
     color: #6666FF;
 }
@@ -81,7 +105,12 @@ a.demande_ferme {
     text-decoration: line-through;
 }
 
-li.zero_demandes {
+li.liste_vide {
     list-style-type: none;
     font-style: oblique;
+}
+
+p.liste_vide {
+    font-style: oblique;
+    margin-left: 1em;
 }
