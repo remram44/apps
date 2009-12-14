@@ -33,6 +33,19 @@
 <!-- END ZERO_DEMANDES -->
         </ul>
       </div>
+      <div class="box">
+        <h3>Versions</h3>
+        <p>Versions du projet :</p>
+        <ul>
+<!-- BEGIN VERSION -->
+          <li>{VERSION.NOM}</li>
+<!-- END VERSION -->
+<!-- BEGIN ZERO_VERSIONS -->
+          <li class="liste_vide">{ZERO_VERSIONS.MSG}</li>
+<!-- END ZERO_VERSIONS -->
+        </ul>
+        <p><a href="index.php?mod=versions&amp;id={PROJ_ID}">Détails</a></p>
+      </div>
     </div>
     <div class="mainsplit">
       <div class="box">

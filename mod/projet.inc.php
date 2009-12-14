@@ -14,7 +14,8 @@ else
     {
         $template->assign_vars(array(
             'PROJ_TITRE' => $row['nom'],
-            'PROJ_DESCR' => $row['description']));
+            'PROJ_DESCR' => $row['description'],
+            'PROJ_ID' => $row['id']));
 
         // Dernières demandes
         {
@@ -59,11 +60,28 @@ else
         }
 
         // TODO : Dernières modifications (commits)
+
+        // Liste des versions
+        {
+            $res = mysql_query('SELECT nom FROM versions WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT 0, ' . $conf['projet_nb_versions'] . ';');
+            if(mysql_num_rows($res) == 0)
+            {
+                $template->assign_block_vars('ZERO_VERSIONS', array(
+                    'MSG' => 'Ce projet n\'a défini aucune version.'));
+            }
+            else
+            {
+                while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                {
+                    $template->assign_block_vars('VERSION', array(
+                        'NOM' => $row['nom'],
+                        'DESCR' => $row['description']));
+                }
+            }
+        }
     }
     else
-    {
         erreur_fatale('Erreur : Ce projet n\'existe pas ou plus.');
-    }
 }
 
 ?>
