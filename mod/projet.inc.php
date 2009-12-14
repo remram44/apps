@@ -34,7 +34,7 @@ else
                         'TITRE' => $row['titre'],
                         'AUTEUR' => $row['auteur'],
                         'DESCR' => $row['description'],
-                        'STATUT' => ($row['statut'] == 0)?'ouvert':'ferme'));
+                        'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert'));
                 }
             }
         }

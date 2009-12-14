@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS demandes (
   auteur int(10) unsigned NOT NULL,
   description text NOT NULL,
   priorite int(10) NOT NULL,
-  statut int(10) NOT NULL,
+  statut int(10) unsigned NOT NULL,
   FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
   FOREIGN KEY (version) REFERENCES versions (id) ON DELETE SET NULL,
   FOREIGN KEY (auteur) REFERENCES utilisateurs (id) ON DELETE RESTRICT,

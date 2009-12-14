@@ -35,7 +35,7 @@ else
                     'TITRE' => $demande['titre'],
                     'AUTEUR' => $demande['auteur'],
                     'DESCR' => $demande['description'],
-                    'STATUT' => ($demande['statut'] == 0)?'ouvert':'ferme'));
+                    'STATUT' => ($demande['statut'] == 0)?'ferme':'ouvert'));
             }
         }
     }
