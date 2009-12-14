@@ -31,6 +31,7 @@
           <li class="liste_vide">{ZERO_DEMANDES.MSG}</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
+        <p><a href="index.php?mod=liste_demandes">Détails</a></p>
       </div>
     </div>
     <div class="mainsplit">
