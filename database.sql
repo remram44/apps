@@ -12,14 +12,16 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
 
 CREATE TABLE IF NOT EXISTS demandes (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  projet int(11) NOT NULL,
+  projet int(11) unsigned NOT NULL,
+  version int(11) unsigned,
   titre text NOT NULL,
   auteur int(10) unsigned NOT NULL,
   description text NOT NULL,
   priorite int(11) NOT NULL,
   statut int(11) NOT NULL,
-  PRIMARY KEY (id),
-  KEY projet (projet)
+  FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
+  FOREIGN KEY (version) REFERENCES versions (id) ON DELETE SET NULL,
+  PRIMARY KEY (id)
 ) TYPE=INNODB;
 
 CREATE TABLE IF NOT EXISTS projets (
@@ -35,22 +37,14 @@ CREATE TABLE IF NOT EXISTS versions (
   projet int(10) unsigned NOT NULL,
   nom varchar(255) NOT NULL,
   description text NOT NULL,
-  PRIMARY KEY (id),
-  KEY nom (nom)
+  FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
+  PRIMARY KEY (id)
 ) TYPE=INNODB;
 
-CREATE TABLE association_utilisateurs_projets (
+CREATE TABLE IF NOT EXISTS association_utilisateurs_projets (
   utilisateur int(10) unsigned NOT NULL,
   projet int(10) unsigned NOT NULL,
   FOREIGN KEY (utilisateur) REFERENCES utilisateurs(id) ON DELETE CASCADE,
   FOREIGN KEY (projet) REFERENCES projets(id) ON DELETE CASCADE,
   PRIMARY KEY(utilisateur, projet)
-) TYPE=INNODB;
-
-CREATE TABLE association_versions_demandes (
-  version int(10) unsigned NOT NULL,
-  demande int(10) unsigned NOT NULL,
-  FOREIGN KEY (version) REFERENCES versions(id) ON DELETE CASCADE,
-  FOREIGN KEY (demande) REFERENCES demandes(id) ON DELETE CASCADE,
-  PRIMARY KEY(version, demande)
 ) TYPE=INNODB;
