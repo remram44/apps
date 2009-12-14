@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
   promotion int(10) unsigned NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY nom (nom),
-  KEY pseudo (pseudo)
+  UNIQUE KEY pseudo (pseudo)
 ) TYPE=INNODB;
 
 CREATE TABLE IF NOT EXISTS projets (
@@ -20,11 +20,13 @@ CREATE TABLE IF NOT EXISTS projets (
 
 CREATE TABLE IF NOT EXISTS versions (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  position int(10) unsigned NOT NULL,
   projet int(10) unsigned NOT NULL,
   nom varchar(255) NOT NULL,
   description text NOT NULL,
   FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE KEY nom (nom)
 ) TYPE=INNODB;
 
 CREATE TABLE IF NOT EXISTS demandes (
@@ -38,6 +40,7 @@ CREATE TABLE IF NOT EXISTS demandes (
   statut int(10) NOT NULL,
   FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
   FOREIGN KEY (version) REFERENCES versions (id) ON DELETE SET NULL,
+  FOREIGN KEY (auteur) REFERENCES utilisateurs (id) ON DELETE RESTRICT,
   PRIMARY KEY (id)
 ) TYPE=INNODB;
 
