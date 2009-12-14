@@ -63,7 +63,7 @@ else
 
         // Liste des versions
         {
-            $res = mysql_query('SELECT nom FROM versions WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT 0, ' . $conf['projet_nb_versions'] . ';');
+            $res = mysql_query('SELECT nom, description FROM versions WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT 0, ' . $conf['projet_nb_versions'] . ';');
             if(mysql_num_rows($res) == 0)
             {
                 $template->assign_block_vars('ZERO_VERSIONS', array(
