@@ -114,3 +114,19 @@ p.liste_vide {
     font-style: oblique;
     margin-left: 1em;
 }
+
+table.liste_demandes {
+    width: 100%;
+}
+
+table.liste_demandes td {
+    border: 1px solid silver;
+}
+
+table.liste_demandes tr.par td {
+    background-color: #D0FFD0;
+}
+
+table.liste_demandes tr.impar td {
+    background-color: #D0D0FF;
+}

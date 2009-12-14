@@ -13,5 +13,7 @@ $conf['index_nb_demandes'] = 8;
 $conf['projet_nb_demandes'] = 8;
 $conf['projet_nb_versions'] = 5;
 $conf['projets_nb_resultats'] = 30;
+$conf['demandes_nb_resultats'] = 50;
+$conf['demande_statuts'] = array('fermé', 'non-confirmé', 'confirmé', 'en cours');
 
 ?>
