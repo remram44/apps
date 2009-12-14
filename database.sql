@@ -10,20 +10,6 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
   KEY pseudo (pseudo)
 ) TYPE=INNODB;
 
-CREATE TABLE IF NOT EXISTS demandes (
-  id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  projet int(11) unsigned NOT NULL,
-  version int(11) unsigned,
-  titre text NOT NULL,
-  auteur int(10) unsigned NOT NULL,
-  description text NOT NULL,
-  priorite int(11) NOT NULL,
-  statut int(11) NOT NULL,
-  FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
-  FOREIGN KEY (version) REFERENCES versions (id) ON DELETE SET NULL,
-  PRIMARY KEY (id)
-) TYPE=INNODB;
-
 CREATE TABLE IF NOT EXISTS projets (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   nom varchar(255) NOT NULL,
@@ -38,6 +24,20 @@ CREATE TABLE IF NOT EXISTS versions (
   nom varchar(255) NOT NULL,
   description text NOT NULL,
   FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
+  PRIMARY KEY (id)
+) TYPE=INNODB;
+
+CREATE TABLE IF NOT EXISTS demandes (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  projet int(10) unsigned NOT NULL,
+  version int(10) unsigned,
+  titre text NOT NULL,
+  auteur int(10) unsigned NOT NULL,
+  description text NOT NULL,
+  priorite int(10) NOT NULL,
+  statut int(10) NOT NULL,
+  FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
+  FOREIGN KEY (version) REFERENCES versions (id) ON DELETE SET NULL,
   PRIMARY KEY (id)
 ) TYPE=INNODB;
 
