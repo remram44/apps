@@ -41,7 +41,7 @@ else
 
         // Liste des membres
         {
-            $res = mysql_query('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u, association_utilisateurs_projets a WHERE a.projet=' . $projet . ' AND u.id = a.utilisateur;');
+            $res = mysql_query('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=' . $projet . ';');
             if(mysql_num_rows($res) == 0)
             {
                 $template->assign_block_vars('ZERO_MEMBRES', array(
