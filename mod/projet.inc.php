@@ -20,7 +20,7 @@ else
 
         // Dernières demandes
         {
-            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
+            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' ORDER BY derniere_activite DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
             if(mysql_num_rows($res) == 0)
             {
                 $template->assign_block_vars('ZERO_DEMANDES', array(
