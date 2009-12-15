@@ -1,11 +1,11 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #9999FF;
+    background-color: #3366FF;
 }
 
 #header {
-    background-color: #5555CC;
+    background-color: #003399;
     padding: 0 0 2px 0;
     color: #FFFFFF;
 }
@@ -15,7 +15,7 @@ body {
 }
 
 #menu {
-    background-color: #2222AA;
+    background-color: #000000;
     height: 1.5em;
     padding: 0;
     margin: 0;
