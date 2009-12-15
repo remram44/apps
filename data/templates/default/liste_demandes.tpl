@@ -56,8 +56,8 @@
           <td><acronym title="{DEMANDE.AUT_NOM} ({DEMANDE.AUT_PROMO})">{DEMANDE.AUT_PSEUDO}</acronym></td>
           <td>{DEMANDE.STATUT_NOM}</td>
           <td>{DEMANDE.PRIORITE}</td>
-          <td></td>
-          <td></td>
+          <td>{DEMANDE.CREATION}</td>
+          <td>{DEMANDE.ACTIVITE}</td>
         </tr>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
