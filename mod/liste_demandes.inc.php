@@ -50,16 +50,16 @@ FROM demandes d
 ORDER BY priorite, id DESC
 LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1) . ';');
 
-// Pas de résultats
+// Pas de résultat
 if(mysql_num_rows($res) == 0)
 {
     $template->assign_block_vars('ZERO_DEMANDES', array(
         'MSG' => 'Il n\'y a aucune demande à afficher.'));
 }
-// Affiche les résultats
+// Résultats : on les affiche
 else
 {
-    $prev = $page;
+    $prev = $page > 1;
     $next = mysql_num_rows($res) > $nb;
 
     $i = 0;

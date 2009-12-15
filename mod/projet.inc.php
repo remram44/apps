@@ -8,6 +8,7 @@ if(!isset($_GET['id']) || intval($_GET['id']) <= 0)
 }
 else
 {
+    // Requête SQL : détails du projet
     $projet = intval($_GET['id']);
     $res = mysql_query('SELECT * FROM projets WHERE id=' . $projet . ';');
     if($row = mysql_fetch_array($res))
