@@ -35,8 +35,10 @@ $template = new Template('data/templates/' . $utilisateur->template());
 $template->set_filenames(array(
     'index' => 'index.tpl',
     'projet' => 'projet.tpl',
+    'edit_projet' => 'edit_projet.tpl',
     'liste_projets' => 'liste_projets.tpl',
     'demande' => 'demande.tpl',
+    'edit_demande' => 'edit_demande.tpl',
     'liste_demandes' => 'liste_demandes.tpl',
     'versions' => 'versions.tpl',
     'erreur' => 'erreur.tpl'
