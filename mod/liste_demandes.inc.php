@@ -41,7 +41,7 @@ if(isset($_GET['page']))
 $nb = $conf['demandes_nb_resultats'];
 
 $res = mysql_query(
-'SELECT d.id, d.titre, d.description, d.priorite, d.statut, d.projet AS projet_id, p.nom AS projet, v.nom AS version, u.pseudo, u.nom AS nom_auteur, u.promotion
+'SELECT d.id, d.titre, d.description, d.priorite, d.statut, d.creation, d.derniere_activite, d.projet AS projet_id, p.nom AS projet, v.nom AS version, u.pseudo, u.nom AS nom_auteur, u.promotion
 FROM demandes d
     INNER JOIN projets p ON d.projet=p.id
     LEFT OUTER JOIN versions v ON d.version=v.id
@@ -50,16 +50,16 @@ FROM demandes d
 ORDER BY priorite, id DESC
 LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1) . ';');
 
-// Pas de résultats
+// Pas de résultat
 if(mysql_num_rows($res) == 0)
 {
     $template->assign_block_vars('ZERO_DEMANDES', array(
         'MSG' => 'Il n\'y a aucune demande à afficher.'));
 }
-// Affiche les résultats
+// Résultats : on les affiche
 else
 {
-    $prev = $page;
+    $prev = $page > 1;
     $next = mysql_num_rows($res) > $nb;
 
     $i = 0;
@@ -79,9 +79,11 @@ else
             'PRIORITE' => $row['priorite'],
             'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert',
             'STATUT_NOM' => $statut,
+            'CREATION' => $row['creation'],
+            'ACTIVITE' => $row['derniere_activite'],
             'PARITE' => ((($i % 2) == 0)?'par':'impar')));
+        // FIXME : format des dates
         // TODO : lien "ancre" vers la version dans le .tpl
-        // TODO : dernier changement
         if(isset($row['version']) && $row['version'] != '')
             $template->assign_block_vars('DEMANDE.VERSION', array(
                 'NOM' => $row['version']));

@@ -8,6 +8,7 @@ if(!isset($_GET['id']) || intval($_GET['id']) <= 0)
 }
 else
 {
+    // Requête SQL : détails du projet
     $projet = intval($_GET['id']);
     $res = mysql_query('SELECT * FROM projets WHERE id=' . $projet . ';');
     if($row = mysql_fetch_array($res))
@@ -19,7 +20,7 @@ else
 
         // Dernières demandes
         {
-            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
+            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' ORDER BY derniere_activite DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
             if(mysql_num_rows($res) == 0)
             {
                 $template->assign_block_vars('ZERO_DEMANDES', array(

@@ -2,6 +2,7 @@
 
 // mod/liste_projets.inc.php : Liste des projets
 
+// Filtres
 if(isset($_GET['filtre_nom']) && $_GET['filtre_nom'] != '')
 {
     $where = str_replace("*", "%",
@@ -20,6 +21,7 @@ else
     $filtre = '';
 }
 
+// Numéro de page
 $page = 1;
 if(isset($_GET['page']))
 {
@@ -29,14 +31,18 @@ if(isset($_GET['page']))
         erreur_fatale('Erreur : numéro de page invalide');
 }
 
+// Requête SQL
 $nb = $conf['projets_nb_resultats'];
 
 $res = mysql_query('SELECT * from projets' . $where . ' ORDER BY id LIMIT ' . (($page - 1) * $nb) . ', ' . ($nb+1) . ';');
+
+// Pas de résultat
 if(mysql_num_rows($res) == 0)
 {
     $template->assign_block_vars('ZERO_PROJETS', array(
         'MSG' => 'Il n\'y a aucun projet à afficher.'));
 }
+// Résultats : on les affiche
 else
 {
     $prev = $page > 1;

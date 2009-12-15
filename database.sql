@@ -38,6 +38,8 @@ CREATE TABLE IF NOT EXISTS demandes (
   description text NOT NULL,
   priorite int(10) NOT NULL,
   statut int(10) unsigned NOT NULL,
+  creation datetime NOT NULL,
+  derniere_activite datetime NOT NULL,
   FOREIGN KEY (projet) REFERENCES projets (id) ON DELETE CASCADE,
   FOREIGN KEY (version) REFERENCES versions (id) ON DELETE SET NULL,
   FOREIGN KEY (auteur) REFERENCES utilisateurs (id) ON DELETE RESTRICT,
@@ -47,7 +49,8 @@ CREATE TABLE IF NOT EXISTS demandes (
 CREATE TABLE IF NOT EXISTS association_utilisateurs_projets (
   utilisateur int(10) unsigned NOT NULL,
   projet int(10) unsigned NOT NULL,
-  FOREIGN KEY (utilisateur) REFERENCES utilisateurs(id) ON DELETE CASCADE,
+  derniere_activite datetime,
+  FOREIGN KEY (utilisateur) REFERENCES utilisateurs(id) ON DELETE RESTRICT,
   FOREIGN KEY (projet) REFERENCES projets(id) ON DELETE CASCADE,
   PRIMARY KEY(utilisateur, projet)
 ) TYPE=INNODB;

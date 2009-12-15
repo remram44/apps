@@ -1,0 +1,54 @@
+   /--------------------------------------------------\
+  < Projet Apps : Gestionnaire de projets en PHP/MySQL >
+   \--------------------------------------------------/
+
+
+  I. Le projet
+    I.1. Introduction
+    I.2. Objectifs
+  II. Utilisation du logiciel
+    II.1. Installation
+
+
+  I. Le projet
+
+    I.1. Introduction
+
+    Apps est une application web de gestion de projet, qui sera utilisée au sein
+du Rézo de Supélec Gif, dans un premier temps pour les projets internes. Elle
+est développée dans le cadre du nouveau protocole de développement, qui vise à
+introduire des méthodes de développement normalisées et efficaces (avec
+notamment le passage de Subversion à Mercurial).
+
+    I.2. Objectifs
+
+    Les objectifs du projet sont les suivants :
+      - comptes utilisateurs séparés, avec des droits spécifiques par projet ;
+      - gestionnaire de tickets ("demandes"), c'est à dire rapport de bug ou
+bien demande de fonctionnalité ;
+      - interaction avec le gestionnaire de sources (Mercurial), avec notamment
+suivi de l'activité, création automatique d'un nouveau dépôt et mise à jour des
+permissions ;
+      - "roadmap" : définition et suivi de l'avancement de plusieurs versions du
+projet.
+    Le logiciel sera développé en PHP/MySQL, avec des contraintes de stabilité
+et de maintenabilité pour les générations futures. De plus, il s'agit également
+d'une bonne opportunité de formation aux technologies web.
+    Même s'il est prévu dans un premier temps de n'utiliser le logiciel qu'en
+interne, la possibilité d'héberger les projets de résidents voire dans un second
+temps de rendre disponible le logiciel sous une licence libre n'est pas à
+exclure, mais les adaptations nécessaires du code source seront réalisées en
+temps voulu.
+
+  II. Utilisation du logiciel
+
+    II.1. Installation
+
+    L'utilisation d'Apps nécessite l'installation préalable d'un serveur web
+ainsi que d'un serveur de bases de données (pour l'instant, seul MySQL est
+utilisable).
+    Placez tous les fichiers dans un dossier accessible par votre serveur web,
+puis copiez le fichier inc/conf.inc.php vers data/conf.php. Vous pouvez adapter
+ce fichier selon vos besoins, dans un premier temps seuls les paramètres
+db_serveur, db_user, db_passwd et db_database sont indispensables au bon
+fonctionnement du logiciel.
