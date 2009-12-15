@@ -20,6 +20,8 @@
       <div class="box">
 {HTML_DESCRIPTION}
       </div>
+    </div>
+    <div class="mainsplit">
       <div class="box">
         <h3>Suivi des demandes</h3>
         <p>Dernières activités sur les demandes :</p>
@@ -33,25 +35,17 @@
         </ul>
         <p><a href="index.php?mod=liste_demandes">Détails</a></p>
       </div>
-    </div>
-    <div class="mainsplit">
       <div class="box">
         <h3>Utilisateurs actifs</h3>
-        <p>Texte qui ne sert à rien</p>
         <ul>
-          <li>Demande inutile</li>
-          <li>Bug inutile</li>
+<!-- BEGIN UTILISATEUR -->
+          <li>{UTILISATEUR.PSEUDO} ({UTILISATEUR.NOM}, {UTILISATEUR.PROMO}) sur <a href="index.php?mod=projet&amp;id={UTILISATEUR.PROJET_ID}">{UTILISATEUR.PROJET}</a></li>
+<!-- END UTILISATEUR -->
+<!-- BEGIN ZERO_UTILISATEURS -->
+          <li class="liste_vide">{ZERO_UTILISATEURS.MSG}</li>
+<!-- END ZERO_UTILISATEURS -->
         </ul>
       </div>
-      <div class="box">
-        <h3>Projets actifs</h3>
-        <p>Texte qui ne sert à rien</p>
-        <ul>
-          <li>Demande inutile</li>
-          <li>Bug inutile</li>
-        </ul>
-      </div>
-    </div>
     <hr class="clear" />
   </body>
 </html>
