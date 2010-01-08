@@ -2,6 +2,9 @@
 
 // mod/versions.inc.php : Versions du projet, avec leur description, leur état d'avancement et les demandes liées
 
+if(!isset($template))
+    die();
+
 if(isset($_GET['id']) && intval($_GET['id']) > 0)
     $projet = intval($_GET['id']);
 else

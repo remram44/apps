@@ -2,6 +2,9 @@
 
 // mod/projet.inc.php : Description détaillée d'un projet
 
+if(!isset($template))
+    die();
+
 if(!isset($_GET['id']) || intval($_GET['id']) <= 0)
 {
     erreur_fatale('Erreur : Projet invalide !');

@@ -2,6 +2,9 @@
 
 // mod/liste_demandes.inc.php : Listes les demandes, avec différents filtres
 
+if(!isset($template))
+    die();
+
 // Filtres
 if(isset($_GET['filtre_nom']) && $_GET['filtre_nom'] != '')
 {

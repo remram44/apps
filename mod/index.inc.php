@@ -2,6 +2,9 @@
 
 // mod/index.inc.php : Page d'accueil, activité récente
 
+if(!isset($template))
+    die();
+
 // Description du site (globale, pas un projet)
 $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
 

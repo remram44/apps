@@ -96,12 +96,15 @@ div.box_next_page {
     float: right;
 }
 
-a.demande_ouvert {
+a {
     color: #6666FF;
 }
 
+a:hover {
+    color: #FF4444;
+}
+
 a.demande_ferme {
-    color: #6666FF;
     text-decoration: line-through;
 }
 

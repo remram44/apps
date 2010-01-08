@@ -2,6 +2,9 @@
 
 // mod/liste_projets.inc.php : Liste des projets
 
+if(!isset($template))
+    die();
+
 // Filtres
 if(isset($_GET['filtre_nom']) && $_GET['filtre_nom'] != '')
 {
