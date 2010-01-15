@@ -29,6 +29,7 @@ else
             'DESCR' => $row['description']));
 
         // Requête SQL : demandes associées
+        // FIXME : trop de requêtes SQL ?
         $res2 = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' AND version=' . $row['id'] . ';');
 
         // Pas de résultat

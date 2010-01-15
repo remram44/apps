@@ -25,9 +25,9 @@ class Utilisateur {
             $infos = explode(':', $_COOKIE['remember']);
             if(count($infos) == 2)
             {
-                $pseudo = $infos[0];
+                $pseudo = strreplace('"', '', $infos[0]);
                 $passwd = $infos[1];
-                $res = mysql_query('SELECT * FROM utilisateurs WHERE pseudo="' . $pseudo . '"');
+                $res = mysql_query("SELECT * FROM utilisateurs WHERE pseudo='" . $pseudo . "'");
                 if($row = mysql_fetch_array($res, MYSQL_ASSOC))
                 {
                     if($row['password'] == md5($passwd))
