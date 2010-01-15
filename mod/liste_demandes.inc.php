@@ -43,7 +43,8 @@ if(isset($_GET['page']))
 // Requête SQL
 $nb = $conf['demandes_nb_resultats'];
 
-$res = mysql_query(
+// FIXME : requête pas jolie. Risques d'injection ?
+$st = $db->query(
 'SELECT d.id, d.titre, d.description, d.priorite, d.statut, d.creation, d.derniere_activite, d.projet AS projet_id, p.nom AS projet, v.nom AS version, u.pseudo, u.nom AS nom_auteur, u.promotion
 FROM demandes d
     INNER JOIN projets p ON d.projet=p.id
@@ -54,7 +55,7 @@ ORDER BY priorite, id DESC
 LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1) . ';');
 
 // Pas de résultat
-if(mysql_num_rows($res) == 0)
+if($st->rowCount() == 0)
 {
     $template->assign_block_vars('ZERO_DEMANDES', array(
         'MSG' => 'Il n\'y a aucune demande à afficher.'));
@@ -63,10 +64,10 @@ if(mysql_num_rows($res) == 0)
 else
 {
     $prev = $page > 1;
-    $next = mysql_num_rows($res) > $nb;
+    $next = $st->rowCount() > $nb;
 
     $i = 0;
-    while( ($row = mysql_fetch_array($res, MYSQL_ASSOC)) && ($i < $nb) )
+    while( ($row = $st->fetch(PDO::FETCH_ASSOC)) && ($i < $nb) )
     {
         $statut = 'inconnu';
         if(is_array($conf['demande_statuts']) && isset($conf['demande_statuts'][$row['statut']]))

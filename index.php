@@ -7,16 +7,18 @@ include 'inc/conf.inc.php';
 if(file_exists('data/conf.php'))
     include 'data/conf.php';
 
-// Connection à MySQL
-if(!@mysql_connect($conf['db_serveur'], $conf['db_user'], $conf['db_passwd'])
- || !@mysql_select_db($conf['db_database']))
-{
+// Connection à la base de données
+try {
+    $db = new PDO($conf['db_dsn'], $conf['db_user'], $conf['db_passwd'], array(
+        PDO::ATTR_PERSISTENT => $conf['db_persistent']));
+}
+catch(PDOException $e) {
     $template = new Template('data/templates/' . $conf['default_template']);
     $template->set_filenames(array('erreur' => 'erreur.tpl'));
     $template->assign_var('TITRE', $conf['titre']);
     $template->assign_var('TEMPLATE_URL', 'data/templates/' . $conf['default_template']);
     $template->assign_var('ERREUR_DESCR', 'Erreur : impossible de se connecter à la base de données !<br/>
-MySQL a répondu : ' . mysql_error());
+Erreur : ' . $e->getMessage());
     $template->pparse('erreur');
     exit(1);
 }

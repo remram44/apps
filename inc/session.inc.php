@@ -12,6 +12,7 @@ class Utilisateur {
     function __construct()
     {
         global $conf;
+        global $db;
 
         session_start();
         if(isset($_SESSION['pseudo']))
@@ -25,10 +26,11 @@ class Utilisateur {
             $infos = explode(':', $_COOKIE['remember']);
             if(count($infos) == 2)
             {
-                $pseudo = strreplace('"', '', $infos[0]);
+                $pseudo = $infos[0];
                 $passwd = $infos[1];
-                $res = mysql_query("SELECT * FROM utilisateurs WHERE pseudo='" . $pseudo . "'");
-                if($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
+                $st->execute(array($pseudo));
+                if($row = $st->fetch(PDO::FETCH_ASSOC))
                 {
                     if($row['password'] == md5($passwd))
                     {

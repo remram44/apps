@@ -10,15 +10,15 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
 
 // Dernières demandes
 {
-    $res = mysql_query('SELECT * FROM demandes ORDER BY id DESC LIMIT ' . $conf['index_nb_demandes'] . ';');
-    if(mysql_num_rows($res) == 0)
+    $st = $db->query('SELECT * FROM demandes ORDER BY id DESC LIMIT ' . $conf['index_nb_demandes']);
+    if($st->rowCount() == 0)
     {
         $template->assign_block_vars('ZERO_DEMANDES', array(
             'MSG' => 'Il n\'y a aucune demande à afficher.'));
     }
     else
     {
-        while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+        while($row = $st->fetch(PDO::FETCH_ASSOC))
         {
             $template->assign_block_vars('DEMANDE', array(
                 'ID' => $row['id'],
@@ -32,7 +32,7 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
 
 // Utilisateurs actifs
 {
-    $res = mysql_query(
+    $st = $db->query(
     'SELECT a.derniere_activite, u.pseudo, u.nom, u.promotion, a.projet AS projet_id, p.nom AS projet
     FROM association_utilisateurs_projets a
         INNER JOIN projets p ON a.projet=p.id
@@ -40,14 +40,14 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
     WHERE derniere_activite IS NOT NULL
     ORDER BY derniere_activite DESC
     LIMIT ' . $conf['index_nb_utilisateurs'] . ';');
-    if(mysql_num_rows($res) == 0)
+    if($st->rowCount() == 0)
     {
         $template->assign_block_vars('ZERO_UTILISATEURS', array(
-            'mSG' => 'Il n\'y a aucune activité à rapporter.'));
+            'MSG' => 'Il n\'y a aucune activité à rapporter.'));
     }
     else
     {
-        while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+        while($row = $st->fetch(PDO::FETCH_ASSOC))
         {
             $template->assign_block_vars('UTILISATEUR', array(
                 'PSEUDO' => $row['pseudo'],

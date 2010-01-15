@@ -37,10 +37,11 @@ if(isset($_GET['page']))
 // Requête SQL
 $nb = $conf['projets_nb_resultats'];
 
-$res = mysql_query('SELECT * from projets' . $where . ' ORDER BY id LIMIT ' . (($page - 1) * $nb) . ', ' . ($nb+1) . ';');
+// FIXME : requête pas jolie. Risques d'injection ?
+$st = $db->query('SELECT * from projets' . $where . ' ORDER BY id LIMIT ' . (($page - 1) * $nb) . ', ' . ($nb+1) . ';');
 
 // Pas de résultat
-if(mysql_num_rows($res) == 0)
+if($st->rowCount() == 0)
 {
     $template->assign_block_vars('ZERO_PROJETS', array(
         'MSG' => 'Il n\'y a aucun projet à afficher.'));
@@ -49,10 +50,10 @@ if(mysql_num_rows($res) == 0)
 else
 {
     $prev = $page > 1;
-    $next = mysql_num_rows($res) > $nb;
+    $next = $st->rowCount() > $nb;
 
     $i = 0;
-    while( ($row = mysql_fetch_array($res, MYSQL_ASSOC)) && ($i < $nb) )
+    while( ($row = $st->fetch(PDO::FETCH_ASSOC)) && ($i < $nb) )
     {
         $template->assign_block_vars('PROJET', array(
             'ID' => $row['id'],

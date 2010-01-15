@@ -13,8 +13,9 @@ else
 {
     // Requête SQL : détails du projet
     $projet = intval($_GET['id']);
-    $res = mysql_query('SELECT * FROM projets WHERE id=' . $projet . ';');
-    if($row = mysql_fetch_array($res))
+    $st = $db->prepare('SELECT * FROM projets WHERE id=?');
+    $st->execute(array($projet));
+    if($row = $st->fetch(PDO::FETCH_ASSOC))
     {
         $template->assign_vars(array(
             'PROJ_TITRE' => $row['nom'],
@@ -23,42 +24,44 @@ else
 
         // Dernières demandes
         {
-            $res = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' ORDER BY derniere_activite DESC LIMIT ' . $conf['projet_nb_demandes'] . ';');
-            if(mysql_num_rows($res) == 0)
+            $st2 = $db->prepare('SELECT * FROM demandes WHERE projet=? ORDER BY derniere_activite DESC LIMIT ' . $conf['projet_nb_demandes']);
+            $st2->execute(array($projet));
+            if($st2->rowCount() == 0)
             {
                 $template->assign_block_vars('ZERO_DEMANDES', array(
                     'MSG' => 'Il n\'y a aucune demande à afficher.'));
             }
             else
             {
-                while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                while($row2 = $st2->fetch(PDO::FETCH_ASSOC))
                 {
                     $template->assign_block_vars('DEMANDE', array(
-                        'ID' => $row['id'],
-                        'TITRE' => $row['titre'],
-                        'AUTEUR' => $row['auteur'],
-                        'DESCR' => $row['description'],
-                        'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert'));
+                        'ID' => $row2['id'],
+                        'TITRE' => $row2['titre'],
+                        'AUTEUR' => $row2['auteur'],
+                        'DESCR' => $row2['description'],
+                        'STATUT' => ($row2['statut'] == 0)?'ferme':'ouvert'));
                 }
             }
         }
 
         // Liste des membres
         {
-            $res = mysql_query('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=' . $projet . ';');
-            if(mysql_num_rows($res) == 0)
+            $st2 = $db->prepare('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=.');
+            $st2->execute(array($projet));
+            if($st2->rowCount() == 0)
             {
                 $template->assign_block_vars('ZERO_MEMBRES', array(
                     'MSG' => 'Ce projet n\'a aucun membre.'));
             }
             else
             {
-                while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                while($row2 = $st2->fetch(PDO::FETCH_ASSOC))
                 {
                     $template->assign_block_vars('MEMBRE', array(
-                        'PSEUDO' => $row['pseudo'],
-                        'NOM' => $row['nom'],
-                        'PROMOTION' => $row['promotion']));
+                        'PSEUDO' => $row2['pseudo'],
+                        'NOM' => $row2['nom'],
+                        'PROMOTION' => $row2['promotion']));
                 }
             }
         }
@@ -67,19 +70,20 @@ else
 
         // Liste des versions
         {
-            $res = mysql_query('SELECT nom, description FROM versions WHERE projet=' . $projet . ' ORDER BY id DESC LIMIT 0, ' . $conf['projet_nb_versions'] . ';');
-            if(mysql_num_rows($res) == 0)
+            $st2 = $db->prepare('SELECT nom, description FROM versions WHERE projet = ? ORDER BY id DESC LIMIT 0, ' . $conf['projet_nb_versions']);
+            $st2->execute(array($projet));
+            if($st2->rowCount() == 0)
             {
                 $template->assign_block_vars('ZERO_VERSIONS', array(
                     'MSG' => 'Ce projet n\'a défini aucune version.'));
             }
             else
             {
-                while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                while($row2 = $st2->fetch(PDO::FETCH_ASSOC))
                 {
                     $template->assign_block_vars('VERSION', array(
-                        'NOM' => $row['nom'],
-                        'DESCR' => $row['description']));
+                        'NOM' => $row2['nom'],
+                        'DESCR' => $row2['description']));
                 }
             }
         }

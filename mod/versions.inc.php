@@ -11,10 +11,11 @@ else
     erreur_fatale('Erreur : projet non spécifié.');
 
 // Requête SQL
-$res = mysql_query('SELECT * from versions WHERE projet=' . $projet . ' ORDER BY position;');
+$st = $db->prepare('SELECT * from versions WHERE projet=? ORDER BY position');
+$st->execute(array($projet));
 
 // Pas de résultat
-if(mysql_num_rows($res) == 0)
+if($st->rowCount() == 0)
 {
     $template->assign_block_vars('ZERO_VERSIONS', array(
         'MSG' => 'Il n\'y a aucune version à afficher.'));
@@ -22,18 +23,21 @@ if(mysql_num_rows($res) == 0)
 // Résultats : on les affiche
 else
 {
-    while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+    // Requête SQL : demandes associées
+    $st2 = $db->prepare('SELECT * FROM demandes WHERE projet=:projet AND version=:version');
+    while($row = $st->fetch(PDO::FETCH_ASSOC))
     {
         $template->assign_block_vars('VERSION', array(
             'NOM' => $row['nom'],
             'DESCR' => $row['description']));
 
-        // Requête SQL : demandes associées
         // FIXME : trop de requêtes SQL ?
-        $res2 = mysql_query('SELECT * FROM demandes WHERE projet=' . $projet . ' AND version=' . $row['id'] . ';');
+        $st2->execute(array(
+            ':projet' => $projet,
+            ':version' => $row['id']));
 
         // Pas de résultat
-        if(mysql_num_rows($res2) == 0)
+        if($st2->rowCount() == 0)
         {
             $template->assign_block_vars('VERSION.ZERO_DEMANDES', array(
                 'MSG' => 'Aucune demande n\'est associée à cette version.'));
@@ -41,7 +45,7 @@ else
         // Résultats : on les affiche
         else
         {
-            while($demande = mysql_fetch_array($res2, MYSQL_ASSOC))
+            while($demande = $st2->fetch(PDO::FETCH_ASSOC))
             {
                 $template->assign_block_vars('VERSION.DEMANDE', array(
                     'ID' => $demande['id'],

@@ -1,6 +1,6 @@
-   /--------------------------------------------------\
-  < Projet Apps : Gestionnaire de projets en PHP/MySQL >
-   \--------------------------------------------------/
+   /------------------------------------------------\
+  < Projet Apps : Gestionnaire de projets en PHP/SQL >
+   \------------------------------------------------/
 
 
   I. Le projet
@@ -31,8 +31,8 @@ suivi de l'activité, création automatique d'un nouveau dépôt et mise à jour des
 permissions ;
       - "roadmap" : définition et suivi de l'avancement de plusieurs versions du
 projet.
-    Le logiciel sera développé en PHP/MySQL, avec des contraintes de stabilité
-et de maintenabilité pour les générations futures. De plus, il s'agit également
+    Le logiciel sera développé en PHP/SQL, avec des contraintes de stabilité et
+de maintenabilité pour les générations futures. De plus, il s'agit également
 d'une bonne opportunité de formation aux technologies web.
     Même s'il est prévu dans un premier temps de n'utiliser le logiciel qu'en
 interne, la possibilité d'héberger les projets de résidents voire dans un second
@@ -45,8 +45,7 @@ temps voulu.
     II.1. Installation
 
     L'utilisation d'Apps nécessite l'installation préalable d'un serveur web
-ainsi que d'un serveur de bases de données (pour l'instant, seul MySQL est
-utilisable).
+ainsi que d'un serveur de bases de données supporté par PDO.
     Placez tous les fichiers dans un dossier accessible par votre serveur web,
 puis copiez le fichier inc/conf.inc.php vers data/conf.php. Vous pouvez adapter
 ce fichier selon vos besoins, dans un premier temps seuls les paramètres
