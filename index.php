@@ -14,12 +14,13 @@ try {
 }
 catch(PDOException $e) {
     $template = new Template('data/templates/' . $conf['default_template']);
-    $template->set_filenames(array('erreur' => 'erreur.tpl'));
+    $template->set_filenames(array('root' => 'root.tpl'));
     $template->assign_var('TITRE', $conf['titre']);
     $template->assign_var('TEMPLATE_URL', 'data/templates/' . $conf['default_template']);
-    $template->assign_var('ERREUR_DESCR', 'Erreur : impossible de se connecter à la base de données !<br/>
-Erreur : ' . $e->getMessage());
-    $template->pparse('erreur');
+    $template->assign_block_vars('MSG_ERREUR', array(
+        'DESCR' => 'Erreur : impossible de se connecter à la base de données !<br/>
+Erreur : ' . $e->getMessage()));
+    $template->pparse('root');
     exit(1);
 }
 
@@ -44,7 +45,6 @@ $template->set_filenames(array(
     'edit_demande' => 'edit_demande.tpl',
     'liste_demandes' => 'liste_demandes.tpl',
     'versions' => 'versions.tpl',
-    'erreur' => 'erreur.tpl',
     'connexion' => 'connexion.tpl',
     'deconnexion' => 'deconnexion.tpl',
     'perso' => 'perso.tpl'
@@ -55,8 +55,7 @@ $erreur = false;
 function erreur_fatale($msg)
 {
     global $template;
-    $template->assign_var('ERREUR_DESCR', $msg);
-    $template->assign_var_from_handle('ROOT_CONTENT', 'erreur');
+    $template->assign_block_vars('MSG_ERREUR', array('DESCR' => $msg));
     $template->pparse('root');
     exit(0);
 }

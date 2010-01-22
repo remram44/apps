@@ -22,6 +22,11 @@
       </div>
       <h1>{TITRE}</h1>
     </div>
+<!-- BEGIN MSG_ERREUR -->
+    <div class="erreurbox">
+      <p>{MSG_ERREUR.DESCR}</p>
+    </div>
+<!-- END MSG_ERREUR -->
 {ROOT_CONTENT}
     <hr class="clear" />
   </body>
