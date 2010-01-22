@@ -46,7 +46,7 @@ $template->set_filenames(array(
     'erreur' => 'erreur.tpl',
     'connexion' => 'connexion.tpl',
     'deconnexion' => 'deconnexion.tpl',
-//    'perso' => 'perso.tpl'
+    'perso' => 'perso.tpl'
     ));
 
 // Fonction d'erreur utilisant le template

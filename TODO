@@ -3,6 +3,6 @@ A faire :
     - mod/demande : affichage d'une demande, voir/ajouter des commentaires
     - mod/edit_demande : ajouter/modifier une demande
     - mod/edit_projet : ajouter/modifier projet, versions, membres
-  - utilisateurs :
-    - création d'un compte, modification des préférences (mot de passe, template)
+    - mod/admin : création/gestion de comptes utilisateurs
+    - (mod/perso : changement de template)
   - interface avec les dépôts

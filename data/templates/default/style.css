@@ -78,6 +78,15 @@ div.erreurbox {
     padding: 10px;
 }
 
+div.confirmbox {
+    border: 2px solid #0000FF;
+    background-color: #8888DD;
+    color: #0000FF;
+    margin: 10px;
+    font-weight: bold;
+    padding: 10px;
+}
+
 div.box_prev_page {
     border: 1px solid grey;
     margin: 10px;

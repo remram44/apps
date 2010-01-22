@@ -3,11 +3,15 @@
 class Utilisateur {
 
     var $pseudo;
+    var $nom;
     var $userid;
     var $template;
 
     function pseudo()
     { return $this->pseudo; }
+
+    function nom()
+    { return $this->nom; }
 
     function estAnonyme()
     { return $this->pseudo == 'Anonyme'; }
@@ -25,6 +29,7 @@ class Utilisateur {
         if(isset($_SESSION['pseudo']))
         {
             $this->pseudo   = $_SESSION['pseudo'];
+            $this->nom      = $_SESSION['nom'];
             $this->userid   = $_SESSION['userid'];
             $this->template = $_SESSION['template'];
         }
@@ -43,6 +48,7 @@ class Utilisateur {
                     if($row['password'] == md5($passwd))
                     {
                         $this->pseudo   = $_SESSION['pseudo']   = $pseudo;
+                        $this->nom      = $_SESSION['nom']      = $row['nom'];
                         $this->userid   = $_SESSION['userid']   = $row['id'];
                         $this->template = $_SESSION['template'] = $row['template'];
                     }
@@ -57,6 +63,7 @@ class Utilisateur {
             if( ($row = $st->fetch(PDO::FETCH_ASSOC)) && ($row['password'] == md5($_POST['conn_mdp'])) )
             {
                 $this->pseudo   = $_SESSION['pseudo']   = $_POST['conn_nom'];
+                $this->nom      = $_SESSION['nom']      = $row['nom'];
                 $this->userid   = $_SESSION['userid']   = $row['id'];
                 $this->template = $_SESSION['template'] = $row['template'];
             }
@@ -66,6 +73,7 @@ class Utilisateur {
         if($this->pseudo == '')
         {
             $this->pseudo = 'Anonyme';
+            $this->nom = 'Anonyme';
             $this->userid = 0;
             $this->template = $conf['default_template'];
         }
