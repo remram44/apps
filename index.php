@@ -35,6 +35,7 @@ else
 // Initialisation du moteur de template
 $template = new Template('data/templates/' . $utilisateur->template());
 $template->set_filenames(array(
+    'root' => 'root.tpl',
     'index' => 'index.tpl',
     'projet' => 'projet.tpl',
     'edit_projet' => 'edit_projet.tpl',
@@ -54,7 +55,9 @@ $erreur = false;
 function erreur_fatale($msg)
 {
     global $template;
-    $template->assign_var('ERREUR_DESCR', $msg); $template->pparse('erreur');
+    $template->assign_var('ERREUR_DESCR', $msg);
+    $template->assign_var_from_handle('ROOT_CONTENT', 'erreur');
+    $template->pparse('root');
     exit(0);
 }
 
@@ -90,7 +93,8 @@ if(in_array($mod, array('index', 'projet', 'liste_projets', 'demande', 'liste_de
 {
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';
-    $template->pparse($mod);
+    $template->assign_var_from_handle('ROOT_CONTENT', $mod);
+    $template->pparse('root');
 }
 else
 {
