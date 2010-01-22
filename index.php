@@ -72,21 +72,14 @@ $template->assign_block_vars('MENU', array(
     'LIEN' => 'index.php?mod=liste_projets',
     'TEXTE' => 'Projets'));
 // Connexion
-// TODO : Liens à placer ailleurs
 if($utilisateur->estAnonyme())
 {
-    $template->assign_block_vars('MENU', array(
-        'LIEN' => 'index.php?mod=connexion',
-        'TEXTE' => 'Connexion'));
+    $template->assign_block_vars('MENU2_CONN', array());
 }
 else
 {
-    $template->assign_block_vars('MENU', array(
-        'LIEN' => 'index.php?mod=perso',
-        'TEXTE' => 'Identifié comme ' . $utilisateur->pseudo()));
-    $template->assign_block_vars('MENU', array(
-        'LIEN' => 'index.php?mod=deconnexion',
-        'TEXTE' => '(déconnexion)'));
+    $template->assign_block_vars('MENU2_DECO', array(
+        'PSEUDO' => $utilisateur->pseudo()));
 }
 
 if(in_array($mod, array('index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions', 'connexion', 'deconnexion', 'perso')))

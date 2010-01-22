@@ -10,8 +10,14 @@
       <div id="menu">
         <ul>
 <!-- BEGIN MENU -->
-          <li><a href="{MENU.LIEN}">{MENU.TEXTE}</a></li>
+          <li class="left"><a href="{MENU.LIEN}">{MENU.TEXTE}</a></li>
 <!-- END MENU -->
+<!-- BEGIN MENU2_CONN -->
+          <li class="right"><a href="index.php?mod=connexion">Connexion</a></li>
+<!-- END MENU2_CONN -->
+<!-- BEGIN MENU2_DECO -->
+          <li class="right">Identifié comme <a href="index.php?mod=perso">{MENU2_DECO.PSEUDO}</a> <a href="index.php?mod=deconnexion">(déconnexion)</a></li>
+<!-- END MENU2_DECO -->
         </ul>
       </div>
       <h1>{TITRE}</h1>
