@@ -43,7 +43,10 @@ $template->set_filenames(array(
     'edit_demande' => 'edit_demande.tpl',
     'liste_demandes' => 'liste_demandes.tpl',
     'versions' => 'versions.tpl',
-    'erreur' => 'erreur.tpl'
+    'erreur' => 'erreur.tpl',
+//    'connexion' => 'connexion.tpl',
+    'deconnexion' => 'deconnexion.tpl',
+//    'perso' => 'perso.tpl'
     ));
 
 // Fonction d'erreur utilisant le template
@@ -65,8 +68,24 @@ $template->assign_block_vars('MENU', array(
 $template->assign_block_vars('MENU', array(
     'LIEN' => 'index.php?mod=liste_projets',
     'TEXTE' => 'Projets'));
+// Connexion
+if($utilisateur->estAnonyme())
+{
+    $template->assign_block_vars('MENU', array(
+        'LIEN' => 'index.php?mod=connexion',
+        'TEXTE' => 'Connexion'));
+}
+else
+{
+    $template->assign_block_vars('MENU', array(
+        'LIEN' => 'index.php?mod=perso',
+        'TEXTE' => 'Identifié comme ' . $utilisateur->pseudo()));
+    $template->assign_block_vars('MENU', array(
+        'LIEN' => 'index.php?mod=deconnexion',
+        'TEXTE' => '(déconnexion)'));
+}
 
-if(in_array($mod, array('index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions')))
+if(in_array($mod, array('index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions', 'connexion', 'deconnexion', 'perso')))
 {
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';

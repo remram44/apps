@@ -51,6 +51,17 @@ class Utilisateur {
         }
     }
 
+    function estAnonyme()
+    {
+        return $this->pseudo == 'Anonyme';
+    }
+
+    function deconnecte()
+    {
+        session_destroy();
+        setcookie("remember", "", time() - 3600);
+    }
+
 }
 
 ?>
