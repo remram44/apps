@@ -6,6 +6,12 @@ class Utilisateur {
     var $userid;
     var $template;
 
+    function pseudo()
+    { return $this->pseudo; }
+
+    function estAnonyme()
+    { return $this->pseudo == 'Anonyme'; }
+
     function template()
     { return $this->template; }
 
@@ -15,12 +21,14 @@ class Utilisateur {
         global $db;
 
         session_start();
+        // Session déjà ouverte
         if(isset($_SESSION['pseudo']))
         {
-            $this->pseudo = $_SESSION['pseudo'];
-            $this->userid = $_SESSION['userid'];
+            $this->pseudo   = $_SESSION['pseudo'];
+            $this->userid   = $_SESSION['userid'];
             $this->template = $_SESSION['template'];
         }
+        // Cookie client
         else if(isset($_COOKIE['remember']))
         {
             $infos = explode(':', $_COOKIE['remember']);
@@ -34,11 +42,23 @@ class Utilisateur {
                 {
                     if($row['password'] == md5($passwd))
                     {
-                        $this->pseudo = $pseudo;
-                        $this->userid = $row['id'];
-                        $this->template = $row['template'];
+                        $this->pseudo   = $_SESSION['pseudo']   = $pseudo;
+                        $this->userid   = $_SESSION['userid']   = $row['id'];
+                        $this->template = $_SESSION['template'] = $row['template'];
                     }
                 }
+            }
+        }
+        // Connexion via le formulaire
+        else if(isset($_POST['conn_nom']) && isset($_POST['conn_mdp']))
+        {
+            $st = $db->prepare('SELECT * from utilisateurs WHERE pseudo=?');
+            $st->execute(array($_POST['conn_nom']));
+            if( ($row = $st->fetch(PDO::FETCH_ASSOC)) && ($row['password'] == md5($_POST['conn_mdp'])) )
+            {
+                $this->pseudo   = $_SESSION['pseudo']   = $_POST['conn_nom'];
+                $this->userid   = $_SESSION['userid']   = $row['id'];
+                $this->template = $_SESSION['template'] = $row['template'];
             }
         }
 
@@ -49,11 +69,6 @@ class Utilisateur {
             $this->userid = 0;
             $this->template = $conf['default_template'];
         }
-    }
-
-    function estAnonyme()
-    {
-        return $this->pseudo == 'Anonyme';
     }
 
     function deconnecte()

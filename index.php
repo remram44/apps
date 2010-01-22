@@ -44,7 +44,7 @@ $template->set_filenames(array(
     'liste_demandes' => 'liste_demandes.tpl',
     'versions' => 'versions.tpl',
     'erreur' => 'erreur.tpl',
-//    'connexion' => 'connexion.tpl',
+    'connexion' => 'connexion.tpl',
     'deconnexion' => 'deconnexion.tpl',
 //    'perso' => 'perso.tpl'
     ));
@@ -69,6 +69,7 @@ $template->assign_block_vars('MENU', array(
     'LIEN' => 'index.php?mod=liste_projets',
     'TEXTE' => 'Projets'));
 // Connexion
+// TODO : Liens à placer ailleurs
 if($utilisateur->estAnonyme())
 {
     $template->assign_block_vars('MENU', array(
