@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
   template varchar(255) NOT NULL,
   nom varchar(255) NOT NULL,
   promotion int(10) unsigned NOT NULL,
+  flags int(10) unsigned NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY nom (nom),
   UNIQUE KEY pseudo (pseudo)

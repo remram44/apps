@@ -1,11 +1,14 @@
 <?php
 
+define('PERM_MANAGE_USERS', 1);
+
 class Utilisateur {
 
     var $pseudo;
     var $nom;
     var $userid;
     var $template;
+    var $flags;
 
     function pseudo()
     { return $this->pseudo; }
@@ -18,6 +21,9 @@ class Utilisateur {
 
     function template()
     { return $this->template; }
+
+    function autorise($perm)
+    { return ($this->flags & $perm) != 0; }
 
     function __construct()
     {
@@ -32,6 +38,7 @@ class Utilisateur {
             $this->nom      = $_SESSION['nom'];
             $this->userid   = $_SESSION['userid'];
             $this->template = $_SESSION['template'];
+            $this->flags    = $_SESSION['flags'];
         }
         // Cookie client
         else if(isset($_COOKIE['remember']))
@@ -51,6 +58,7 @@ class Utilisateur {
                         $this->nom      = $_SESSION['nom']      = $row['nom'];
                         $this->userid   = $_SESSION['userid']   = $row['id'];
                         $this->template = $_SESSION['template'] = $row['template'];
+                        $this->flags    = $_SESSION['flags']    = $row['flags'];
                     }
                 }
             }
@@ -66,6 +74,7 @@ class Utilisateur {
                 $this->nom      = $_SESSION['nom']      = $row['nom'];
                 $this->userid   = $_SESSION['userid']   = $row['id'];
                 $this->template = $_SESSION['template'] = $row['template'];
+                $this->flags    = $_SESSION['flags']    = $row['flags'];
             }
         }
 
@@ -76,6 +85,7 @@ class Utilisateur {
             $this->nom = 'Anonyme';
             $this->userid = 0;
             $this->template = $conf['default_template'];
+            $this->flags = 0;
         }
     }
 

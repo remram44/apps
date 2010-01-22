@@ -25,3 +25,8 @@
         </div>
       </form>
     </div>
+<!-- BEGIN LIEN_ADMIN -->
+    <div class="box">
+      <p class="admin"><a href="index.php?mod=admin">Page d'administration</a></p>
+    </div>
+<!-- END LIEN_ADMIN -->

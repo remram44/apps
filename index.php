@@ -47,7 +47,8 @@ $template->set_filenames(array(
     'versions' => 'versions.tpl',
     'connexion' => 'connexion.tpl',
     'deconnexion' => 'deconnexion.tpl',
-    'perso' => 'perso.tpl'
+    'perso' => 'perso.tpl',
+    'admin' => 'admin.tpl'
     ));
 
 // Fonction d'erreur utilisant le template
@@ -81,7 +82,9 @@ else
         'PSEUDO' => $utilisateur->pseudo()));
 }
 
-if(in_array($mod, array('index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions', 'connexion', 'deconnexion', 'perso')))
+if(in_array($mod, array(
+    'index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions',
+    'connexion', 'deconnexion', 'perso')))
 {
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';

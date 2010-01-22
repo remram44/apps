@@ -55,4 +55,10 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
     }
 }
 
+// Page d'administration
+if($utilisateur->autorise(PERM_MANAGE_USERS))
+{
+    $template->assign_block_vars('LIEN_ADMIN', array());
+}
+
 ?>

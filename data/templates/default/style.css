@@ -113,12 +113,19 @@ a {
     color: #6666FF;
 }
 
-a:hover {
-    color: #FF4444;
-}
-
 a.demande_ferme {
     text-decoration: line-through;
+}
+
+.admin, .admin a {
+    font-weight: bold;
+    color:red;
+    font-style: oblique;
+    text-align: center;
+}
+
+a:hover {
+    color: #FF4444;
 }
 
 li.liste_vide {
