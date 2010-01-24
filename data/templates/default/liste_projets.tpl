@@ -30,3 +30,8 @@
       <p><a href="{NEXT_PAGE.LIEN}">Page suivante</a></p>
     </div>
 <!-- END NEXT_PAGE -->
+<!-- BEGIN LIEN_ADMIN -->
+    <div class="box">
+      <p class="admin"><a href="index.php?mod=edit_projet">Ajouter un projet</a></p>
+    </div>
+<!-- END LIEN_ADMIN -->

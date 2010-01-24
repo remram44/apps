@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS demandes (
 CREATE TABLE IF NOT EXISTS association_utilisateurs_projets (
   utilisateur int(10) unsigned NOT NULL,
   projet int(10) unsigned NOT NULL,
+  admin BOOL NOT NULL,
   derniere_activite datetime,
   FOREIGN KEY (utilisateur) REFERENCES utilisateurs(id) ON DELETE RESTRICT,
   FOREIGN KEY (projet) REFERENCES projets(id) ON DELETE CASCADE,

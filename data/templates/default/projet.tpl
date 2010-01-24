@@ -51,4 +51,9 @@
           <li>Bug inutile</li>
         </ul>
       </div>
+<!-- BEGIN ADMIN_PROJET -->
+      <div class="box">
+        <p class="admin"><a href="index.php?mod=edit_projet&amp;id={PROJ_ID}">Page d'administration</a></p>
+      </div>
+<!-- END ADMIN_PROJET -->
     </div>

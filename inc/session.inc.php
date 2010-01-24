@@ -1,6 +1,7 @@
 <?php
 
 define('PERM_MANAGE_USERS', 1);
+define('PERM_MANAGE_PROJECTS', 2);
 
 class Utilisateur {
 
@@ -18,6 +19,9 @@ class Utilisateur {
 
     function estAnonyme()
     { return $this->pseudo == 'Anonyme'; }
+
+    function userid()
+    { return $this->userid; }
 
     function template()
     { return $this->template; }
