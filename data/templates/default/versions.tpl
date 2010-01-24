@@ -8,7 +8,7 @@
           <li><a href="index.php?mod=demande&amp;id={VERSION.DEMANDE.ID}" class="demande_{VERSION.DEMANDE.STATUT}">{VERSION.DEMANDE.ID}</a> : {VERSION.DEMANDE.DESCR}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
-          <li class="liste_vide">{VERSION.ZERO_DEMANDES.MSG}</li>
+          <li class="liste_vide">Aucune demande n'est associée à cette version.</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
     </div>
@@ -16,6 +16,6 @@
 <!-- BEGIN ZERO_VERSIONS -->
     <div class="box">
       <h3>Aucune version</h3>
-      <p class="liste_vide">{ZERO_VERSIONS.MSG}</p>
+      <p class="liste_vide">Il n'y a aucune version à afficher.</p>
     </div>
 <!-- END ZERO_VERSIONS -->

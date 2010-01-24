@@ -13,8 +13,7 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
     $st = $db->query('SELECT * FROM demandes ORDER BY id DESC LIMIT ' . $conf['index_nb_demandes']);
     if($st->rowCount() == 0)
     {
-        $template->assign_block_vars('ZERO_DEMANDES', array(
-            'MSG' => 'Il n\'y a aucune demande à afficher.'));
+        $template->assign_block_vars('ZERO_DEMANDES', array());
     }
     else
     {
@@ -42,8 +41,7 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
     LIMIT ' . $conf['index_nb_utilisateurs'] . ';');
     if($st->rowCount() == 0)
     {
-        $template->assign_block_vars('ZERO_UTILISATEURS', array(
-            'MSG' => 'Il n\'y a aucune activité à rapporter.'));
+        $template->assign_block_vars('ZERO_UTILISATEURS', array());
     }
     else
     {

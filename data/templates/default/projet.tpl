@@ -11,7 +11,7 @@
           <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.DESCR}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
-          <li class="liste_vide">{ZERO_DEMANDES.MSG}</li>
+          <li class="liste_vide">Il n'y a aucune demande à afficher.</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
         <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Détails</a></p>
@@ -24,7 +24,7 @@
           <li>{VERSION.NOM}</li>
 <!-- END VERSION -->
 <!-- BEGIN ZERO_VERSIONS -->
-          <li class="liste_vide">{ZERO_VERSIONS.MSG}</li>
+          <li class="liste_vide">Ce projet n'a défini aucune version.</li>
 <!-- END ZERO_VERSIONS -->
         </ul>
         <p><a href="index.php?mod=versions&amp;id={PROJ_ID}">Détails</a></p>
@@ -39,7 +39,7 @@
           <li>{MEMBRE.PSEUDO} ({MEMBRE.NOM}, promo {MEMBRE.PROMOTION})</li>
 <!-- END MEMBRE -->
 <!-- BEGIN ZERO_MEMBRES -->
-          <li class="liste_vide">{ZERO_MEMBRES.MSG}</li>
+          <li class="liste_vide">Ce projet n'a aucun membre.</li>
 <!-- END ZERO_MEMBRES -->
         </ul>
       </div>

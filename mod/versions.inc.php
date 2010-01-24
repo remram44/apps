@@ -17,8 +17,7 @@ $st->execute(array($projet));
 // Pas de résultat
 if($st->rowCount() == 0)
 {
-    $template->assign_block_vars('ZERO_VERSIONS', array(
-        'MSG' => 'Il n\'y a aucune version à afficher.'));
+    $template->assign_block_vars('ZERO_VERSIONS', array());
 }
 // Résultats : on les affiche
 else
@@ -39,8 +38,7 @@ else
         // Pas de résultat
         if($st2->rowCount() == 0)
         {
-            $template->assign_block_vars('VERSION.ZERO_DEMANDES', array(
-                'MSG' => 'Aucune demande n\'est associée à cette version.'));
+            $template->assign_block_vars('VERSION.ZERO_DEMANDES', array());
         }
         // Résultats : on les affiche
         else

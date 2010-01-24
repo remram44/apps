@@ -28,8 +28,7 @@ else
             $st2->execute(array($projet));
             if($st2->rowCount() == 0)
             {
-                $template->assign_block_vars('ZERO_DEMANDES', array(
-                    'MSG' => 'Il n\'y a aucune demande à afficher.'));
+                $template->assign_block_vars('ZERO_DEMANDES', array());
             }
             else
             {
@@ -51,8 +50,7 @@ else
             $st2->execute(array($projet));
             if($st2->rowCount() == 0)
             {
-                $template->assign_block_vars('ZERO_MEMBRES', array(
-                    'MSG' => 'Ce projet n\'a aucun membre.'));
+                $template->assign_block_vars('ZERO_MEMBRES', array());
             }
             else
             {
@@ -74,8 +72,7 @@ else
             $st2->execute(array($projet));
             if($st2->rowCount() == 0)
             {
-                $template->assign_block_vars('ZERO_VERSIONS', array(
-                    'MSG' => 'Ce projet n\'a défini aucune version.'));
+                $template->assign_block_vars('ZERO_VERSIONS', array());
             }
             else
             {

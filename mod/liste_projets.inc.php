@@ -43,8 +43,7 @@ $st = $db->query('SELECT * from projets' . $where . ' ORDER BY id LIMIT ' . (($p
 // Pas de résultat
 if($st->rowCount() == 0)
 {
-    $template->assign_block_vars('ZERO_PROJETS', array(
-        'MSG' => 'Il n\'y a aucun projet à afficher.'));
+    $template->assign_block_vars('ZERO_PROJETS', array());
 }
 // Résultats : on les affiche
 else

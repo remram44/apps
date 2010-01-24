@@ -16,7 +16,7 @@
 <!-- BEGIN ZERO_PROJETS -->
     <div class="box">
       <h3>Aucun résultat</h3>
-      <p class="liste_vide">{ZERO_PROJETS.MSG}</p>
+      <p class="liste_vide">Il n'y a aucun projet à afficher.</p>
     </div>
 <!-- END ZERO_PROJETS -->
 

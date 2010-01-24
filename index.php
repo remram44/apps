@@ -66,7 +66,7 @@ $template->assign_var('TITRE', $conf['titre']);
 $template->assign_var('TEMPLATE_URL', 'data/templates/' . $utilisateur->template());
 // Menu
 $template->assign_block_vars('MENU', array(
-    'LIEN' => 'index.php?mod=index',
+    'LIEN' => 'index.php',
     'TEXTE' => 'Accueil'));
 $template->assign_block_vars('MENU', array(
     'LIEN' => 'index.php?mod=liste_projets',

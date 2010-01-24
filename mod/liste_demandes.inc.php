@@ -51,14 +51,13 @@ FROM demandes d
     LEFT OUTER JOIN versions v ON d.version=v.id
     INNER JOIN utilisateurs u ON d.auteur=u.id
 ' . $filtres . '
-ORDER BY priorite, id DESC
+ORDER BY d.priorite, d.derniere_activite DESC
 LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1) . ';');
 
 // Pas de résultat
 if($st->rowCount() == 0)
 {
-    $template->assign_block_vars('ZERO_DEMANDES', array(
-        'MSG' => 'Il n\'y a aucune demande à afficher.'));
+    $template->assign_block_vars('ZERO_DEMANDES', array());
 }
 // Résultats : on les affiche
 else
