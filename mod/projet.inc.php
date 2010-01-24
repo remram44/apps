@@ -47,7 +47,7 @@ else
 
         // Liste des membres
         {
-            $st2 = $db->prepare('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=.');
+            $st2 = $db->prepare('SELECT u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=?');
             $st2->execute(array($projet));
             if($st2->rowCount() == 0)
             {
