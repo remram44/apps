@@ -16,6 +16,19 @@ if(isset($_GET['id']))
         erreur_fatale('Erreur : Projet invalide !');
 }
 
+// Vérification des permissions
+if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS) && isset($projet))
+{
+    $st = $db->prepare('SELECT * FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
+    $st->execute(array(
+        ':utilisateur' => $utilisateur->userid(),
+        ':projet' => $projet['id']));
+    if($st->rowCount() == 0 || !($row = $st->fetch(PDO::FETCH_ASSOC)) || $row['admin'] == 0)
+        erreur_fatale("Erreur : vous n'avez pas la permission de modifier ce projet !");
+}
+else if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS))
+    erreur_fatale("Erreur : vous n'avez pas la permission de créer un projet !");
+
 //------------------------------------------------------------------------------
 // Traitement des données reçues
 
@@ -25,21 +38,21 @@ if(isset($projet))
     // Ajout d'un membre
     if(isset($_POST['proj_mem_add_sub']) && isset($_POST['proj_mem_add']))
     {
-        $utilisateur = intval($_POST['proj_mem_add'], 10);
+        $new_utilisateur = intval($_POST['proj_mem_add'], 10);
         $admin = (isset($_POST['proj_mem_add_admin']) && $_POST['proj_mem_add_admin'] == 1)?1:0;
         $st = $db->prepare('SELECT id FROM utilisateurs WHERE id=?');
-        $st->execute(array($utilisateur));
+        $st->execute(array($new_utilisateur));
         if($st->rowCount() > 0)
         {
             $st = $db->prepare('SELECT utilisateur FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
             $st->execute(array(
-                ':utilisateur' => $utilisateur,
+                ':utilisateur' => $new_utilisateur,
                 ':projet' => $projet['id']));
             if($st->rowCount() == 0)
             {
                 $st = $db->prepare('INSERT INTO association_utilisateurs_projets(utilisateur, projet, admin, derniere_activite) VALUES(:utilisateur, :projet, :admin, NOW())');
                 $st->execute(array(
-                    ':utilisateur' => $utilisateur,
+                    ':utilisateur' => $new_utilisateur,
                     ':projet' => $projet['id'],
                     ':admin' => $admin));
             }
