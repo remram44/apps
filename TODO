@@ -2,7 +2,7 @@ A faire :
   - les modules :
     - mod/demande : affichage d'une demande, voir/ajouter des commentaires
     - mod/edit_demande : ajouter/modifier une demande
-    - mod/edit_projet : ajouter/modifier projet, versions, membres
     - mod/admin : création/gestion de comptes utilisateurs
     - (mod/perso : changement de template)
+    - (mod/edit_projet : ajouter/modifier les versions)
   - interface avec les dépôts

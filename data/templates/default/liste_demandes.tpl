@@ -43,7 +43,7 @@
         </tr>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
-        <tr><td class="liste_vide" colspan="2">{ZERO_DEMANDES.MSG}</td></tr>
+        <tr><td class="liste_vide" colspan="9">{ZERO_DEMANDES.MSG}</td></tr>
 <!-- END ZERO_DEMANDES -->
       </table>
     </div>

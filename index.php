@@ -83,7 +83,9 @@ else
 }
 
 if(in_array($mod, array(
-    'index', 'projet', 'liste_projets', 'demande', 'liste_demandes', 'versions',
+    'index',
+    'projet', 'liste_projets', 'edit_projet', 'versions',
+    'demande', 'liste_demandes',
     'connexion', 'deconnexion', 'perso')))
 {
     // Appel du module spécifié

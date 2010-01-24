@@ -133,7 +133,7 @@ li.liste_vide {
     font-style: oblique;
 }
 
-p.liste_vide {
+p.liste_vide, td.liste_vide {
     font-style: oblique;
     margin-left: 1em;
 }
