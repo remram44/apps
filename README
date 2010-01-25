@@ -49,5 +49,5 @@ ainsi que d'un serveur de bases de données supporté par PDO.
     Placez tous les fichiers dans un dossier accessible par votre serveur web,
 puis copiez le fichier inc/conf.inc.php vers data/conf.php. Vous pouvez adapter
 ce fichier selon vos besoins, dans un premier temps seuls les paramètres
-db_serveur, db_user, db_passwd et db_database sont indispensables au bon
-fonctionnement du logiciel.
+db_dsn, db_user et db_passwd sont indispensables au bon fonctionnement du
+logiciel.

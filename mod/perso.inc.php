@@ -8,12 +8,26 @@ if(!isset($template))
 if($utilisateur->estAnonyme())
     erreur_fatale("Erreur : vous n'êtes pas connecté !");
 
-$template->assign_vars(array(
-    'PSEUDO' => $utilisateur->pseudo(),
-    'NOM' => $utilisateur->nom(),
-    'TEMPLATE' => $utilisateur->template()));
+//------------------------------------------------------------------------------
+// Traitement des données reçues
 
-// TODO : Choix du design
+// Changement du design
+if(isset($_POST['chg_tpl']) && $_POST['chg_tpl'] != $utilisateur->template()
+ && preg_match('/^[a-zA-Z0-9_.-]+$/', $_POST['chg_tpl']))
+{
+    if( ($dir = @opendir('data/templates/' . $_POST['chg_tpl'])) !== false)
+    {
+        closedir($dir);
+        $st = $db->prepare('UPDATE utilisateurs SET template=:template WHERE id=:utilisateur');
+        $st->execute(array(
+            ':utilisateur' => $utilisateur->userid(),
+            ':template' => $_POST['chg_tpl']));
+        $utilisateur->update();
+    }
+    else
+        $template->assign_block_vars('ERREUR', array(
+            'TEXTE' => 'Design inconnu'));
+}
 
 // Changement de mot de passe
 if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
@@ -54,6 +68,35 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
         }
     }
 }
+
+//------------------------------------------------------------------------------
+// Affichage du formulaire
+
+// Variables générales
+$template->assign_vars(array(
+    'PSEUDO' => $utilisateur->pseudo(),
+    'NOM' => $utilisateur->nom(),
+    'TEMPLATE' => $utilisateur->template()));
+
+// Designs
+$dir = opendir('data/templates');
+while( ($e = readdir($dir)) !== false)
+{
+    if($e == '.' || $e == '..')
+        continue;
+    $template->assign_block_vars('TEMPLATE', array());
+    if($e == $utilisateur->template())
+    {
+        $template->assign_block_vars('TEMPLATE.ACTUEL', array(
+            'NOM' => $e));
+    }
+    else
+    {
+        $template->assign_block_vars('TEMPLATE.AUTRE', array(
+            'NOM' => $e));
+    }
+}
+closedir($dir);
 
 // Page d'administration
 if($utilisateur->autorise(PERM_MANAGE_USERS))

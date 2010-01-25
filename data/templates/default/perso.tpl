@@ -20,7 +20,16 @@
           <p><label>Mot de passe actuel : <input type="password" name="chg_mdp" /></label></p>
           <p><label>Nouveau mot de passe : <input type="password" name="chg_mdp1" /></label></p>
           <p><label>Nouveau mot de passe (confirmez) : <input type="password" name="chg_mdp2" /></label></p>
-          <p><label>Design : <input type="text" name="chg_tpl" value="{TEMPLATE}" disabled /></label></p>
+          <p><label>Design : <select name="chg_tpl">
+<!-- BEGIN TEMPLATE -->
+<!-- BEGIN ACTUEL -->
+              <option value="{TEMPLATE.ACTUEL.NOM}" selected>{TEMPLATE.ACTUEL.NOM}</option>
+<!-- END ACTUEL -->
+<!-- BEGIN AUTRE -->
+              <option value="{TEMPLATE.AUTRE.NOM}">{TEMPLATE.AUTRE.NOM}</option>
+<!-- END AUTRE -->
+<!-- END TEMPLATE -->
+            </select></label></p>
           <p><input type="submit" value="Enregistrer" /></p>
         </div>
       </form>

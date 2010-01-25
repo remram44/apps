@@ -47,6 +47,7 @@ class Utilisateur {
         // Cookie client
         else if(isset($_COOKIE['remember']))
         {
+            // FIXME : caractère ':' dans le mot de passe ?
             $infos = explode(':', $_COOKIE['remember']);
             if(count($infos) == 2)
             {
@@ -70,7 +71,7 @@ class Utilisateur {
         // Connexion via le formulaire
         else if(isset($_POST['conn_nom']) && isset($_POST['conn_mdp']))
         {
-            $st = $db->prepare('SELECT * from utilisateurs WHERE pseudo=?');
+            $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
             $st->execute(array($_POST['conn_nom']));
             if( ($row = $st->fetch(PDO::FETCH_ASSOC)) && ($row['password'] == md5($_POST['conn_mdp'])) )
             {
@@ -96,7 +97,22 @@ class Utilisateur {
     function deconnecte()
     {
         session_destroy();
-        setcookie("remember", "", time() - 3600);
+        setcookie('remember', '', time() - 3600);
+    }
+
+    function update()
+    {
+        global $db;
+        $st = $db->prepare('SELECT * FROM utilisateurs WHERE id=?');
+        $st->execute(array($this->userid));
+        if($row = $st->fetch(PDO::FETCH_ASSOC))
+        {
+            $this->pseudo   = $_SESSION['pseudo']   = $row['pseudo'];
+            $this->nom      = $_SESSION['nom']      = $row['nom'];
+            $this->userid   = $_SESSION['userid']   = $row['id'];
+            $this->template = $_SESSION['template'] = $row['template'];
+            $this->flags    = $_SESSION['flags']    = $row['flags'];
+        }
     }
 
 }
