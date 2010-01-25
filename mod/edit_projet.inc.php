@@ -89,6 +89,36 @@ if(isset($projet))
         }
     }
 
+    // Changement du nom
+    if(isset($_POST['proj_nom']) && $_POST['proj_nom'] != $projet['nom']
+     && $_POST['proj_nom'] != '' && strlen($_POST['proj_nom']) < 50)
+    {
+        if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS))
+        {
+            $template->assign_block_vars('MSG_ERREUR', array(
+                'DESCR' => "Erreur : vous n'avez pas la permission de changer le nom d'un projet"
+                ));
+        }
+        else
+        {
+            $st = $db->prepare('SELECT * FROM projets WHERE nom=?');
+            $st->execute(array($_POST['proj_nom']));
+            if($st->rowCount() > 0)
+            {
+                $template->assign_block_vars('MSG_ERREUR', array(
+                    'DESCR' => 'Un projet avec ce nom existe déjà - impossible de changer le nom'));
+            }
+            else
+            {
+                $st = $db->prepare('UPDATE projets SET nom=:nom WHERE id=:projet');
+                $st->execute(array(
+                    ':projet' => $projet['id'],
+                    ':nom' => $_POST['proj_nom']));
+            }
+        }
+    }
+    $_POST['proj_nom'] = ''; unset($_POST['proj_nom']);
+
     // Mise à jour de la description
     if(isset($_POST['proj_description']) && ($_POST['proj_description'] != $projet['description']) )
     {
@@ -101,7 +131,8 @@ if(isset($projet))
 // Ajout d'un projet
 else
 {
-    if(isset($_POST['proj_nom']) && isset($_POST['proj_description']))
+    if(isset($_POST['proj_nom']) && isset($_POST['proj_description'])
+     && $_POST['proj_nom'] != "" && strlen($_POST['proj_nom']) < 50)
     {
         $st = $db->prepare('SELECT * FROM projets WHERE nom=?');
         $st->execute(array($_POST['proj_nom']));
@@ -109,6 +140,13 @@ else
         {
             $template->assign_block_vars('MSG_ERREUR', array(
                 'DESCR' => 'Un projet avec ce nom existe déjà - veuillez en choisir un autre'));
+        }
+        else
+        {
+            $st = $db->prepare('INSERT INTO projets(nom, description) VALUES(:nom, :description)');
+            $st->execute(array(
+                ':nom' => $_POST['proj_nom'],
+                ':description' => htmlentities($_POST['proj_description'])));
         }
     }
 }
@@ -163,5 +201,7 @@ else
         'NOM' => isset($_POST['proj_nom'])?$_POST['proj_nom']:'',
         'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:''));
 }
+
+// TODO : Modification des versions
 
 ?>

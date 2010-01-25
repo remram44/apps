@@ -20,7 +20,7 @@
     <div class="box">
       <form method="post" action="index.php?mod=edit_projet&amp;id={EDIT.PROJ_ID}">
         <table>
-          <tr><td>Nom du projet :</td><td><input type="text" value="{EDIT.NOM}" disabled /></td></tr>
+          <tr><td>Nom du projet :</td><td><input type="text" name="proj_nom" value="{EDIT.NOM}" /></td></tr>
           <tr><td>Description :</td><td><textarea name="proj_description" rows="8" cols="60">{EDIT.DESCRIPTION}</textarea></td></tr>
           <tr>
             <td>Membres :</td>

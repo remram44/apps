@@ -87,11 +87,16 @@ else
 
         // Page d'édition du projet
         {
-            $st3 = $db->prepare('SELECT admin FROM association_utilisateurs_projets WHERE projet=:projet AND utilisateur=:utilisateur');
-            $st3->execute(array(
-                ':projet' => $projet,
-                ':utilisateur' => $utilisateur->userid()));
-            if( ($row3 = $st3->fetch(PDO::FETCH_ASSOC)) && ($row3['admin'] == true) )
+            $admin = $utilisateur->autorise(PERM_MANAGE_PROJECTS);
+            if(!$admin)
+            {
+                $st3 = $db->prepare('SELECT admin FROM association_utilisateurs_projets WHERE projet=:projet AND utilisateur=:utilisateur');
+                $st3->execute(array(
+                    ':projet' => $projet,
+                    ':utilisateur' => $utilisateur->userid()));
+                $admin = ($row3 = $st3->fetch(PDO::FETCH_ASSOC)) && ($row3['admin'] == 1);
+            }
+            if($admin)
                 $template->assign_block_vars('ADMIN_PROJET', array());
         }
     }
