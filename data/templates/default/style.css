@@ -153,3 +153,16 @@ table.liste_demandes tr.par td {
 table.liste_demandes tr.impar td {
     background-color: #D0D0FF;
 }
+
+td {
+    vertical-align: top;
+}
+
+#demande td {
+    padding: 0 5em 0 3em;
+}
+
+#demande th {
+    font-weight: bold;
+    text-align: left;
+}

@@ -85,7 +85,7 @@ else
 if(in_array($mod, array(
     'index',
     'projet', 'liste_projets', 'edit_projet', 'versions',
-    'demande', 'liste_demandes',
+    'demande', 'liste_demandes', 'edit_demande',
     'connexion', 'deconnexion', 'perso')))
 {
     // Appel du module spécifié
