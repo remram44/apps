@@ -125,7 +125,7 @@ if(isset($projet))
         $st = $db->prepare('UPDATE projets SET description=:description WHERE id=:projet');
         $st->execute(array(
             ':projet' => $projet['id'],
-            ':description' => htmlentities($_POST['proj_description'])));
+            ':description' => $_POST['proj_description']));
     }
 }
 // Ajout d'un projet
@@ -146,7 +146,7 @@ else
             $st = $db->prepare('INSERT INTO projets(nom, description) VALUES(:nom, :description)');
             $st->execute(array(
                 ':nom' => $_POST['proj_nom'],
-                ':description' => htmlentities($_POST['proj_description'])));
+                ':description' => $_POST['proj_description']));
         }
     }
 }
@@ -160,8 +160,8 @@ if(isset($projet))
     // Nom et description
     $template->assign_block_vars('EDIT', array(
         'PROJ_ID' => $projet['id'],
-        'NOM' => $projet['nom'],
-        'DESCRIPTION' => $projet['description']));
+        'NOM' => isset($_POST['proj_nom'])?$_POST['proj_nom']:str_replace('"', "\\\"", $projet['nom']),
+        'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:htmlentities($projet['description'])));
 
     // Membres
     $st = $db->prepare('SELECT u.id AS id, u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion, a.admin AS admin FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=?');

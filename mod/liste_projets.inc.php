@@ -57,7 +57,7 @@ else
         $template->assign_block_vars('PROJET', array(
             'ID' => $row['id'],
             'NOM' => $row['nom'],
-            'DESCR' => $row['description']));
+            'DESCR' => wikicode2html($row['description'])));
         $i++;
     }
 

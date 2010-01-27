@@ -26,10 +26,10 @@ if(is_array($conf['demande_statuts']) && isset($conf['demande_statuts'][$row['st
 
 $template->assign_vars(array(
     'DEMANDE_ID' => $row['id'],
-    'TITRE' => $row['titre'],
+    'DEMANDE_TITRE' => $row['titre'],
     'AUT_PSEUDO' => $row['auteur_pseudo'],
     'AUT_NOM' => $row['auteur_nom'],
-    'DESCRIPTION' => $row['description'],
+    'DESCRIPTION' => wikicode2html($row['description']),
     'PRIORITE' => $row['priorite'],
     'STATUT' => ($row['statut'] == 0)?"ferme":"ouvert",
     'STATUT_NOM' => $statut,

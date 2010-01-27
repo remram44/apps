@@ -166,3 +166,8 @@ td {
     font-weight: bold;
     text-align: left;
 }
+
+dfn {
+    text-decoration: underline;
+    font-style: normal;
+}

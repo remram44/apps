@@ -19,7 +19,7 @@ else
     {
         $template->assign_vars(array(
             'PROJ_TITRE' => $row['nom'],
-            'PROJ_DESCR' => $row['description'],
+            'PROJ_DESCR' => wikicode2html($row['description']),
             'PROJ_ID' => $row['id']));
 
         // Dernières demandes

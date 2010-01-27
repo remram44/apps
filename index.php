@@ -4,6 +4,17 @@ include 'inc/session.inc.php';
 include 'inc/template.inc.php';
 include 'inc/conf.inc.php';
 
+function wikicode2html($code)
+{
+    $code = htmlentities($code);
+    $code = str_replace("\n", "<br />\n", $code);
+    $code = preg_replace('#\*\*(.+)\*\*#U', '<strong>$1</strong>', $code);
+    $code = preg_replace("#//(.+)//#U", '<em>$1</em>', $code);
+    $code = preg_replace("#__(.+)__#U", '<dfn>$1</dfn>', $code);
+    // TODO : liens
+    return $code;
+}
+
 if(file_exists('data/conf.php'))
     include 'data/conf.php';
 
