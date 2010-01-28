@@ -21,7 +21,7 @@ if(isset($_GET['filtre_statut']) && ($_GET['filtre_statut'] == '0' || intval($_G
     $filtre_statut = intval($_GET['filtre_statut']);
 
 $filtres = array();
-if(isset($filtre_nom)) $filtres[] = ' d.nom LIKE "%' . $filtre_nom . '%"';
+if(isset($filtre_nom)) $filtres[] = ' d.titre LIKE "%' . $filtre_nom . '%"';
 if(isset($projet)) $filtres[] = ' d.projet=' . $projet;
 if(isset($filtre_statut)) $filtres[] = ' d.statut=' . $filtre_statut;
 
@@ -52,7 +52,7 @@ FROM demandes d
     INNER JOIN utilisateurs u ON d.auteur=u.id
 ' . $filtres . '
 ORDER BY d.priorite, d.derniere_activite DESC
-LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1) . ';');
+LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1));
 
 // Pas de résultat
 if($st->rowCount() == 0)

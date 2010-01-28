@@ -82,7 +82,7 @@ div.erreurbox {
     padding: 10px;
 }
 
-div.confirmbox {
+div.infobox {
     border: 2px solid #0000FF;
     background-color: #8888DD;
     color: #0000FF;

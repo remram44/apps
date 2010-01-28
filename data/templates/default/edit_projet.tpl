@@ -62,7 +62,7 @@
               </table>
             </td>
           </tr>
-          <tr><td></td><td><input type="submit" value="Modifier" /></td></tr>
+          <tr><td></td><td><input type="submit" name="proj_submit" value="Modifier" /></td></tr>
         </table>
       </form>
     </div>

@@ -35,6 +35,8 @@ else if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS))
 // Projet existant
 if(isset($projet))
 {
+    $edited_ok = true;
+
     // Ajout d'un membre
     if(isset($_POST['proj_mem_add_sub']) && isset($_POST['proj_mem_add']))
     {
@@ -98,6 +100,7 @@ if(isset($projet))
             $template->assign_block_vars('MSG_ERREUR', array(
                 'DESCR' => "Erreur : vous n'avez pas la permission de changer le nom d'un projet"
                 ));
+            $edited_ok = false;
         }
         else
         {
@@ -107,6 +110,7 @@ if(isset($projet))
             {
                 $template->assign_block_vars('MSG_ERREUR', array(
                     'DESCR' => 'Un projet avec ce nom existe déjà - impossible de changer le nom'));
+                $edited_ok = false;
             }
             else
             {
@@ -126,6 +130,14 @@ if(isset($projet))
         $st->execute(array(
             ':projet' => $projet['id'],
             ':description' => $_POST['proj_description']));
+    }
+
+    if($edited_ok && isset($_POST['proj_submit']))
+    {
+        header('HTTP/1.1 302 Moved Temporarily');
+        header('Location: index.php?mod=projet&id=' . $projet['id']);
+        $template->assign_block_vars('MSG_INFO', array(
+            'DESCR' => 'Projet modifié ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
     }
 }
 // Ajout d'un projet
@@ -147,6 +159,13 @@ else
             $st->execute(array(
                 ':nom' => $_POST['proj_nom'],
                 ':description' => $_POST['proj_description']));
+            $st = $db->prepare('SELECT id FROM projets WHERE nom=?');
+            $st->execute(array($_POST['proj_nom']));
+            if($projet = $st->fetch(PDO::FETCH_ASSOC))
+            {
+                $template->assign_block_vars('MSG_INFO', array(
+                    'DESCR' => 'Projet créé ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
+            }
         }
     }
 }

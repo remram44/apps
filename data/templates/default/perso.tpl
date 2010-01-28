@@ -7,7 +7,7 @@
     </div>
 <!-- END ERREUR -->
 <!-- BEGIN INFO -->
-    <div class="confirmbox">
+    <div class="infobox">
       <p>{INFO.TEXTE}</p>
     </div>
 <!-- END INFO -->

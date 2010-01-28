@@ -27,6 +27,11 @@
       <p>{MSG_ERREUR.DESCR}</p>
     </div>
 <!-- END MSG_ERREUR -->
+<!-- BEGIN MSG_INFO -->
+    <div class="infobox">
+      <p>{MSG_INFO.DESCR}</p>
+    </div>
+<!-- END MSG_INFO -->
 {ROOT_CONTENT}
     <hr class="clear" />
   </body>
