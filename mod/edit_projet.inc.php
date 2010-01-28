@@ -179,7 +179,7 @@ if(isset($projet))
     // Nom et description
     $template->assign_block_vars('EDIT', array(
         'PROJ_ID' => $projet['id'],
-        'NOM' => isset($_POST['proj_nom'])?$_POST['proj_nom']:str_replace('"', "\\\"", $projet['nom']),
+        'NOM' => str_replace('"', "\\\"", isset($_POST['proj_nom'])?$_POST['proj_nom']:$projet['nom']),
         'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:htmlentities($projet['description'])));
 
     // Membres
@@ -217,8 +217,8 @@ if(isset($projet))
 else
 {
     $template->assign_block_vars('AJOUT', array(
-        'NOM' => isset($_POST['proj_nom'])?$_POST['proj_nom']:'',
-        'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:''));
+        'NOM' => isset($_POST['proj_nom'])?str_replace('"', "\\\"", $_POST['proj_nom']):'',
+        'DESCRIPTION' => isset($_POST['proj_description'])?htmlentities($_POST['proj_description']):''));
 }
 
 // TODO : Modification des versions

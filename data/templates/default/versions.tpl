@@ -5,7 +5,7 @@
       <h4>Demandes associées :</h4>
         <ul>
 <!-- BEGIN DEMANDE -->
-          <li><a href="index.php?mod=demande&amp;id={VERSION.DEMANDE.ID}" class="demande_{VERSION.DEMANDE.STATUT}">{VERSION.DEMANDE.ID}</a> : {VERSION.DEMANDE.DESCR}</li>
+          <li><a href="index.php?mod=demande&amp;id={VERSION.DEMANDE.ID}" class="demande_{VERSION.DEMANDE.STATUT}">{VERSION.DEMANDE.ID}</a> : {VERSION.DEMANDE.TITRE}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
           <li class="liste_vide">Aucune demande n'est associée à cette version.</li>

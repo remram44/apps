@@ -147,7 +147,7 @@ WHERE d.projet=:projet AND d.titre=:titre AND d.auteur=:auteur');
 // Affichage du formulaire
 
 $template->assign_vars(array(
-    'DEM_PROJET' => isset($demande)?$demande['projet_nom']:$projet['nom'],
+    'DEM_PROJET' => isset($demande)?$demande['projet_nom']:htmlentities($projet['nom']),
     'DEM_PROJET_ID' => isset($demande)?$demande['projet']:$projet['id'],
     'DEM_PRIO' => isset($demande)?$demande['priorite']:'1'));
 
@@ -156,7 +156,7 @@ if(isset($demande))
 {
     $template->assign_block_vars('EDIT', array(
         'DEM_ID' => $demande['id'],
-        'DEM_TITRE' => $demande['titre'],
+        'DEM_TITRE' => str_replace("\"", "\\\"", $demande['titre']),
         'DESCRIPTION' => htmlentities($demande['description'])));
 
     // Affichage des versions
@@ -169,7 +169,7 @@ if(isset($demande))
     {
         $template->assign_block_vars(($row['id'] == $demande['version'])?'EDIT.VERSION_COURANTE':'EDIT.VERSION', array(
             'ID' => $row['id'],
-            'NOM' => $row['nom']));
+            'NOM' => htmlentities($row['nom'])));
     }
 
     // Affichage des statuts

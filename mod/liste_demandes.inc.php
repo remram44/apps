@@ -75,7 +75,7 @@ else
             'ID' => $row['id'],
             'PROJET' => $row['projet'],
             'PROJET_ID' => $row['projet_id'],
-            'TITRE' => $row['titre'],
+            'TITRE' => htmlentities($row['titre']),
             'AUT_PSEUDO' => $row['pseudo'],
             'AUT_NOM' => $row['nom_auteur'],
             'AUT_PROMO' => $row['promotion'],
@@ -89,7 +89,7 @@ else
         // TODO : lien "ancre" vers la version dans le .tpl
         if(isset($row['version']) && $row['version'] != '')
             $template->assign_block_vars('DEMANDE.VERSION', array(
-                'NOM' => $row['version']));
+                'NOM' => htmlentities($row['version'])));
         $i++;
     }
 

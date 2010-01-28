@@ -26,7 +26,7 @@ if(is_array($conf['demande_statuts']) && isset($conf['demande_statuts'][$row['st
 
 $template->assign_vars(array(
     'DEMANDE_ID' => $row['id'],
-    'DEMANDE_TITRE' => $row['titre'],
+    'DEMANDE_TITRE' => htmlentities($row['titre']),
     'AUT_PSEUDO' => $row['auteur_pseudo'],
     'AUT_NOM' => $row['auteur_nom'],
     'DESCRIPTION' => wikicode2html($row['description']),
@@ -34,11 +34,11 @@ $template->assign_vars(array(
     'STATUT' => ($row['statut'] == 0)?"ferme":"ouvert",
     'STATUT_NOM' => $statut,
     'CREATION' => $row['creation'], // FIXME : format des dates
-    'PROJET' => $row['projet_nom'],
+    'PROJET' => htmlentities($row['projet_nom']),
     'PROJET_ID' => $row['projet_id']));
 
 if(isset($row['version']))
     $template->assign_block_vars('VERSION', array(
-        'NOM' => $row['version']));
+        'NOM' => htmlentities($row['version'])));
 
 ?>

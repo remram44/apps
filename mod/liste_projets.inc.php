@@ -38,7 +38,7 @@ if(isset($_GET['page']))
 $nb = $conf['projets_nb_resultats'];
 
 // FIXME : requête pas jolie. Risques d'injection ?
-$st = $db->query('SELECT * from projets' . $where . ' ORDER BY id LIMIT ' . (($page - 1) * $nb) . ', ' . ($nb+1) . ';');
+$st = $db->query('SELECT * FROM projets' . $where . ' ORDER BY id LIMIT ' . (($page - 1) * $nb) . ', ' . ($nb+1) . ';');
 
 // Pas de résultat
 if($st->rowCount() == 0)
@@ -56,7 +56,7 @@ else
     {
         $template->assign_block_vars('PROJET', array(
             'ID' => $row['id'],
-            'NOM' => $row['nom'],
+            'NOM' => htmlentities($row['nom']),
             'DESCR' => wikicode2html($row['description'])));
         $i++;
     }

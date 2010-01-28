@@ -21,9 +21,8 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
         {
             $template->assign_block_vars('DEMANDE', array(
                 'ID' => $row['id'],
-                'TITRE' => $row['titre'],
+                'TITRE' => htmlentities($row['titre']),
                 'AUTEUR' => $row['auteur'],
-                'DESCR' => $row['description'],
                 'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert'));
         }
     }
