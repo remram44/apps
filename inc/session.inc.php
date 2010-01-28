@@ -2,6 +2,7 @@
 
 define('PERM_MANAGE_USERS', 1);
 define('PERM_MANAGE_PROJECTS', 2);
+define('PERM_MANAGE_REQUESTS', 4);
 
 class Utilisateur {
 
