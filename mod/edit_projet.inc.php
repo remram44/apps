@@ -159,7 +159,7 @@ else
             $st->execute(array(
                 ':nom' => $_POST['proj_nom'],
                 ':description' => $_POST['proj_description']));
-            $st = $db->prepare('SELECT id FROM projets WHERE nom=?');
+            $st = $db->prepare('SELECT * FROM projets WHERE nom=?');
             $st->execute(array($_POST['proj_nom']));
             if($projet = $st->fetch(PDO::FETCH_ASSOC))
             {

@@ -154,6 +154,10 @@ table.liste_demandes tr.impar td {
     background-color: #D0D0FF;
 }
 
+th {
+    vertical-align: top;
+}
+
 td {
     vertical-align: top;
 }

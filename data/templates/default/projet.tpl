@@ -14,7 +14,8 @@
           <li class="liste_vide">Il n'y a aucune demande à afficher.</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
-        <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Détails</a></p>
+        <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Détails</a> - 
+          <a href="index.php?mod=edit_demande&amp;projet={PROJ_ID}">Nouvelle demande</a></p>
       </div>
       <div class="box">
         <h3>Versions</h3>

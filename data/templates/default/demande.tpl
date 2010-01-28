@@ -13,7 +13,7 @@
           <th>Date d'ouverture</th><td>{CREATION}</td>
         </tr>
         <tr>
-          <th>Projet</th><td>{PROJET}</td>
+          <th>Projet</th><td><a href="index.php?mod=projet&amp;id={PROJET_ID}">{PROJET}</a></td>
           <th>Description</th><td rowspan="2">{DESCRIPTION}</td>
         </tr>
 <!-- BEGIN VERSION -->

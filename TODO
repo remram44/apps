@@ -1,6 +1,5 @@
 A faire :
   - les modules :
-    - mod/edit_demande : ajouter/modifier une demande
     - mod/admin : création/gestion de comptes utilisateurs
     - cookie d'authentification, sans mot de passe
     - (mod/demande : voir/ajouter des commentaires)
