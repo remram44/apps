@@ -82,10 +82,9 @@ else
             'PRIORITE' => $row['priorite'],
             'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert',
             'STATUT_NOM' => $statut,
-            'CREATION' => $row['creation'],
-            'ACTIVITE' => $row['derniere_activite'],
+            'CREATION' => format_date($row['creation']),
+            'ACTIVITE' => format_date($row['derniere_activite']),
             'PARITE' => ((($i % 2) == 0)?'par':'impar')));
-        // FIXME : format des dates
         // TODO : lien "ancre" vers la version dans le .tpl
         if(isset($row['version']) && $row['version'] != '')
             $template->assign_block_vars('DEMANDE.VERSION', array(
@@ -108,7 +107,7 @@ if(!isset($filtre_statut)) $filtre_statut = -1;
 $template->assign_block_vars('FILTRE_STATUT', array(
     'VALEUR' => -1,
     'SELECTED' => ($filtre_statut==-1)?' selected="selected"':'',
-    'NOM' => 'Tous'));
+    'NOM' => '(tous)'));
 if(is_array($conf['demande_statuts']))
     foreach($conf['demande_statuts'] as $valeur => $nom)
     {

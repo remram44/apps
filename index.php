@@ -11,8 +11,13 @@ function wikicode2html($code)
     $code = preg_replace('#\*\*(.+)\*\*#U', '<strong>$1</strong>', $code);
     $code = preg_replace("#//(.+)//#U", '<em>$1</em>', $code);
     $code = preg_replace("#__(.+)__#U", '<dfn>$1</dfn>', $code);
-    // TODO : liens
+    $code = preg_replace("#\\[\\[(https?://[^ ]+)\\|(.+)\\]\\]#U", '<a href="$1">$2</a>', $code);
     return $code;
+}
+
+function format_date($date)
+{
+    return date('j/m/Y H:i:s', strtotime($date));
 }
 
 if(file_exists('data/conf.php'))

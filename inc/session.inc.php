@@ -48,12 +48,11 @@ class Utilisateur {
         // Cookie client
         else if(isset($_COOKIE['remember']))
         {
-            // FIXME : caractère ':' dans le mot de passe ?
-            $infos = explode(':', $_COOKIE['remember']);
-            if(count($infos) == 2)
+            $pos = strpos($_COOKIE['remember'], ':');
+            if($pos !== false)
             {
-                $pseudo = $infos[0];
-                $passwd = $infos[1];
+                $pseudo = substr($_COOKIE['remember'], 0, $pos);
+                $passwd = substr($_COOKIE['remember'], $pos+1);
                 $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
                 $st->execute(array($pseudo));
                 if($row = $st->fetch(PDO::FETCH_ASSOC))

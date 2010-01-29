@@ -33,7 +33,7 @@ $template->assign_vars(array(
     'PRIORITE' => $row['priorite'],
     'STATUT' => ($row['statut'] == 0)?"ferme":"ouvert",
     'STATUT_NOM' => $statut,
-    'CREATION' => $row['creation'], // FIXME : format des dates
+    'CREATION' => format_date($row['creation']),
     'PROJET' => htmlentities($row['projet_nom']),
     'PROJET_ID' => $row['projet_id']));
 
