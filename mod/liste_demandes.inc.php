@@ -85,7 +85,7 @@ else
             'CREATION' => format_date($row['creation']),
             'ACTIVITE' => format_date($row['derniere_activite']),
             'PARITE' => ((($i % 2) == 0)?'par':'impar')));
-        // TODO : lien "ancre" vers la version dans le .tpl
+        // TODO 2 : lien "ancre" vers la version dans le .tpl
         if(isset($row['version']) && $row['version'] != '')
             $template->assign_block_vars('DEMANDE.VERSION', array(
                 'NOM' => htmlentities($row['version'])));

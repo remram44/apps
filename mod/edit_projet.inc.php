@@ -17,17 +17,13 @@ if(isset($_GET['id']))
 }
 
 // Vérification des permissions
-if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS) && isset($projet))
+if(!$utilisateur->autorise(PERM_MANAGE_PROJECT, isset($projet)?$projet['id']:null))
 {
-    $st = $db->prepare('SELECT * FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
-    $st->execute(array(
-        ':utilisateur' => $utilisateur->userid(),
-        ':projet' => $projet['id']));
-    if($st->rowCount() == 0 || !($row = $st->fetch(PDO::FETCH_ASSOC)) || $row['admin'] == 0)
+    if(isset($projet))
         erreur_fatale("Erreur : vous n'avez pas la permission de modifier ce projet !");
+    else
+        erreur_fatale("Erreur : vous n'avez pas la permission de créer un projet !");
 }
-else if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS))
-    erreur_fatale("Erreur : vous n'avez pas la permission de créer un projet !");
 
 //------------------------------------------------------------------------------
 // Traitement des données reçues
@@ -41,7 +37,7 @@ if(isset($projet))
     if(isset($_POST['proj_mem_add_sub']) && isset($_POST['proj_mem_add']))
     {
         $new_utilisateur = intval($_POST['proj_mem_add'], 10);
-        $admin = (isset($_POST['proj_mem_add_admin']) && $_POST['proj_mem_add_admin'] == 1)?1:0;
+        $admin = isset($_POST['proj_mem_add_admin'])?intval($_POST['proj_mem_add_admin']):0;
         $st = $db->prepare('SELECT id FROM utilisateurs WHERE id=?');
         $st->execute(array($new_utilisateur));
         if($st->rowCount() > 0)
@@ -52,7 +48,7 @@ if(isset($projet))
                 ':projet' => $projet['id']));
             if($st->rowCount() == 0)
             {
-                $st = $db->prepare('INSERT INTO association_utilisateurs_projets(utilisateur, projet, admin, derniere_activite) VALUES(:utilisateur, :projet, :admin, NOW())');
+                $st = $db->prepare('INSERT INTO association_utilisateurs_projets(utilisateur, projet, flags, derniere_activite) VALUES(:utilisateur, :projet, :admin, NOW())');
                 $st->execute(array(
                     ':utilisateur' => $new_utilisateur,
                     ':projet' => $projet['id'],
@@ -79,10 +75,10 @@ if(isset($projet))
         if(isset($_POST['proj_mem_admin' . $row['utilisateur']]))
         {
             $admin = intval($_POST['proj_mem_admin' . $row['utilisateur']]);
-            if( ($row['admin'] == 1  && $admin == 0)
-             || ($row['admin'] == 0 && $admin == 1) )
+            if( ($row['flags'] == 1  && $admin == 0)
+             || ($row['flags'] == 0 && $admin == 1) )
             {
-                $st2 = $db->prepare('UPDATE association_utilisateurs_projets SET admin=:admin WHERE utilisateur=:utilisateur AND projet=:projet');
+                $st2 = $db->prepare('UPDATE association_utilisateurs_projets SET flags=:admin WHERE utilisateur=:utilisateur AND projet=:projet');
                 $st2->execute(array(
                     ':utilisateur' => $row['utilisateur'],
                     ':projet' => $projet['id'],
@@ -91,11 +87,20 @@ if(isset($projet))
         }
     }
 
+    // Changement du statut de l'ajout de demandes
+    if(isset($_POST['proj_open_demandes']) && $_POST['proj_open_demandes'] != '' && $_POST['proj_open_demandes'] != $projet['open_demaneds'])
+    {
+        $st = $db->prepare('UPDATE projets SET open_demandes=:open_demandes WHERE id=:projet');
+        $st->execute(array(
+            ':projet' => $projet['id'],
+            ':open_demandes' => intval($_POST['proj_open_demandes'])));
+    }
+
     // Changement du nom
     if(isset($_POST['proj_nom']) && $_POST['proj_nom'] != $projet['nom']
      && $_POST['proj_nom'] != '' && strlen($_POST['proj_nom']) < 50)
     {
-        if(!$utilisateur->autorise(PERM_MANAGE_PROJECTS))
+        if(!$utilisateur->autorise(PERM_MANAGE_PROJECT))
         {
             $template->assign_block_vars('MSG_ERREUR', array(
                 'DESCR' => "Erreur : vous n'avez pas la permission de changer le nom d'un projet"
@@ -183,7 +188,7 @@ if(isset($projet))
         'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:htmlentities($projet['description'])));
 
     // Membres
-    $st = $db->prepare('SELECT u.id AS id, u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion, a.admin AS admin FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=?');
+    $st = $db->prepare('SELECT u.id AS id, u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion, a.flags AS flags FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=?');
     $st->execute(array($projet['id']));
     if($st->rowCount() == 0)
         $template->assign_block_vars('EDIT.ZERO_MEMBRES', array());
@@ -196,10 +201,24 @@ if(isset($projet))
                 'PSEUDO' => $row['pseudo'],
                 'USERID' => $row['id'],
                 'PROMO' => $row['promotion']));
-            if($row['admin'])
+            if($row['flags'] == 1)
                 $template->assign_block_vars('EDIT.MEMBRE.ADMIN', array());
             else
                 $template->assign_block_vars('EDIT.MEMBRE.NONADMIN', array());
+            $role = $row['flags'];
+            if($role & 2) $role = 2;
+            else if($role & 4) $role = 4;
+            else if($role & 8) $role = 8;
+            else $role = 0;
+            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($row['flags'] == 2)?'_SELECTED':''), array(
+                'VALEUR' => 14,
+                'NOM' => 'Admin'));
+            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($row['flags'] == 4)?'_SELECTED':''), array(
+                'VALEUR' => 12,
+                'NOM' => 'Développeur'));
+            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($row['flags'] == 8)?'_SELECTED':''), array(
+                'VALEUR' => 8,
+                'NOM' => 'Rapporteur'));
         }
     }
 
@@ -213,6 +232,26 @@ if(isset($projet))
             'PSEUDO' => $row['pseudo'],
             'PROMOTION' => $row['promotion']));
     }
+    // Développeur par défaut
+    $template->assign_block_vars('EDIT.ROLE', array(
+        'VALEUR' => 12,
+        'NOM' => 'Développeur'));
+    $template->assign_block_vars('EDIT.ROLE', array(
+        'VALEUR' => 14,
+        'NOM' => 'Admin'));
+    $template->assign_block_vars('EDIT.ROLE', array(
+        'VALEUR' => 8,
+        'NOM' => 'Rapporteur'));
+
+    $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 0)?'_SELECTED':''), array(
+        'VALEUR' => 0,
+        'NOM' => 'Utilisateurs autorisés'));
+    $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 1)?'_SELECTED':''), array(
+        'VALEUR' => 1,
+        'NOM' => 'Tous les utilisateurs enregistrés'));
+    $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 2)?'_SELECTED':''), array(
+        'VALEUR' => 2,
+        'NOM' => 'Tout le monde (anonymes compris)'));
 }
 else
 {
@@ -221,6 +260,6 @@ else
         'DESCRIPTION' => isset($_POST['proj_description'])?htmlentities($_POST['proj_description']):''));
 }
 
-// TODO : Modification des versions
+// TODO 2 : Modification des versions
 
 ?>

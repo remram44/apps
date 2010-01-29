@@ -8,14 +8,17 @@
         <p>Dernières activités sur les demandes :</p>
         <ul>
 <!-- BEGIN DEMANDE -->
-          <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.DESCR}</li>
+          <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.TITRE}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
           <li class="liste_vide">Il n'y a aucune demande à afficher.</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
-        <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Détails</a> - 
-          <a href="index.php?mod=edit_demande&amp;projet={PROJ_ID}">Nouvelle demande</a></p>
+        <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Détails</a>
+<!-- BEGIN NOUVELLE_DEMANDE -->
+          - <a href="index.php?mod=edit_demande&amp;projet={PROJ_ID}">Nouvelle demande</a>
+<!-- END NOUVELLE_DEMANDE -->
+        </p>
       </div>
       <div class="box">
         <h3>Versions</h3>

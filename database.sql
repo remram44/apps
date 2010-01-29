@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS projets (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   nom varchar(255) NOT NULL,
   description text NOT NULL,
+  open_demandes tinyint(2) unsigned NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY nom (nom)
 ) TYPE=INNODB;
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS demandes (
 CREATE TABLE IF NOT EXISTS association_utilisateurs_projets (
   utilisateur int(10) unsigned NOT NULL,
   projet int(10) unsigned NOT NULL,
-  admin BOOL NOT NULL,
+  flags int(10) unsigned NOT NULL,
   derniere_activite datetime,
   FOREIGN KEY (utilisateur) REFERENCES utilisateurs(id) ON DELETE RESTRICT,
   FOREIGN KEY (projet) REFERENCES projets(id) ON DELETE CASCADE,

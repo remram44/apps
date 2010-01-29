@@ -38,11 +38,14 @@ else
                         'ID' => $row2['id'],
                         'TITRE' => htmlentities($row2['titre']),
                         'AUTEUR' => $row2['auteur'],
-                        'DESCR' => $row2['description'],
                         'STATUT' => ($row2['statut'] == 0)?'ferme':'ouvert'));
                 }
             }
         }
+
+        // Lien pour poster une nouvelle demande
+        if($utilisateur->autorise(PERM_CREATE_REQUEST, $projet))
+            $template->assign_block_vars('NOUVELLE_DEMANDE', array());
 
         // Liste des membres
         {
@@ -64,7 +67,7 @@ else
             }
         }
 
-        // TODO : Dernières modifications (commits)
+        // TODO 1 : Dernières modifications (commits)
 
         // Liste des versions
         {
@@ -86,19 +89,8 @@ else
         }
 
         // Page d'édition du projet
-        {
-            $admin = $utilisateur->autorise(PERM_MANAGE_PROJECTS);
-            if(!$admin)
-            {
-                $st3 = $db->prepare('SELECT admin FROM association_utilisateurs_projets WHERE projet=:projet AND utilisateur=:utilisateur');
-                $st3->execute(array(
-                    ':projet' => $projet,
-                    ':utilisateur' => $utilisateur->userid()));
-                $admin = ($row3 = $st3->fetch(PDO::FETCH_ASSOC)) && ($row3['admin'] == 1);
-            }
-            if($admin)
-                $template->assign_block_vars('ADMIN_PROJET', array());
-        }
+        if($utilisateur->autorise(PERM_MANAGE_PROJECT, $projet))
+            $template->assign_block_vars('ADMIN_PROJET', array());
     }
     else
         erreur_fatale('Erreur : Ce projet n\'existe pas ou plus.');

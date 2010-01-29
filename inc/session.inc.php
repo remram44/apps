@@ -1,8 +1,9 @@
 <?php
 
-define('PERM_MANAGE_USERS', 1);
-define('PERM_MANAGE_PROJECTS', 2);
-define('PERM_MANAGE_REQUESTS', 4);
+define('PERM_MANAGE_USERS', 1);    // globale
+define('PERM_MANAGE_PROJECT', 2);  // globale et par projet
+define('PERM_MANAGE_REQUESTS', 4); // globale et par projet
+define('PERM_CREATE_REQUEST', 8);  // globale et par projet
 
 class Utilisateur {
 
@@ -27,8 +28,40 @@ class Utilisateur {
     function template()
     { return $this->template; }
 
-    function autorise($perm)
-    { return ($this->flags & $perm) != 0; }
+    function autorise($perm, $projet = null)
+    {
+        global $db;
+
+        if($this->flags & $perm != 0)
+            return true;
+        if($projet == null)
+            return false;
+        if($perm == PERM_CREATE_REQUEST)
+        {
+            $st = $db->prepare('SELECT open_demandes FROM projets WHERE id=?');
+            $st->execute(array($projet));
+            if($st->rowCount() == 0 || !($row = $st->fetch(PDO::FETCH_ASSOC)))
+                return false;
+
+            // open_demandes : statut des créations de demandes sur le projet
+            // 0 : utilisateurs autorisés seulement
+            // 1 : tous les utilisateurs enregistrés
+            // 2 : tout le monde (possible anonymement)
+            else if($row['open_demandes'] == 2)
+                return true;
+            else if($row['open_demandes'] == 1 && !$this->estAnonyme())
+                return true;
+        }
+
+        $st = $db->prepare('SELECT flags FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
+        $st->execute(array(
+            ':utilisateur' => $this->userid,
+            ':projet' => $projet));
+        if($st->rowCount() == 0 || !($row = $st->fetch(PDO::FETCH_ASSOC)))
+            return false;
+        else
+            return ($row['flags'] & $perm) != 0;
+    }
 
     function __construct()
     {

@@ -72,7 +72,7 @@ else
 }
 
 // Page d'administration
-if($utilisateur->autorise(PERM_MANAGE_PROJECTS))
+if($utilisateur->autorise(PERM_MANAGE_PROJECT))
 {
     $template->assign_block_vars('LIEN_ADMIN', array());
 }

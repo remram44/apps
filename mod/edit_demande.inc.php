@@ -2,7 +2,7 @@
 
 // mod/edit_demande.inc.php : Crée une nouvelle demande ou modifie les détails
 
-// TODO : priorités
+// TODO 2 : choix de la priorité
 
 if(!isset($template))
     die();
@@ -31,14 +31,13 @@ else
 }
 
 // Vérification des permissions
-if(!$utilisateur->autorise(PERM_MANAGE_REQUESTS) && isset($demande))
+if( (isset($demande) && !$utilisateur->autorise(PERM_MANAGE_REQUESTS, $demande['projet']))
+ || (!isset($demande) &&!$utilisateur->autorise(PERM_CREATE_REQUEST, $projet['id'])) )
 {
-    $st = $db->prepare('SELECT * FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
-    $st->execute(array(
-        ':projet' => $demande['projet'],
-        ':utilisateur' => $utilisateur->userid()));
-    if(!($row = $st->fetch(PDO::FETCH_ASSOC)) || $row['admin'] == 0)
+    if(isset($demande))
         erreur_fatale("Erreur : vous n'avez pas la permission de modifier cette demande !");
+    else
+        erreur_fatale("Erreur : vous n'avez pas la permission de créer une demande sur ce projet !");
 }
 
 //------------------------------------------------------------------------------
