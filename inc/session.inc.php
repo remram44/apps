@@ -121,7 +121,7 @@ class Utilisateur {
         {
             $this->pseudo = 'Anonyme';
             $this->nom = 'Anonyme';
-            $this->userid = 0;
+            $this->userid = null;
             $this->template = $conf['default_template'];
             $this->flags = 0;
         }

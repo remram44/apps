@@ -13,7 +13,7 @@ $st = $db->prepare(
 FROM demandes d
     INNER JOIN projets p ON p.id=d.projet
     LEFT OUTER JOIN versions v ON v.id=d.version
-    INNER JOIN utilisateurs u ON u.id=d.auteur
+    LEFT OUTER JOIN utilisateurs u ON u.id=d.auteur
 WHERE d.id=?');
 $st->execute(array(intval($_GET['id'])));
 
@@ -27,8 +27,8 @@ if(is_array($conf['demande_statuts']) && isset($conf['demande_statuts'][$row['st
 $template->assign_vars(array(
     'DEMANDE_ID' => $row['id'],
     'DEMANDE_TITRE' => htmlentities($row['titre']),
-    'AUT_PSEUDO' => $row['auteur_pseudo'],
-    'AUT_NOM' => $row['auteur_nom'],
+    'AUT_PSEUDO' => ($row['auteur_pseudo']!=null)?$row['auteur_pseudo']:'Inconnu',
+    'AUT_NOM' => ($row['auteur_nom']!=null)?$row['auteur_nom']:'Anonyme',
     'DESCRIPTION' => wikicode2html($row['description']),
     'PRIORITE' => $row['priorite'],
     'STATUT' => ($row['statut'] == 0)?"ferme":"ouvert",
@@ -40,5 +40,12 @@ $template->assign_vars(array(
 if(isset($row['version']))
     $template->assign_block_vars('VERSION', array(
         'NOM' => htmlentities($row['version'])));
+
+// Lien vers la page de modification de la demande
+if($utilisateur->autorise(PERM_MANAGE_REQUESTS, $row['projet_id']))
+{
+    $template->assign_block_vars('ADMIN_DEMANDE', array(
+        'DEMANDE_ID' => $row['id']));
+}
 
 ?>

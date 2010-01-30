@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS demandes (
   projet int(10) unsigned NOT NULL,
   version int(10) unsigned,
   titre text NOT NULL,
-  auteur int(10) unsigned NOT NULL,
+  auteur int(10) unsigned,
   description text NOT NULL,
   priorite int(10) NOT NULL,
   statut int(10) unsigned NOT NULL,

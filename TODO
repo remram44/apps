@@ -1,7 +1,6 @@
 A faire :
-  - les modules :
-    - mod/admin : création/gestion de comptes utilisateurs
-    - (cookie d'authentification, sans mot de passe ?)
-    - (mod/demande : voir/ajouter des commentaires)
-    - (mod/edit_projet : ajouter/modifier les versions)
+  - mod/admin : création/gestion de comptes utilisateurs
+  - mod/demande : voir/ajouter des commentaires
   - interface avec les dépôts
+  - (cookie d'authentification, sans mot de passe ?)
+  - (mod/edit_projet : ajouter/modifier les versions)

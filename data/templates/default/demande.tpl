@@ -23,3 +23,8 @@
 <!-- END VERSION -->
       </table>
     </div>
+<!-- BEGIN ADMIN_DEMANDE -->
+    <div class="box">
+      <p class="admin"><a href="index.php?mod=edit_demande&amp;id={DEMANDE_ID}">Modification</a></p>
+    </div>
+<!-- END ADMIN_DEMANDE -->
