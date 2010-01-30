@@ -7,16 +7,19 @@ if(!isset($template))
 
 $utilisateur->deconnecte();
 
-header('HTTP/302 Moved Temporarily');
-if(isset($_SERVER['HTTP_REFERER']))
+if(!$conf['debug'])
 {
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    $template->assign_var('LIEN', $_SERVER['HTTP_REFERER']);
-}
-else
-{
-    header('Location: index.php');
-    $template->assign_var('LIEN', 'index.php');
+    header('HTTP/302 Moved Temporarily');
+    if(isset($_SERVER['HTTP_REFERER']))
+    {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        $template->assign_var('LIEN', $_SERVER['HTTP_REFERER']);
+    }
+    else
+    {
+        header('Location: index.php');
+        $template->assign_var('LIEN', 'index.php');
+    }
 }
 
 ?>

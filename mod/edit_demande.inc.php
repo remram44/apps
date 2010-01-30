@@ -109,8 +109,11 @@ if(isset($demande))
 
     if($edited_ok && isset($_POST['dem_submit']))
     {
-        header('HTTP/1.1 302 Moved Temporarily');
-        header('Location: index.php?mod=demande&id=' . $demande['id']);
+        if(!$conf['debug'])
+        {
+            header('HTTP/1.1 302 Moved Temporarily');
+            header('Location: index.php?mod=demande&id=' . $demande['id']);
+        }
         $template->assign_block_vars('MSG_INFO', array(
             'DESCR' => 'Demande modifiée ; <a href="index.php?mod=demande&amp;id=' . $demande['id'] . '">cliquez ici</a> pour la consulter'));
     }

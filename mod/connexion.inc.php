@@ -7,8 +7,11 @@ if(!isset($template))
 
 if(!$utilisateur->estAnonyme())
 {
-    header('HTTP/302 Moved Temporarily');
-    header('Location: index.php');
+    if(!$conf['debug'])
+    {
+        header('HTTP/302 Moved Temporarily');
+        header('Location: index.php');
+    }
     $template->assign_block_vars('OK_REDIRECT', array(
         'PSEUDO' => $utilisateur->pseudo()));
 }

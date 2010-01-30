@@ -139,8 +139,11 @@ if(isset($projet))
 
     if($edited_ok && isset($_POST['proj_submit']))
     {
-        header('HTTP/1.1 302 Moved Temporarily');
-        header('Location: index.php?mod=projet&id=' . $projet['id']);
+        if(!$conf['debug'])
+        {
+            header('HTTP/1.1 302 Moved Temporarily');
+            header('Location: index.php?mod=projet&id=' . $projet['id']);
+        }
         $template->assign_block_vars('MSG_INFO', array(
             'DESCR' => 'Projet modifié ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
     }
