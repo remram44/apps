@@ -60,7 +60,7 @@ if(isset($demande))
 
     // Changement de statut
     if(isset($_POST['dem_statut']) && $_POST['dem_statut'] != $demande['statut']
-     && $_POST['dem_statut'] != '' && isset($conf['demande_statuts'][$_POST['dem_statut']]))
+     && $_POST['dem_statut'] != '' && isset($conf['demande_statuts'][intval($_POST['dem_statut'])]))
     {
         $st = $db->prepare('UPDATE demandes SET statut=:statut WHERE id=:id');
         $st->execute(array(
@@ -78,7 +78,7 @@ if(isset($demande))
     }
 
     // Changement de la version cible
-    if(isset($_POST['dem_version']) && $_POST['dem_version'] != $demande['version'])
+    if(isset($_POST['dem_version']) && ($_POST['dem_version'] != '0' || $demande['version'] != NULL) && $_POST['dem_version'] != $demande['version'])
     {
         if($_POST['dem_version'] != '0')
         {
@@ -178,7 +178,7 @@ if(isset($demande))
     foreach($conf['demande_statuts'] as $nb => $nom)
     {
         $template->assign_block_vars(($nb == $demande['statut'])?'EDIT.STATUT_COURANT':'EDIT.STATUT', array(
-            'NUM' => $nb,
+            'NB' => $nb,
             'NOM' => $nom));
     }
 }
