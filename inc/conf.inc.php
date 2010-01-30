@@ -9,6 +9,7 @@ $conf['db_dsn'] = 'mysql:host=localhost;dbname=apps';
 $conf['db_user'] = 'root';
 $conf['db_passwd'] = '';
 $conf['db_persistent'] = false;
+$conf['debug'] = false;
 $conf['index_nb_demandes'] = 8;
 $conf['index_nb_utilisateurs'] = 8;
 $conf['projet_nb_demandes'] = 8;

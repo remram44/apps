@@ -23,9 +23,80 @@ function format_date($date)
 if(file_exists('data/conf.php'))
     include 'data/conf.php';
 
+class MyStatement {
+
+    var $real_st;
+
+    function __construct($st, $sql)
+    {
+        $this->real_st = $st;
+        $this->sql = $sql;
+    }
+
+    function execute($params)
+    {
+        global $db;
+        $db->nb_query++;
+        $texte = $this->sql;
+        if(count($params) > 0)
+            $texte = $texte . '<br/>avec';
+        foreach($params as $key => $value)
+            $texte = $texte . ' [' . $key . ']=>"' . $value . '"';
+        $db->queries[] = $texte;
+        return $this->real_st->execute($params);
+    }
+
+    function fetch($fetch_style)
+    {
+        return $this->real_st->fetch($fetch_style);
+    }
+
+    function rowCount()
+    {
+        return $this->real_st->rowCount();
+    }
+
+}
+
+class MyPDO extends PDO {
+
+    var $nb_query;
+    var $queries;
+
+    function __construct($dsn, $username='', $password='', $driver_options=array())
+    {
+        $this->nb_query = 0;
+        $this->queries = array();
+        parent::__construct($dsn, $username, $password, $driver_options);
+    }
+
+    function query($statement)
+    {
+        $this->nb_query++;
+        $this->queries[] = $statement;
+        return parent::query($statement);
+    }
+
+    function prepare($statement)
+    {
+        return new MyStatement(parent::prepare($statement), $statement);
+    }
+
+    function report()
+    {
+        global $template;
+        $template->assign_block_vars('DEBUG', array(
+            'NB_REQUETES' => $this->nb_query));
+        foreach($this->queries as $q)
+            $template->assign_block_vars('DEBUG.REQ', array(
+                'SQL' => $q));
+    }
+
+}
+
 // Connection à la base de données
 try {
-    $db = new PDO($conf['db_dsn'], $conf['db_user'], $conf['db_passwd'], array(
+    $db = new MyPDO($conf['db_dsn'], $conf['db_user'], $conf['db_passwd'], array(
         PDO::ATTR_PERSISTENT => $conf['db_persistent']));
 }
 catch(PDOException $e) {
@@ -107,6 +178,8 @@ if(in_array($mod, array(
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';
     $template->assign_var_from_handle('ROOT_CONTENT', $mod);
+    if($conf['debug'])
+        $db->report();
     $template->pparse('root');
 }
 else

@@ -34,5 +34,15 @@
 <!-- END MSG_INFO -->
 {ROOT_CONTENT}
     <hr class="clear" />
+<!-- BEGIN DEBUG -->
+    <div class="box" style="font-size: 60%;">
+      <h2>Debug ({DEBUG.NB_REQUETES} requêtes)</h2>
+      <ul>
+<!-- BEGIN REQ -->
+        <li>{DEBUG.REQ.SQL}</li>
+<!-- END REQ -->
+      </ul>
+    </div>
+<!-- END DEBUG -->
   </body>
 </html>
