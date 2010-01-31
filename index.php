@@ -1,5 +1,7 @@
 <?php
 
+define('START_TIME', microtime());
+
 include 'inc/session.inc.php';
 include 'inc/template.inc.php';
 include 'inc/conf.inc.php';
@@ -85,8 +87,12 @@ class MyPDO extends PDO {
     function report()
     {
         global $template;
+        $at = explode(' ', START_TIME);
+        $bt = explode(' ', microtime());
+        $temps = floor(1000*(($bt[1] - $at[1]) + $bt[0]-$at[0]))/1000.0;
         $template->assign_block_vars('DEBUG', array(
-            'NB_REQUETES' => $this->nb_query));
+            'NB_REQUETES' => $this->nb_query,
+            'TEMPS' => $temps));
         foreach($this->queries as $q)
             $template->assign_block_vars('DEBUG.REQ', array(
                 'SQL' => $q));
