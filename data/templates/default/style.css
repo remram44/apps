@@ -138,20 +138,31 @@ p.liste_vide, td.liste_vide {
     margin-left: 1em;
 }
 
-table.liste_demandes {
+table.liste {
     width: 100%;
 }
 
-table.liste_demandes td {
+table.liste td {
     border: 1px solid silver;
 }
 
-table.liste_demandes tr.par td {
+table.liste tr.par td {
     background-color: #D0FFD0;
 }
 
-table.liste_demandes tr.impar td {
+table.liste tr.impar td {
     background-color: #D0D0FF;
+}
+
+table.liste td ul{
+    margin: 0;
+    padding: 0;
+}
+
+table.liste td li {
+    list-style-type: none;
+    float: left;
+    margin: 0px 0px 0px 20px;
 }
 
 th {

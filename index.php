@@ -173,7 +173,7 @@ if(in_array($mod, array(
     'index',
     'projet', 'liste_projets', 'edit_projet', 'versions',
     'demande', 'liste_demandes', 'edit_demande',
-    'connexion', 'deconnexion', 'perso')))
+    'connexion', 'deconnexion', 'perso', 'admin')))
 {
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';

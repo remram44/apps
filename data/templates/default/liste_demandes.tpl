@@ -8,7 +8,7 @@
           <option value="{FILTRE_STATUT.VALEUR}"{FILTRE_STATUT.SELECTED}>{FILTRE_STATUT.NOM}</option>
 <!-- END FILTRE_STATUT -->
         </select></label><br />
-        <input type="hidden" name="mod" value="liste_demandes" />
+        <input type="hidden" name="mod" value="liste" />
         <input type="submit" value="Rechercher" /></p>
       </form>
     </div>
