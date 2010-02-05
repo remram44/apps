@@ -17,6 +17,16 @@ function wikicode2html($code)
     return $code;
 }
 
+function wikicode2text($code)
+{
+    $code = htmlentities($code);
+    $code = preg_replace('#\*\*(.+)\*\*#U', '$1', $code);
+    $code = preg_replace("#//(.+)//#U", '$1', $code);
+    $code = preg_replace("#__(.+)__#U", '$1', $code);
+    $code = preg_replace("#\\[\\[(https?://[^ ]+)\\|(.+)\\]\\]#U", '$2 <$1>', $code);
+    return $code;
+}
+
 function format_date($date)
 {
     return date('j/m/Y H:i:s', strtotime($date));
@@ -143,6 +153,8 @@ $template->set_filenames(array(
     'perso' => 'perso.tpl',
     'admin' => 'admin.tpl'
     ));
+$template->set_rootdir('inc');
+$template->set_filenames(array('rss' => 'rss.tpl'));
 
 // Fonction d'erreur utilisant le template
 $erreur = false;
@@ -187,6 +199,11 @@ if(in_array($mod, array(
     if($conf['debug'])
         $db->report();
     $template->pparse('root');
+}
+else if($mod == 'rss')
+{
+    include 'mod/' . $mod . '.inc.php';
+    $template->pparse($mod);
 }
 else
 {
