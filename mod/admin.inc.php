@@ -1,6 +1,6 @@
 <?php
 
-// TODO : mod/admin.inc.php : Ajoute ou modifie des utilisateurs
+// mod/admin.inc.php : Ajoute ou modifie des utilisateurs et des projets
 
 if(!isset($template))
     die();
@@ -60,10 +60,10 @@ if($aff_users)
     // Affichage du formulaire
     $template->assign_block_vars('ADMIN_UTILISATEURS', array());
     $st = $db->query(
-'SELECT u.pseudo, u.nom, u.promotion, u.flags, COUNT(d.id)
+'SELECT u.id, u.pseudo, u.nom, u.promotion, u.flags, COUNT(d.id)
 FROM utilisateurs u
     LEFT OUTER JOIN demandes d ON d.auteur=u.id
-GROUP BY u.pseudo, u.nom, u.promotion, u.flags');
+GROUP BY u.id, u.pseudo, u.nom, u.promotion, u.flags');
     if($st->rowCount() == 0)
         $template->assign_block_vars('ADMIN_UTILISATEURS.ZERO_UTILISATEURS', array());
     else
@@ -73,6 +73,7 @@ GROUP BY u.pseudo, u.nom, u.promotion, u.flags');
         {
             $template->assign_block_vars('ADMIN_UTILISATEURS.UTILISATEUR', array(
                 'PARITE' => ($i%2==0)?'par':'impar',
+                'ID' => $row['id'],
                 'PSEUDO' => $row['pseudo'],
                 'NOM' => $row['nom'],
                 'PROMO' => $row['promotion']));
@@ -84,6 +85,7 @@ GROUP BY u.pseudo, u.nom, u.promotion, u.flags');
                 $template->assign_block_vars('ADMIN_UTILISATEURS.UTILISATEUR.PERMISSION', array('NOM' => 'Gestion des demandes'));
             else if($row['flags'] & PERM_CREATE_REQUEST)
                 $template->assign_block_vars('ADMIN_UTILISATEURS.UTILISATEUR.PERMISSION', array('NOM' => 'Création de demandes'));
+            $i++;
         }
     }
 }

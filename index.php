@@ -151,7 +151,8 @@ $template->set_filenames(array(
     'connexion' => 'connexion.tpl',
     'deconnexion' => 'deconnexion.tpl',
     'perso' => 'perso.tpl',
-    'admin' => 'admin.tpl'
+    'admin' => 'admin.tpl',
+    'edit_user' => 'edit_user.tpl'
     ));
 $template->set_rootdir('inc');
 $template->set_filenames(array('rss' => 'rss.tpl'));
@@ -191,7 +192,7 @@ if(in_array($mod, array(
     'index',
     'projet', 'liste_projets', 'edit_projet', 'versions',
     'demande', 'liste_demandes', 'edit_demande',
-    'connexion', 'deconnexion', 'perso', 'admin')))
+    'connexion', 'deconnexion', 'perso', 'admin', 'edit_user')))
 {
     // Appel du module spécifié
     include 'mod/' . $mod . '.inc.php';

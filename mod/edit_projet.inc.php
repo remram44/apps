@@ -88,7 +88,7 @@ if(isset($projet))
     }
 
     // Changement du statut de l'ajout de demandes
-    if(isset($_POST['proj_open_demandes']) && $_POST['proj_open_demandes'] != '' && $_POST['proj_open_demandes'] != $projet['open_demaneds'])
+    if(isset($_POST['proj_open_demandes']) && $_POST['proj_open_demandes'] != '' && $_POST['proj_open_demandes'] != $projet['open_demandes'])
     {
         $st = $db->prepare('UPDATE projets SET open_demandes=:open_demandes WHERE id=:projet');
         $st->execute(array(

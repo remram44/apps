@@ -13,6 +13,7 @@
 <!-- BEGIN ZERO_PROJETS -->
           <tr><td class="liste_vide" colspan="5">Il n'y a aucun projet à afficher.</td></tr>
 <!-- END ZERO_PROJETS -->
+          <tr><td colspan="4" class="ajout"><a href="index.php?mod=edit_projet">Ajouter un projet</a></td></tr>
         </table>
       </div>
 <!-- END ADMIN_PROJETS -->
@@ -26,8 +27,9 @@
 <!-- BEGIN PERMISSION -->
             <li>{ADMIN_UTILISATEURS.UTILISATEUR.PERMISSION.NOM}</li>
 <!-- END PERMISSION -->
-          </ul></td></tr>
+          </ul></td><td><a href="index.php?mod=edit_user&amp;id={ADMIN_UTILISATEURS.UTILISATEUR.ID}">Modifier</a></td></tr>
 <!-- END UTILISATEUR -->
+          <tr><td colspan="4" class="ajout"><a href="index.php?mod=edit_user">Ajouter un utilisateur</a></td></tr>
         </table>
       </div>
 <!-- END ADMIN_UTILISATEURS -->
