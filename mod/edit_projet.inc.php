@@ -75,14 +75,14 @@ if(isset($projet))
         if(isset($_POST['proj_mem_admin' . $row['utilisateur']]))
         {
             $admin = intval($_POST['proj_mem_admin' . $row['utilisateur']]);
-            if( ($row['flags'] == 1  && $admin == 0)
-             || ($row['flags'] == 0 && $admin == 1) )
+            if($row['flags'] != $admin)
             {
                 $st2 = $db->prepare('UPDATE association_utilisateurs_projets SET flags=:admin WHERE utilisateur=:utilisateur AND projet=:projet');
                 $st2->execute(array(
                     ':utilisateur' => $row['utilisateur'],
                     ':projet' => $projet['id'],
                     ':admin' => $admin));
+                $row['flags'] = $admin;
             }
         }
     }
@@ -209,18 +209,18 @@ if(isset($projet))
             else
                 $template->assign_block_vars('EDIT.MEMBRE.NONADMIN', array());
             $role = $row['flags'];
-            if($role & 2) $role = 2;
-            else if($role & 4) $role = 4;
-            else if($role & 8) $role = 8;
+            if($role & PERM_MANAGE_PROJECT) $role = 1;
+            else if($role & PERM_MANAGE_REQUESTS) $role = 2;
+            else if($role & PERM_CREATE_REQUEST) $role = 3;
             else $role = 0;
-            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($row['flags'] == 2)?'_SELECTED':''), array(
-                'VALEUR' => 14,
+            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 1)?'_SELECTED':''), array(
+                'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS | PERM_MANAGE_PROJECT,
                 'NOM' => 'Admin'));
-            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($row['flags'] == 4)?'_SELECTED':''), array(
-                'VALEUR' => 12,
+            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 2)?'_SELECTED':''), array(
+                'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS,
                 'NOM' => 'Développeur'));
-            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($row['flags'] == 8)?'_SELECTED':''), array(
-                'VALEUR' => 8,
+            $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 3)?'_SELECTED':''), array(
+                'VALEUR' => PERM_CREATE_REQUEST,
                 'NOM' => 'Rapporteur'));
         }
     }
@@ -237,13 +237,13 @@ if(isset($projet))
     }
     // Développeur par défaut
     $template->assign_block_vars('EDIT.ROLE', array(
-        'VALEUR' => 12,
+        'VALEUR' => PERM_MANAGE_REQUESTS | PERM_CREATE_REQUEST,
         'NOM' => 'Développeur'));
     $template->assign_block_vars('EDIT.ROLE', array(
-        'VALEUR' => 14,
+        'VALEUR' => PERM_MANAGE_REQUESTS | PERM_CREATE_REQUEST | PERM_MANAGE_PROJECT,
         'NOM' => 'Admin'));
     $template->assign_block_vars('EDIT.ROLE', array(
-        'VALEUR' => 8,
+        'VALEUR' => PERM_CREATE_REQUEST,
         'NOM' => 'Rapporteur'));
 
     $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 0)?'_SELECTED':''), array(
