@@ -1,6 +1,6 @@
 <?php
 
-// mod/liste_demandes.inc.php : Listes les demandes, avec différents filtres
+// mod/rss.inc.php : Listes les demandes au format RSS
 
 if(!isset($template))
     die();
@@ -11,7 +11,7 @@ $template->assign_vars(array(
     'CHANNEL_LIEN' => $conf['base_url']));
 
 if(isset($_GET['projet']) && intval($_GET['projet']) > 0)
-    $projet = ' WHERE d.projet='.intval($_GET['projet']);
+    $projet = 'WHERE d.projet='.intval($_GET['projet']);
 else
     $projet = '';
 

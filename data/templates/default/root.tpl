@@ -4,6 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
     <title>{TITRE}</title>
     <link href="{TEMPLATE_URL}/style.css" rel="stylesheet" type="text/css" />
+<!-- BEGIN HEAD_BALISE -->
+{HEAD_BALISE.HTML}
+<!-- END HEAD_BALISES -->
   </head>
   <body>
     <div id="header">

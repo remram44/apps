@@ -30,6 +30,14 @@ if(count($filtres) > 0)
 else
     $filtres = '';
 
+// Lien vers le flux RSS
+if(isset($projet))
+    $template->assign_block_vars('HEAD_BALISE', array(
+        'HTML' => '<link rel="alternate" type="application/rss+xml" href="index.php?mod=rss&projet=' . $projet . '" title="Flux RSS des demandes" />'));
+else
+    $template->assign_block_vars('HEAD_BALISE', array(
+        'HTML' => '<link rel="alternate" type="application/rss+xml" href="index.php?mod=rss" title="Flux RSS des demandes" />'));
+
 // Numéro de page
 $page = 1;
 if(isset($_GET['page']))
