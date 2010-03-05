@@ -29,7 +29,7 @@ function wikicode2text($code)
 
 function format_date($date)
 {
-    return date('j/m/Y H:i:s', strtotime($date));
+    return date('d/m/Y H:i:s', strtotime($date));
 }
 
 if(file_exists('data/conf.php'))

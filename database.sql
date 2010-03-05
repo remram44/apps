@@ -57,3 +57,14 @@ CREATE TABLE IF NOT EXISTS association_utilisateurs_projets (
   FOREIGN KEY (projet) REFERENCES projets(id) ON DELETE CASCADE,
   PRIMARY KEY(utilisateur, projet)
 ) TYPE=INNODB;
+
+CREATE TABLE IF NOT EXISTS commentaires (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  auteur int(10) unsigned,
+  demande int(10) unsigned NOT NULL,
+  texte text NOT NULL,
+  creation datetime NOT NULL,
+  FOREIGN KEY (demande) REFERENCES demandes (id) ON DELETE CASCADE,
+  FOREIGN KEY (auteur) REFERENCES utilisateurs (id) ON DELETE RESTRICT,
+  PRIMARY KEY (id)
+) TYPE=INNODB;

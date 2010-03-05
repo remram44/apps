@@ -28,3 +28,10 @@
       <p class="admin"><a href="index.php?mod=edit_demande&amp;id={DEMANDE_ID}">Modification</a></p>
     </div>
 <!-- END ADMIN_DEMANDE -->
+<!-- BEGIN COMMENTAIRE -->
+    <div class="box">
+      <div style="float: right"><p>{COMMENTAIRE.DATE}</p></div>
+      <h3>{COMMENTAIRE.AUTEUR_PSEUDO} ({COMMENTAIRE.AUTEUR_NOM}, {COMMENTAIRE.AUTEUR_PROMO})</h3>
+      <p>{COMMENTAIRE.TEXTE}</p>
+    </div>
+<!-- END COMMENTAIRE -->
