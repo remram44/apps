@@ -28,6 +28,15 @@
       <p class="admin"><a href="index.php?mod=edit_demande&amp;id={DEMANDE_ID}">Modification</a></p>
     </div>
 <!-- END ADMIN_DEMANDE -->
+<!-- BEGIN AJOUT_COMMENTAIRE -->
+    <div class="box">
+      <h2>Commenter cette demande</h2>
+      <form method="post" action="index.php?mod=demande&amp;id={DEMANDE_ID}">
+        <p><textarea cols="80" rows="3" name="commentaire"></textarea><br />
+        <input type="submit" value="Poster un commentaire" /></p>
+      </form>
+    </div>
+<!-- END AJOUT_COMMENTAIRE -->
 <!-- BEGIN COMMENTAIRE -->
     <div class="box">
       <div style="float: right"><p>{COMMENTAIRE.DATE}</p></div>

@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS projets (
   nom varchar(255) NOT NULL,
   description text NOT NULL,
   open_demandes tinyint(2) unsigned NOT NULL,
+  open_commentaires tinyint(2) unsigned NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY nom (nom)
 ) TYPE=INNODB;

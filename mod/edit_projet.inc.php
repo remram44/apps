@@ -214,13 +214,13 @@ if(isset($projet))
             else if($role & PERM_CREATE_REQUEST) $role = 3;
             else $role = 0;
             $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 1)?'_SELECTED':''), array(
-                'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS | PERM_MANAGE_PROJECT,
+                'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS | PERM_MANAGE_PROJECT | PERM_ADD_COMMENT,
                 'NOM' => 'Admin'));
             $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 2)?'_SELECTED':''), array(
-                'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS,
+                'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS | PERM_ADD_COMMENT,
                 'NOM' => 'Développeur'));
             $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 3)?'_SELECTED':''), array(
-                'VALEUR' => PERM_CREATE_REQUEST,
+                'VALEUR' => PERM_CREATE_REQUEST | PERM_ADD_COMMENT,
                 'NOM' => 'Rapporteur'));
         }
     }

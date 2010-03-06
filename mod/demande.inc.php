@@ -20,6 +20,18 @@ $st->execute(array(intval($_GET['id'])));
 if(!($demande = $st->fetch(PDO::FETCH_ASSOC)))
     erreur_fatale('Erreur : Demande inconnue !');
 
+// Ajout d'un commentaire
+if(isset($_POST['commentaire']) && $_POST['commentaire'] != '')
+{
+    $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation) VALUES(:auteur, :demande, :texte, NOW())');
+    $st->execute(array(
+        ':auteur' => $utilisateur->userid(),
+        ':demande' => $demande['id'],
+        ':texte' => $_POST['commentaire']));
+    $template->assign_block_vars('MSG_INFO', array(
+        'DESCR' => 'Commentaire ajouté.'));
+}
+
 $statut = 'inconnu';
 if(is_array($conf['demande_statuts']) && isset($conf['demande_statuts'][$demande['statut']]))
     $statut = $conf['demande_statuts'][$demande['statut']];
@@ -38,8 +50,10 @@ $template->assign_vars(array(
     'PROJET_ID' => $demande['projet_id']));
 
 if(isset($demande['version']))
+{
     $template->assign_block_vars('VERSION', array(
         'NOM' => htmlentities($demande['version'])));
+}
 
 // Lien vers la page de modification de la demande
 if($utilisateur->autorise(PERM_MANAGE_REQUESTS, $demande['projet_id']))
@@ -48,12 +62,19 @@ if($utilisateur->autorise(PERM_MANAGE_REQUESTS, $demande['projet_id']))
         'DEMANDE_ID' => $demande['id']));
 }
 
+// Formulaire d'ajout d'un commentaire
+if($utilisateur->autorise(PERM_ADD_COMMENT, $demande['projet_id']))
+{
+    $template->assign_block_vars('AJOUT_COMMENTAIRE', array());
+}
+
 // Affichage des commentaires
 $st = $db->prepare(
 'SELECT c.id, c.auteur, c.texte, c.creation, u.pseudo AS auteur_pseudo, u.nom AS auteur_nom, u.promotion AS auteur_promo
 FROM commentaires c
     LEFT OUTER JOIN utilisateurs u ON u.id=c.auteur
-WHERE c.demande=?');
+WHERE c.demande=?
+ORDER BY id DESC');
 $st->execute(array($demande['id']));
 
 if($st->rowCount() == 0)
@@ -69,7 +90,7 @@ else while($commentaire = $st->fetch(PDO::FETCH_ASSOC))
         'AUTEUR_NOM' => $commentaire['auteur_nom'],
         'AUTEUR_PROMO' => $commentaire['auteur_promo'],
         'DATE' => format_date($commentaire['creation']),
-        'TEXTE' => $commentaire['texte']));
+        'TEXTE' => wikicode2html($commentaire['texte'])));
 }
 
 ?>

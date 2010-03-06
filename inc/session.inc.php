@@ -4,6 +4,7 @@ define('PERM_MANAGE_USERS', 1);    // globale
 define('PERM_MANAGE_PROJECT', 2);  // globale et par projet
 define('PERM_MANAGE_REQUESTS', 4); // globale et par projet
 define('PERM_CREATE_REQUEST', 8);  // globale et par projet
+define('PERM_ADD_COMMENT', 16);     // globale et par projet
 
 class Utilisateur {
 
@@ -36,21 +37,34 @@ class Utilisateur {
             return true;
         if($projet == null)
             return false;
-        if($perm == PERM_CREATE_REQUEST)
+        if($perm == PERM_CREATE_REQUEST || $perm == PERM_ADD_COMMENT)
         {
-            $st = $db->prepare('SELECT open_demandes FROM projets WHERE id=?');
+            $st = $db->prepare('SELECT open_demandes, open_commentaires FROM projets WHERE id=?');
             $st->execute(array($projet));
             if($st->rowCount() == 0 || !($row = $st->fetch(PDO::FETCH_ASSOC)))
                 return false;
-
-            // open_demandes : statut des créations de demandes sur le projet
-            // 0 : utilisateurs autorisés seulement
-            // 1 : tous les utilisateurs enregistrés
-            // 2 : tout le monde (possible anonymement)
-            else if($row['open_demandes'] == 2)
-                return true;
-            else if($row['open_demandes'] == 1 && !$this->estAnonyme())
-                return true;
+            else if($perm == PERM_CREATE_REQUEST)
+            {
+                // open_demandes : statut des créations de demandes sur le projet
+                // 0 : utilisateurs autorisés seulement
+                // 1 : tous les utilisateurs enregistrés
+                // 2 : tout le monde (possible anonymement)
+                if($row['open_demandes'] == 2)
+                    return true;
+                else if($row['open_demandes'] == 1 && !$this->estAnonyme())
+                    return true;
+            }
+            else if($perm == PERM_ADD_COMMENT)
+            {
+                // open_commentaires : statut des ajouts de commentaires sur le projet
+                // 0 : utilisateurs autorisés seulement
+                // 1 : tous les utilisateurs enregistrés
+                // 2 : tout le monde (possible anonymement)
+                if($row['open_commentaires'] == 2)
+                    return true;
+                else if($row['open_commentaires'] == 1 && !$this->estAnonyme())
+                    return true;
+            }
         }
 
         $st = $db->prepare('SELECT flags FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
