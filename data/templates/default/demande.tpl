@@ -41,6 +41,11 @@
     <div class="box">
       <div style="float: right"><p>{COMMENTAIRE.DATE}</p></div>
       <h3>{COMMENTAIRE.AUTEUR_PSEUDO} ({COMMENTAIRE.AUTEUR_NOM}, {COMMENTAIRE.AUTEUR_PROMO})</h3>
+<!-- BEGIN TEXTUEL -->
       <p>{COMMENTAIRE.TEXTE}</p>
+<!-- END TEXTUEL -->
+<!-- BEGIN RESUME -->
+      <p class="resume">{COMMENTAIRE.TEXTE}</p>
+<!-- END RESUME -->
     </div>
 <!-- END COMMENTAIRE -->

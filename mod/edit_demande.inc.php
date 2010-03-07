@@ -46,39 +46,14 @@ if( (isset($demande) && !$utilisateur->autorise(PERM_MANAGE_REQUESTS, $demande['
 // Mise à jour
 if(isset($demande))
 {
-    $edited_ok = true;
-
-    // Changement de titre
-    if(isset($_POST['dem_titre']) && $_POST['dem_titre'] != $demande['titre']
-     && $_POST['dem_titre'] != '')
-    {
-        $st = $db->prepare('UPDATE demandes SET titre=:titre WHERE id=:id');
-        $st->execute(array(
-            ':id' => $demande['id'],
-            ':titre' => $_POST['dem_titre']));
-    }
-
-    // Changement de statut
-    if(isset($_POST['dem_statut']) && $_POST['dem_statut'] != $demande['statut']
-     && $_POST['dem_statut'] != '' && isset($conf['demande_statuts'][intval($_POST['dem_statut'])]))
-    {
-        $st = $db->prepare('UPDATE demandes SET statut=:statut WHERE id=:id');
-        $st->execute(array(
-            ':id' => $demande['id'],
-            ':statut' => $_POST['dem_statut']));
-    }
-
-    // Modification de la description
-    if(isset($_POST['dem_descr']) && $_POST['dem_descr'] != $demande['description'] && $_POST['dem_descr'] != '')
-    {
-        $st = $db->prepare('UPDATE demandes SET description=:description WHERE id=:id');
-        $st->execute(array(
-            ':id' => $demande['id'],
-            ':description' => $_POST['dem_descr']));
-    }
+    // 0 : rien de changé
+    // 1 : toutes modifications réussies
+    // 2 : erreur
+    $edited = 0;
+    $modifs = '';
 
     // Changement de la version cible
-    if(isset($_POST['dem_version']) && ($_POST['dem_version'] != '0' || $demande['version'] != NULL) && $_POST['dem_version'] != $demande['version'])
+    if($edited != 2 && isset($_POST['dem_version']) && ($_POST['dem_version'] != '0' || $demande['version'] != NULL) && $_POST['dem_version'] != $demande['version'])
     {
         if($_POST['dem_version'] != '0')
         {
@@ -90,25 +65,72 @@ if(isset($demande))
             {
                 $template->assign_block_vars('MSG_ERREUR', array(
                     'DESCR' => 'Version cible invalide'));
-                $edited_ok = false;
+                $edited = 2;
             }
             else
             {
+                $version = $st->fetch(PDO::FETCH_ASSOC);
                 $st2 = $db->prepare('UPDATE demandes SET version=:version WHERE id=:id');
                 $st2->execute(array(
                     ':id' => $demande['id'],
                     ':version' => $_POST['dem_version']));
+                $edited = 1;
+                $modifs .= '**version cible** changée en //' . $version['nom'] . "//\n";
             }
         }
         else
         {
             $st2 = $db->prepare('UPDATE demandes SET version=NULL WHERE id=?');
             $st2->execute(array($demande['id']));
+            $edited = 1;
+            $modifs .= "**version cible** retirée\n";
         }
     }
 
-    if($edited_ok && isset($_POST['dem_submit']))
+    // Changement de titre
+    if($edited != 2 && isset($_POST['dem_titre']) && $_POST['dem_titre'] != $demande['titre']
+     && $_POST['dem_titre'] != '')
     {
+        $st = $db->prepare('UPDATE demandes SET titre=:titre WHERE id=:id');
+        $st->execute(array(
+            ':id' => $demande['id'],
+            ':titre' => $_POST['dem_titre']));
+        $edited = 1;
+        $modifs .= '**titre** changé en //' . $_POST['dem_titre'] . "//\n";
+    }
+
+    // Changement de statut
+    if($edited != 2 && isset($_POST['dem_statut']) && $_POST['dem_statut'] != $demande['statut']
+     && $_POST['dem_statut'] != '' && isset($conf['demande_statuts'][intval($_POST['dem_statut'])]))
+    {
+        $st = $db->prepare('UPDATE demandes SET statut=:statut WHERE id=:id');
+        $st->execute(array(
+            ':id' => $demande['id'],
+            ':statut' => $_POST['dem_statut']));
+        $edited = 1;
+        $modifs .= '**statut** changé en //' . $conf['demande_statuts'][intval($_POST['dem_statut'])] . "//\n";
+    }
+
+    // Modification de la description
+    if($edited != 2 && isset($_POST['dem_descr']) && $_POST['dem_descr'] != $demande['description'] && $_POST['dem_descr'] != '')
+    {
+        $st = $db->prepare('UPDATE demandes SET description=:description WHERE id=:id');
+        $st->execute(array(
+            ':id' => $demande['id'],
+            ':description' => $_POST['dem_descr']));
+        $edited = 1;
+        $modifs .= "**description** modifiée\n";
+    }
+
+    if($edited == 1)
+    {
+        // Ajout d'un commentaire résumant les modifications
+        $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation, resume) VALUES(:auteur, :demande, :texte, NOW(), 1)');
+        $st->execute(array(
+            ':auteur' => $utilisateur->userid(),
+            ':demande' => $demande['id'],
+            ':texte' => $modifs));
+
         if(!$conf['debug'])
         {
             header('HTTP/1.1 302 Moved Temporarily');

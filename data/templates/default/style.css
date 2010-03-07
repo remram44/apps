@@ -192,3 +192,7 @@ dfn {
     text-decoration: underline;
     font-style: normal;
 }
+
+p.resume {
+    font-size: 60%;
+}

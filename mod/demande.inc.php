@@ -23,7 +23,7 @@ if(!($demande = $st->fetch(PDO::FETCH_ASSOC)))
 // Ajout d'un commentaire
 if(isset($_POST['commentaire']) && $_POST['commentaire'] != '')
 {
-    $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation) VALUES(:auteur, :demande, :texte, NOW())');
+    $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation, resume) VALUES(:auteur, :demande, :texte, NOW(), 0)');
     $st->execute(array(
         ':auteur' => $utilisateur->userid(),
         ':demande' => $demande['id'],
@@ -70,7 +70,7 @@ if($utilisateur->autorise(PERM_ADD_COMMENT, $demande['projet_id']))
 
 // Affichage des commentaires
 $st = $db->prepare(
-'SELECT c.id, c.auteur, c.texte, c.creation, u.pseudo AS auteur_pseudo, u.nom AS auteur_nom, u.promotion AS auteur_promo
+'SELECT c.id, c.auteur, c.texte, c.creation, c.resume, u.pseudo AS auteur_pseudo, u.nom AS auteur_nom, u.promotion AS auteur_promo
 FROM commentaires c
     LEFT OUTER JOIN utilisateurs u ON u.id=c.auteur
 WHERE c.demande=?
@@ -91,6 +91,10 @@ else while($commentaire = $st->fetch(PDO::FETCH_ASSOC))
         'AUTEUR_PROMO' => $commentaire['auteur_promo'],
         'DATE' => format_date($commentaire['creation']),
         'TEXTE' => wikicode2html($commentaire['texte'])));
+    if($commentaire['resume'] == 1)
+        $template->assign_block_vars('COMMENTAIRE.RESUME', array());
+    else
+        $template->assign_block_vars('COMMENTAIRE.TEXTUEL', array());
 }
 
 ?>

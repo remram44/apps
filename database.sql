@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS commentaires (
   demande int(10) unsigned NOT NULL,
   texte text NOT NULL,
   creation datetime NOT NULL,
+  resume tinyint(2) unsigned NOT NULL,
   FOREIGN KEY (demande) REFERENCES demandes (id) ON DELETE CASCADE,
   FOREIGN KEY (auteur) REFERENCES utilisateurs (id) ON DELETE RESTRICT,
   PRIMARY KEY (id)
