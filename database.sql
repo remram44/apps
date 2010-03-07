@@ -70,3 +70,6 @@ CREATE TABLE IF NOT EXISTS commentaires (
   FOREIGN KEY (auteur) REFERENCES utilisateurs (id) ON DELETE RESTRICT,
   PRIMARY KEY (id)
 ) TYPE=INNODB;
+
+/* Utilisateur par défaut : "admin" "admin" */
+INSERT INTO utilisateurs(pseudo, password, template, nom, promotion, flags) VALUES("admin", "21232f297a57a5a743894a0e4a801fc3", "default", "L'Admin", 0, 31);
