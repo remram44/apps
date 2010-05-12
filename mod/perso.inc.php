@@ -98,10 +98,4 @@ while( ($e = readdir($dir)) !== false)
 }
 closedir($dir);
 
-// Page d'administration
-if($utilisateur->autorise(PERM_MANAGE_USERS))
-{
-    $template->assign_block_vars('LIEN_ADMIN', array());
-}
-
 ?>

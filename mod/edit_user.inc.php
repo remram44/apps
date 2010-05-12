@@ -190,7 +190,7 @@ if(isset($user))
         'NOM' => 'Développeur'));
     $template->assign_block_vars('EDIT.ROLE', array(
         'VALEUR' => 14,
-        'NOM' => 'Admin'));
+        'NOM' => 'Chef de projet'));
     $template->assign_block_vars('EDIT.ROLE', array(
         'VALEUR' => 8,
         'NOM' => 'Rapporteur'));

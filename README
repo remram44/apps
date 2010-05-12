@@ -51,3 +51,7 @@ puis copiez le fichier inc/conf.inc.php vers data/conf.php. Vous pouvez adapter
 ce fichier selon vos besoins, dans un premier temps seuls les paramètres
 db_dsn, db_user et db_passwd sont indispensables au bon fonctionnement du
 logiciel.
+    Certaines installations de PHP utilisent la fonctionnalité magic_quotes, qui
+ajoute automatiquement des slashes dans toutes les chaînes de caractères reçues
+de l'extérieur. Si elle est activée dans votre php.ini, vous verrez des slashes
+apparaître un peu partout sur vos pages ; n'activez pas les magic_quotes !

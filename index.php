@@ -187,6 +187,11 @@ else
     $template->assign_block_vars('MENU2_DECO', array(
         'PSEUDO' => $utilisateur->pseudo()));
 }
+// Page d'administration
+if($utilisateur->autorise(PERM_MANAGE_USERS) || $utilisateur->autorise(PERM_MANAGE_PROJECT))
+{
+    $template->assign_block_vars('LIEN_ADMIN', array());
+}
 
 if(in_array($mod, array(
     'index',

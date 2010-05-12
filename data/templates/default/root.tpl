@@ -21,6 +21,9 @@
 <!-- BEGIN MENU2_DECO -->
           <li class="right">Identifié comme <a href="index.php?mod=perso">{MENU2_DECO.PSEUDO}</a> <a href="index.php?mod=deconnexion">(déconnexion)</a></li>
 <!-- END MENU2_DECO -->
+<!-- BEGIN LIEN_ADMIN -->
+          <li class="right admin"><a href="index.php?mod=admin">Page d'administration</a></li>
+<!-- END LIEN_ADMIN -->
         </ul>
       </div>
       <h1>{TITRE}</h1>
