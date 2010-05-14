@@ -13,7 +13,7 @@
       </form>
     </div>
     <div class="box">
-      <table class="liste_demandes">
+      <table class="liste">
         <tr>
           <th>ID</th>
           <th>Projet</th>

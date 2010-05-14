@@ -57,7 +57,7 @@ $st = $db->query(
 FROM demandes d
     INNER JOIN projets p ON d.projet=p.id
     LEFT OUTER JOIN versions v ON d.version=v.id
-    INNER JOIN utilisateurs u ON d.auteur=u.id
+    LEFT OUTER JOIN utilisateurs u ON d.auteur=u.id
 ' . $filtres . '
 ORDER BY d.priorite, d.derniere_activite DESC
 LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1));
@@ -84,9 +84,9 @@ else
             'PROJET' => $row['projet'],
             'PROJET_ID' => $row['projet_id'],
             'TITRE' => htmlentities($row['titre']),
-            'AUT_PSEUDO' => $row['pseudo'],
-            'AUT_NOM' => $row['nom_auteur'],
-            'AUT_PROMO' => $row['promotion'],
+            'AUT_PSEUDO' => ($row['pseudo']!=null)?$row['pseudo']:'Anonyme',
+            'AUT_NOM' => ($row['nom_auteur']!=null)?$row['nom_auteur']:'Inconnu',
+            'AUT_PROMO' => ($row['promotion']!=null)?$row['promotion']:'???',
             'PRIORITE' => $row['priorite'],
             'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert',
             'STATUT_NOM' => $statut,
