@@ -38,14 +38,18 @@
     </div>
 <!-- END AJOUT_COMMENTAIRE -->
 <!-- BEGIN COMMENTAIRE -->
-    <div class="box">
-      <div style="float: right"><p>{COMMENTAIRE.DATE}</p></div>
-      <h3>{COMMENTAIRE.AUTEUR_PSEUDO} ({COMMENTAIRE.AUTEUR_NOM}, {COMMENTAIRE.AUTEUR_PROMO})</h3>
 <!-- BEGIN TEXTUEL -->
+    <div class="box">
+      <div class="date"><p>{COMMENTAIRE.DATE}</p></div>
+      <h3>{COMMENTAIRE.AUTEUR_PSEUDO} ({COMMENTAIRE.AUTEUR_NOM}, {COMMENTAIRE.AUTEUR_PROMO})</h3>
       <p>{COMMENTAIRE.TEXTE}</p>
+    </div>
 <!-- END TEXTUEL -->
 <!-- BEGIN RESUME -->
+    <div class="box_resume">
+      <div class="date"><p>{COMMENTAIRE.DATE}</p></div>
+      <h3 class="resume">{COMMENTAIRE.AUTEUR_PSEUDO} ({COMMENTAIRE.AUTEUR_NOM}, {COMMENTAIRE.AUTEUR_PROMO})</h3>
       <p class="resume">{COMMENTAIRE.TEXTE}</p>
-<!-- END RESUME -->
     </div>
+<!-- END RESUME -->
 <!-- END COMMENTAIRE -->

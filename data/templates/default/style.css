@@ -62,6 +62,14 @@ div.box {
     padding: 0.4em;
 }
 
+div.box_resume {
+    border: 1px solid grey;
+    margin: 10px;
+    margin-right: 0;
+    background-color: #FFFFFF;
+    padding: 0.2em;
+}
+
 div.box_recherche {
     border: 2px dashed #0000FF;
     margin: 10px;
@@ -194,6 +202,21 @@ dfn {
     font-style: normal;
 }
 
+div.date {
+    float: right;
+}
+
+div.date p {
+    font-size: 80%;
+}
+
+h3.resume {
+    font-size: 80%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 p.resume {
+    margin-top: 0.4em;
     font-size: 60%;
 }

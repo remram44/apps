@@ -15,7 +15,7 @@
           <li class="liste_vide">Il n'y a aucune demande à afficher.</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
-        <p><a href="index.php?mod=liste_demandes">Détails</a></p>
+        <p><a href="index.php?mod=liste_demandes">Lister toutes les demandes</a></p>
       </div>
       <div class="box">
         <h3>Utilisateurs actifs</h3>
