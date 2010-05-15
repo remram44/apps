@@ -6,6 +6,8 @@ define('PERM_MANAGE_REQUESTS', 4); // globale et par projet
 define('PERM_CREATE_REQUEST', 8);  // globale et par projet
 define('PERM_ADD_COMMENT', 16);     // globale et par projet
 
+include 'passwords.inc.php';
+
 class Utilisateur {
 
     var $pseudo;
@@ -104,7 +106,7 @@ class Utilisateur {
                 $st->execute(array($pseudo));
                 if($row = $st->fetch(PDO::FETCH_ASSOC))
                 {
-                    if($row['password'] == md5($passwd))
+                    if(password_verify($row['password'], $passwd))
                     {
                         $this->pseudo   = $_SESSION['pseudo']   = $pseudo;
                         $this->nom      = $_SESSION['nom']      = $row['nom'];
@@ -120,7 +122,7 @@ class Utilisateur {
         {
             $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
             $st->execute(array($_POST['conn_nom']));
-            if( ($row = $st->fetch(PDO::FETCH_ASSOC)) && ($row['password'] == md5($_POST['conn_mdp'])) )
+            if( ($row = $st->fetch(PDO::FETCH_ASSOC)) && password_verify($row['password'], $_POST['conn_mdp']) )
             {
                 $this->pseudo   = $_SESSION['pseudo']   = $_POST['conn_nom'];
                 $this->nom      = $_SESSION['nom']      = $row['nom'];

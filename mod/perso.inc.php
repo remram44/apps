@@ -51,7 +51,7 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
         // Vérification de l'ancien mot de passe
         $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
         $st->execute(array($utilisateur->pseudo()));
-        if( !($row = $st->fetch(PDO::FETCH_ASSOC)) || ($row['password'] != md5($_POST['chg_mdp'])) )
+        if( !($row = $st->fetch(PDO::FETCH_ASSOC)) || !password_verify($row['password'], $_POST['chg_mdp']) )
         {
             $template->assign_block_vars('ERREUR', array(
                 'TEXTE' => 'Vous devez entrer votre mot de passe actuel pour confirmation.'));
@@ -59,10 +59,10 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
         else
         {
             // Modification
-            $st = $db->prepare('UPDATE utilisateurs SET password = :mdp WHERE pseudo = :pseudo');
+            $st = $db->prepare('UPDATE utilisateurs SET password=:mdp WHERE pseudo=:pseudo');
             $st->execute(array(
                 ':pseudo' => $utilisateur->pseudo(),
-                ':mdp' => md5($_POST['chg_mdp1'])));
+                ':mdp' => password_encrypt($_POST['chg_mdp1'])));
             $template->assign_block_vars('INFO', array(
                 'TEXTE' => 'Votre mot de passe a été changé.'));
         }

@@ -85,7 +85,7 @@ if(isset($user))
             $st = $db->prepare('UPDATE utilisateurs SET password=:password WHERE id=:utilisateur');
             $st->execute(array(
                 ':utilisateur' => $user['id'],
-                ':password' => $_POST['user_passwd1']));
+                ':password' => password_encrypt($_POST['user_passwd1'])));
         }
     }
 
@@ -148,7 +148,7 @@ else
                 ':nom' => $_POST['user_nom'],
                 ':pseudo' => $_POST['user_pseudo'],
                 ':promotion' => intval($_POST['user_promo']),
-                ':password' => md5($_POST['user_passwd1']),
+                ':password' => password_encrypt($_POST['user_passwd1']),
                 ':template' => $conf['default_template']));
             $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
             $st->execute(array($_POST['user_pseudo']));

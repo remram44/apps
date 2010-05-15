@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS utilisateurs (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   pseudo varchar(255) NOT NULL,
-  password varchar(40) NOT NULL,
+  password varchar(50) NOT NULL,
   template varchar(255) NOT NULL,
   nom varchar(255) NOT NULL,
   promotion int(10) unsigned NOT NULL,
@@ -72,4 +72,4 @@ CREATE TABLE IF NOT EXISTS commentaires (
 ) TYPE=INNODB;
 
 /* Utilisateur par défaut : "admin" "admin" */
-INSERT INTO utilisateurs(pseudo, password, template, nom, promotion, flags) VALUES("admin", "21232f297a57a5a743894a0e4a801fc3", "default", "L'Admin", 0, 31);
+INSERT INTO utilisateurs(pseudo, password, template, nom, promotion, flags) VALUES("admin", "d033e22ae348aeb5660fc2140aec35850c4da997", "default", "L'Admin", 0, 31);
