@@ -43,7 +43,7 @@ if($aff_projets)
         $template->assign_block_vars('ADMIN_PROJETS.PROJET', array(
             'PARITE' => ($i%2==0)?'par':'impar',
             'ID' => $projets[$i]['id'],
-            'NOM' => $projets[$i]['nom'],
+            'NOM' => htmlentities($projets[$i]['nom']),
             'OPEN_DEMANDES' => $projets[$i]['open_demandes'],
             'NB_MEMBRES' => $projets[$i]['nb_membres'],
             'NB_DEMANDES' => $projets[$i]['nb_demandes']));
