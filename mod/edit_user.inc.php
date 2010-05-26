@@ -31,17 +31,17 @@ if(isset($user))
     $edited_ok = true;
 
     // Changement du nom
-    if(isset($_POST['user_nom']) && $_POST['user_nom'] != '' && $_POST['user_nom'] != $user['nom'])
+    if(isset($_POST['user_nom']) && $_POST['user_nom'] != '' && htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8') != $user['nom'])
     {
         $st = $db->prepare('UPDATE utilisateurs SET nom=:nom WHERE id=:utilisateur');
         $st->execute(array(
             ':utilisateur' => $user['id'],
-            ':nom' => $_POST['user_nom']));
+            ':nom' => htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8')));
     }
     $_POST['user_nom'] = ''; unset($_POST['user_nom']);
 
     // Changement du pseudo
-    if(isset($_POST['user_pseudo']) && $_POST['user_pseudo'] != '' && $_POST['user_pseudo'] != $user['pseudo'])
+    if(isset($_POST['user_pseudo']) && $_POST['user_pseudo'] != '' && htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8') != $user['pseudo'])
     {
         $st = $db->prepare('SELECT * FROM utilisateurs where PSEUDO=?');
         $st->execute(array($user['id']));
@@ -56,7 +56,7 @@ if(isset($user))
             $st = $db->prepare('UPDATE utilisateurs SET pseudo=:pseudo WHERE id=:utilisateur');
             $st->execute(array(
                 ':utilisateur' => $user['id'],
-                ':pseudo' => $_POST['user_pseudo']));
+                ':pseudo' => htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8')));
         }
     }
     $_POST['user_pseudo'] = ''; unset($_POST['user_pseudo']);
@@ -130,7 +130,7 @@ else
      && $_POST['user_nom'] != '' && $_POST['user_pseudo'] != '' && intval($_POST['user_promo']) > 0 && $_POST['user_passwd1'] != '' && $_POST['user_passwd2'] != '')
     {
         $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
-        $st->execute(array($_POST['user_pseudo']));
+        $st->execute(array(htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8')));
         if($st->rowCount() > 0)
         {
             $template->assign_block_vars('MSG_ERREUR', array(
@@ -145,8 +145,8 @@ else
         {
             $st = $db->prepare('INSERT INTO utilisateurs(nom, pseudo, promotion, password, template) VALUES(:nom, :pseudo, :promotion, :password, :template)');
             $st->execute(array(
-                ':nom' => $_POST['user_nom'],
-                ':pseudo' => $_POST['user_pseudo'],
+                ':nom' => htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8'),
+                ':pseudo' => htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8'),
                 ':promotion' => intval($_POST['user_promo']),
                 ':password' => password_encrypt($_POST['user_passwd1']),
                 ':template' => $conf['default_template']));
@@ -170,30 +170,9 @@ if(isset($user))
     // Nom et description
     $template->assign_block_vars('EDIT', array(
         'USERID' => $user['id'],
-        'NOM' => str_replace('"', "\\\"", isset($_POST['user_nom'])?$_POST['user_nom']:$user['nom']),
-        'PSEUDO' => str_replace('"', "\\\"", isset($_POST['user_pseudo'])?$_POST['user_pseudo']:$user['pseudo']),
-        'PROMO' => str_replace('"', "\\\"", isset($_POST['user_promo'])?$_POST['user_promo']:$user['promotion'])));
-
-    // Utilisateurs que l'on peut ajouter
-    $st = $db->query('SELECT * FROM utilisateurs');
-    while($row = $st->fetch(PDO::FETCH_ASSOC))
-    {
-        $template->assign_block_vars('EDIT.AUTRE_UTILISATEUR', array(
-            'USERID' => $row['id'],
-            'NOM' => $row['nom'],
-            'PSEUDO' => $row['pseudo'],
-            'PROMOTION' => $row['promotion']));
-    }
-    // Développeur par défaut
-    $template->assign_block_vars('EDIT.ROLE', array(
-        'VALEUR' => 12,
-        'NOM' => 'Développeur'));
-    $template->assign_block_vars('EDIT.ROLE', array(
-        'VALEUR' => 14,
-        'NOM' => 'Chef de projet'));
-    $template->assign_block_vars('EDIT.ROLE', array(
-        'VALEUR' => 8,
-        'NOM' => 'Rapporteur'));
+        'NOM' => str_replace('"', "\\\"", isset($_POST['user_nom'])?htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8'):$user['nom']),
+        'PSEUDO' => str_replace('"', "\\\"", isset($_POST['user_pseudo'])?htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8'):$user['pseudo']),
+        'PROMO' => str_replace('"', "\\\"", isset($_POST['user_promo'])?htmlentities($_POST['user_promo'], ENT_COMPAT, 'UTF-8'):$user['promotion'])));
 
     $template->assign_block_vars('EDIT.PERMISSION_' . (($user['flags'] & PERM_MANAGE_USERS)?'ON':'OFF'), array(
         'NOM' => 'Gestion des utilisateurs',
