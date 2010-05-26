@@ -8,7 +8,7 @@ include 'inc/conf.inc.php';
 
 function wikicode2html($code)
 {
-    $code = htmlentities($code);
+    $code = htmlentities($code, ENT_COMPAT, 'UTF-8');
     $code = str_replace("\n", "<br />\n", $code);
     $code = preg_replace('#\*\*(.+)\*\*#U', '<strong>$1</strong>', $code);
     $code = preg_replace("#//(.+)//#U", '<em>$1</em>', $code);
@@ -19,7 +19,7 @@ function wikicode2html($code)
 
 function wikicode2text($code)
 {
-    $code = htmlentities($code);
+    $code = htmlentities($code, ENT_COMPAT, 'UTF-8');
     $code = preg_replace('#\*\*(.+)\*\*#U', '$1', $code);
     $code = preg_replace("#//(.+)//#U", '$1', $code);
     $code = preg_replace("#__(.+)__#U", '$1', $code);

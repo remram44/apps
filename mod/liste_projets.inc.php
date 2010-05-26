@@ -56,7 +56,7 @@ else
     {
         $template->assign_block_vars('PROJET', array(
             'ID' => $row['id'],
-            'NOM' => htmlentities($row['nom']),
+            'NOM' => htmlentities($row['nom'], ENT_COMPAT, 'UTF-8'),
             'DESCR' => wikicode2html($row['description'])));
         $i++;
     }

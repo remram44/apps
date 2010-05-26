@@ -188,7 +188,7 @@ if(isset($projet))
     $template->assign_block_vars('EDIT', array(
         'PROJ_ID' => $projet['id'],
         'NOM' => str_replace('"', "\\\"", isset($_POST['proj_nom'])?$_POST['proj_nom']:$projet['nom']),
-        'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:htmlentities($projet['description'])));
+        'DESCRIPTION' => isset($_POST['proj_description'])?$_POST['proj_description']:htmlentities($projet['description'], ENT_COMPAT, 'UTF-8')));
 
     // Membres
     $st = $db->prepare('SELECT u.id AS id, u.pseudo AS pseudo, u.nom AS nom, u.promotion AS promotion, a.flags AS flags FROM utilisateurs u INNER JOIN association_utilisateurs_projets a ON u.id=a.utilisateur WHERE a.projet=?');
@@ -260,7 +260,7 @@ else
 {
     $template->assign_block_vars('AJOUT', array(
         'NOM' => isset($_POST['proj_nom'])?str_replace('"', "\\\"", $_POST['proj_nom']):'',
-        'DESCRIPTION' => isset($_POST['proj_description'])?htmlentities($_POST['proj_description']):''));
+        'DESCRIPTION' => isset($_POST['proj_description'])?htmlentities($_POST['proj_description'], ENT_COMPAT, 'UTF-8'):''));
 }
 
 // TODO 2 : Modification des versions

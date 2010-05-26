@@ -32,11 +32,11 @@ while($row = $st->fetch(PDO::FETCH_ASSOC))
         $statut = $conf['demande_statuts'][$row['statut']];
     $template->assign_block_vars('DEMANDE', array(
         'ID' => $row['id'],
-        'TITRE' => htmlentities($row['titre']),
+        'TITRE' => htmlentities($row['titre'], ENT_COMPAT, 'UTF-8'),
         'AUT_PSEUDO' => $row['pseudo'],
         'AUT_NOM' => $row['nom_auteur'],
         'AUT_PROMO' => $row['promotion'],
-        'DESCRIPTION' => str_replace("\n", "&lt;br/&gt;\n", str_replace('&', '&amp;', htmlentities(wikicode2text($row['description'])))),
+        'DESCRIPTION' => str_replace("\n", "&lt;br/&gt;\n", str_replace('&', '&amp;', htmlentities(wikicode2text($row['description']), ENT_COMPAT, 'UTF-8'))),
         'DATE_CREATION' => format_date($row['creation']),
         'STATUT' => $statut));
 }

@@ -38,7 +38,7 @@ if(is_array($conf['demande_statuts']) && isset($conf['demande_statuts'][$demande
 
 $template->assign_vars(array(
     'DEMANDE_ID' => $demande['id'],
-    'DEMANDE_TITRE' => htmlentities($demande['titre']),
+    'DEMANDE_TITRE' => htmlentities($demande['titre'], ENT_COMPAT, 'UTF-8'),
     'AUT_PSEUDO' => ($demande['auteur_pseudo']!=null)?$demande['auteur_pseudo']:'Inconnu',
     'AUT_NOM' => ($demande['auteur_nom']!=null)?$demande['auteur_nom']:'Anonyme',
     'DESCRIPTION' => wikicode2html($demande['description']),
@@ -46,13 +46,13 @@ $template->assign_vars(array(
     'STATUT' => ($demande['statut'] == 0)?"ferme":"ouvert",
     'STATUT_NOM' => $statut,
     'CREATION' => format_date($demande['creation']),
-    'PROJET' => htmlentities($demande['projet_nom']),
+    'PROJET' => htmlentities($demande['projet_nom'], ENT_COMPAT, 'UTF-8'),
     'PROJET_ID' => $demande['projet_id']));
 
 if(isset($demande['version']))
 {
     $template->assign_block_vars('VERSION', array(
-        'NOM' => htmlentities($demande['version'])));
+        'NOM' => htmlentities($demande['version'], ENT_COMPAT, 'UTF-8')));
 }
 
 // Lien vers la page de modification de la demande

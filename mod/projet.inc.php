@@ -18,7 +18,7 @@ else
     if($row = $st->fetch(PDO::FETCH_ASSOC))
     {
         $template->assign_vars(array(
-            'PROJ_TITRE' => htmlentities($row['nom']),
+            'PROJ_TITRE' => htmlentities($row['nom'], ENT_COMPAT, 'UTF-8'),
             'PROJ_DESCR' => wikicode2html($row['description']),
             'PROJ_ID' => $row['id']));
 
@@ -36,7 +36,7 @@ else
                 {
                     $template->assign_block_vars('DEMANDE', array(
                         'ID' => $row2['id'],
-                        'TITRE' => htmlentities($row2['titre']),
+                        'TITRE' => htmlentities($row2['titre'], ENT_COMPAT, 'UTF-8'),
                         'AUTEUR' => $row2['auteur'],
                         'STATUT' => ($row2['statut'] == 0)?'ferme':'ouvert'));
                 }
@@ -82,7 +82,7 @@ else
                 while($row2 = $st2->fetch(PDO::FETCH_ASSOC))
                 {
                     $template->assign_block_vars('VERSION', array(
-                        'NOM' => htmlentities($row2['nom']),
+                        'NOM' => htmlentities($row2['nom'], ENT_COMPAT, 'UTF-8'),
                         'DESCR' => wikicode2html($row2['description'])));
                 }
             }

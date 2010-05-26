@@ -27,7 +27,7 @@ else
     while($row = $st->fetch(PDO::FETCH_ASSOC))
     {
         $template->assign_block_vars('VERSION', array(
-            'NOM' => htmlentities($row['nom']),
+            'NOM' => htmlentities($row['nom'], ENT_COMPAT, 'UTF-8'),
             'DESCR' => wikicode2html($row['description'])));
 
         // FIXME : trop de requêtes SQL ?
@@ -47,7 +47,7 @@ else
             {
                 $template->assign_block_vars('VERSION.DEMANDE', array(
                     'ID' => $demande['id'],
-                    'TITRE' => htmlentities($demande['titre']),
+                    'TITRE' => htmlentities($demande['titre'], ENT_COMPAT, 'UTF-8'),
                     'AUTEUR' => $demande['auteur'],
                     'DESCR' => $demande['description'],
                     'STATUT' => ($demande['statut'] == 0)?'ferme':'ouvert'));
