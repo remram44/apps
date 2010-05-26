@@ -5,7 +5,7 @@
 if(!isset($template))
     die();
 
-// VÈrification des permissions
+// V√©rification des permissions
 $aff_projets = $utilisateur->autorise(PERM_MANAGE_PROJECT);
 $aff_users = $utilisateur->autorise(PERM_MANAGE_USERS);
 if(!$aff_projets && !$aff_users)
@@ -26,7 +26,7 @@ $projets = $st->fetchAll(PDO::FETCH_ASSOC);
 
 if($aff_projets)
 {
-    // Traitement des donnÈes reÁues
+    // Traitement des donn√©es re√ßues
     // TODO : Suppression d'un projet ?
     for($i = 0; $i < count($projets); $i++)
     {
@@ -55,7 +55,7 @@ if($aff_projets)
 
 if($aff_users)
 {
-    // Traitement des donnÈes reÁues
+    // Traitement des donn√©es re√ßues
 
     // Affichage du formulaire
     $template->assign_block_vars('ADMIN_UTILISATEURS', array());
@@ -84,7 +84,7 @@ GROUP BY u.id, u.pseudo, u.nom, u.promotion, u.flags');
             if($row['flags'] & PERM_MANAGE_REQUESTS)
                 $template->assign_block_vars('ADMIN_UTILISATEURS.UTILISATEUR.PERMISSION', array('NOM' => 'Gestion des demandes'));
             else if($row['flags'] & PERM_CREATE_REQUEST)
-                $template->assign_block_vars('ADMIN_UTILISATEURS.UTILISATEUR.PERMISSION', array('NOM' => 'CrÈation de demandes'));
+                $template->assign_block_vars('ADMIN_UTILISATEURS.UTILISATEUR.PERMISSION', array('NOM' => 'Cr√©ation de demandes'));
             $i++;
         }
     }

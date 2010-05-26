@@ -1,6 +1,6 @@
 <?php
 
-// mod/projet.inc.php : Description détaillée d'un projet
+// mod/projet.inc.php : Description dÃ©taillÃ©e d'un projet
 
 if(!isset($template))
     die();
@@ -11,7 +11,7 @@ if(!isset($_GET['id']) || intval($_GET['id']) <= 0)
 }
 else
 {
-    // Requête SQL : détails du projet
+    // RequÃªte SQL : dÃ©tails du projet
     $projet = intval($_GET['id']);
     $st = $db->prepare('SELECT * FROM projets WHERE id=?');
     $st->execute(array($projet));
@@ -22,7 +22,7 @@ else
             'PROJ_DESCR' => wikicode2html($row['description']),
             'PROJ_ID' => $row['id']));
 
-        // Dernières demandes
+        // DerniÃ¨res demandes
         {
             $st2 = $db->prepare('SELECT * FROM demandes WHERE projet=? ORDER BY derniere_activite DESC LIMIT ' . $conf['projet_nb_demandes']);
             $st2->execute(array($projet));
@@ -67,7 +67,7 @@ else
             }
         }
 
-        // TODO 1 : Dernières modifications (commits)
+        // TODO 1 : DerniÃ¨res modifications (commits)
 
         // Liste des versions
         {
@@ -88,7 +88,7 @@ else
             }
         }
 
-        // Page d'édition du projet
+        // Page d'Ã©dition du projet
         if($utilisateur->autorise(PERM_MANAGE_PROJECT, $projet))
             $template->assign_block_vars('ADMIN_PROJET', array());
     }

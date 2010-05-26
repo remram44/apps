@@ -6,7 +6,7 @@
       <form method="post" action="index.php?mod=edit_demande&amp;projet={DEM_PROJET_ID}">
 <!-- END AJOUT -->
 <!-- BEGIN EDIT -->
-       <h1>Demande n°{EDIT.DEM_ID}</h1>
+       <h1>Demande nÂ°{EDIT.DEM_ID}</h1>
     </div>
     <div class="box">
       <form method="post" action="index.php?mod=edit_demande&amp;id={EDIT.DEM_ID}">
@@ -18,7 +18,7 @@
         <table id="demande">
           <tr>
             <th>Projet</th><td><a href="index.php?mod=projet&amp;id={DEM_PROJET_ID}">{DEM_PROJET}</a></td>
-            <th>Priorité</th>
+            <th>PrioritÃ©</th>
 <!-- BEGIN PRIORITE_ADMIN -->
             <td><input type="text" name="dem_prio" value="{DEM_PRIO}" /></td>
 <!-- END PRIORITE_ADMIN -->

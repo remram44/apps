@@ -1,6 +1,6 @@
 <?php
 
-// mod/projet.inc.php : Description détaillée d'un projet
+// mod/projet.inc.php : Description dÃ©taillÃ©e d'un projet
 
 if(!isset($template))
     die();

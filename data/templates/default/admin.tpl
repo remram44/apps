@@ -11,7 +11,7 @@
           <tr class="{ADMIN_PROJETS.PROJET.PARITE}"><td>{ADMIN_PROJETS.PROJET.NOM}</td><td>{ADMIN_PROJETS.PROJET.OPEN_DEMANDES}<td>{ADMIN_PROJETS.PROJET.NB_MEMBRES}</td><td>{ADMIN_PROJETS.PROJET.NB_DEMANDES}</td><td><input type="submit" name="proj_del{ADMIN_PROJETS.PROJET.ID}" value="Supprimer" /> <a href="index.php?mod=edit_projet&amp;id={ADMIN_PROJETS.PROJET.ID}">Modifier</a></td></tr>
 <!-- END PROJET -->
 <!-- BEGIN ZERO_PROJETS -->
-          <tr><td class="liste_vide" colspan="5">Il n'y a aucun projet à afficher.</td></tr>
+          <tr><td class="liste_vide" colspan="5">Il n'y a aucun projet Ã  afficher.</td></tr>
 <!-- END ZERO_PROJETS -->
           <tr><td colspan="4" class="ajout"><a href="index.php?mod=edit_projet">Ajouter un projet</a></td></tr>
         </table>

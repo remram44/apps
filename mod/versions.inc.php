@@ -1,6 +1,6 @@
 <?php
 
-// mod/versions.inc.php : Versions du projet, avec leur description, leur état d'avancement et les demandes liées
+// mod/versions.inc.php : Versions du projet, avec leur description, leur Ã©tat d'avancement et les demandes liÃ©es
 
 if(!isset($template))
     die();
@@ -8,21 +8,21 @@ if(!isset($template))
 if(isset($_GET['id']) && intval($_GET['id']) > 0)
     $projet = intval($_GET['id']);
 else
-    erreur_fatale('Erreur : projet non spécifié.');
+    erreur_fatale('Erreur : projet non spÃ©cifiÃ©.');
 
-// Requête SQL
+// RequÃªte SQL
 $st = $db->prepare('SELECT * from versions WHERE projet=? ORDER BY position');
 $st->execute(array($projet));
 
-// Pas de résultat
+// Pas de rÃ©sultat
 if($st->rowCount() == 0)
 {
     $template->assign_block_vars('ZERO_VERSIONS', array());
 }
-// Résultats : on les affiche
+// RÃ©sultats : on les affiche
 else
 {
-    // Requête SQL : demandes associées
+    // RequÃªte SQL : demandes associÃ©es
     $st2 = $db->prepare('SELECT * FROM demandes WHERE projet=:projet AND version=:version');
     while($row = $st->fetch(PDO::FETCH_ASSOC))
     {
@@ -30,17 +30,17 @@ else
             'NOM' => htmlentities($row['nom']),
             'DESCR' => wikicode2html($row['description'])));
 
-        // FIXME : trop de requêtes SQL ?
+        // FIXME : trop de requÃªtes SQL ?
         $st2->execute(array(
             ':projet' => $projet,
             ':version' => $row['id']));
 
-        // Pas de résultat
+        // Pas de rÃ©sultat
         if($st2->rowCount() == 0)
         {
             $template->assign_block_vars('VERSION.ZERO_DEMANDES', array());
         }
-        // Résultats : on les affiche
+        // RÃ©sultats : on les affiche
         else
         {
             while($demande = $st2->fetch(PDO::FETCH_ASSOC))

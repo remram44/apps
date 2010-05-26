@@ -3,7 +3,7 @@
       <h1>Ajout d'un projet</h1>
     </div>
     <div class="box">
-      <p>Après la création du nouveau projet, vous pourrez y ajouter des membres via cette interface.</p>
+      <p>AprÃ¨s la crÃ©ation du nouveau projet, vous pourrez y ajouter des membres via cette interface.</p>
       <form method="post" action="index.php?mod=edit_projet">
         <table>
           <tr><th>Nom du projet :</th><td><input type="text" name="proj_nom" value="{AJOUT.NOM}" /></td></tr>
@@ -41,7 +41,7 @@
                 </tr>
 <!-- END MEMBRE -->
 <!-- BEGIN ZERO_MEMBRES -->
-                <tr><td colspan="2" class="liste_vide">Aucun membre n'a été ajouté pour l'instant.</td></tr>
+                <tr><td colspan="2" class="liste_vide">Aucun membre n'a Ã©tÃ© ajoutÃ© pour l'instant.</td></tr>
 <!-- END ZERO_MEMBRES -->
                 <tr>
                   <td>
@@ -62,7 +62,7 @@
             </td>
           </tr>
           <tr>
-            <th>Création de demandes</th>
+            <th>CrÃ©ation de demandes</th>
             <td><select name="proj_open_demandes">
 <!-- BEGIN OPEN_DEMANDES_SELECTED -->
               <option value="{EDIT.OPEN_DEMANDES_SELECTED.VALEUR}">{EDIT.OPEN_DEMANDES_SELECTED.NOM}</option>

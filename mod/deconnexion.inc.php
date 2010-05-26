@@ -1,6 +1,6 @@
 <?php
 
-// mod/deconnexion.inc.php : Déconnexion (retour en anonyme)
+// mod/deconnexion.inc.php : DÃ©connexion (retour en anonyme)
 
 if(!isset($template))
     die();

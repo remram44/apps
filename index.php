@@ -110,7 +110,7 @@ class MyPDO extends PDO {
 
 }
 
-// Connection à la base de données
+// Connection Ã  la base de donnÃ©es
 try {
     $db = new MyPDO($conf['db_dsn'], $conf['db_user'], $conf['db_passwd'], array(
         PDO::ATTR_PERSISTENT => $conf['db_persistent']));
@@ -121,8 +121,10 @@ catch(PDOException $e) {
     $template->assign_var('TITRE', $conf['titre']);
     $template->assign_var('TEMPLATE_URL', 'data/templates/' . $conf['default_template']);
     $template->assign_block_vars('MSG_ERREUR', array(
-        'DESCR' => 'Erreur : impossible de se connecter à la base de données !<br/>
+        'DESCR' => 'Erreur : impossible de se connecter Ã  la base de donnÃ©es !<br/>
 Erreur : ' . $e->getMessage()));
+    header('500 Internal Server Error');
+    header('Content-type: text/html; charset=utf-8');
     $template->pparse('root');
     exit(1);
 }
@@ -163,11 +165,12 @@ function erreur_fatale($msg)
 {
     global $template;
     $template->assign_block_vars('MSG_ERREUR', array('DESCR' => $msg));
+    header('Content-type: text/html; charset=utf-8');
     $template->pparse('root');
     exit(0);
 }
 
-// Variables globales, ie communes à tous les modules
+// Variables globales, ie communes Ã  tous les modules
 $template->assign_var('TITRE', $conf['titre']);
 $template->assign_var('TEMPLATE_URL', 'data/templates/' . $utilisateur->template());
 // Menu
@@ -199,11 +202,12 @@ if(in_array($mod, array(
     'demande', 'liste_demandes', 'edit_demande',
     'connexion', 'deconnexion', 'perso', 'admin', 'edit_user')))
 {
-    // Appel du module spécifié
+    // Appel du module spÃ©cifiÃ©
     include 'mod/' . $mod . '.inc.php';
     $template->assign_var_from_handle('ROOT_CONTENT', $mod);
     if($conf['debug'])
         $db->report();
+    header('Content-type: text/html; charset=utf-8');
     $template->pparse('root');
 }
 else if($mod == 'rss')

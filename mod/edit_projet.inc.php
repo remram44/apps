@@ -5,7 +5,7 @@
 if(!isset($template))
     die();
 
-// Récupération des données du projet, si 'id' est spécifié
+// RÃ©cupÃ©ration des donnÃ©es du projet, si 'id' est spÃ©cifiÃ©
 if(isset($_GET['id']))
 {
     // Nom et description
@@ -16,17 +16,17 @@ if(isset($_GET['id']))
         erreur_fatale('Erreur : Projet invalide !');
 }
 
-// Vérification des permissions
+// VÃ©rification des permissions
 if(!$utilisateur->autorise(PERM_MANAGE_PROJECT, isset($projet)?$projet['id']:null))
 {
     if(isset($projet))
         erreur_fatale("Erreur : vous n'avez pas la permission de modifier ce projet !");
     else
-        erreur_fatale("Erreur : vous n'avez pas la permission de créer un projet !");
+        erreur_fatale("Erreur : vous n'avez pas la permission de crÃ©er un projet !");
 }
 
 //------------------------------------------------------------------------------
-// Traitement des données reçues
+// Traitement des donnÃ©es reÃ§ues
 
 // Projet existant
 if(isset($projet))
@@ -57,7 +57,7 @@ if(isset($projet))
         }
     }
 
-    // Mise à jour des membres
+    // Mise Ã  jour des membres
     $st = $db->prepare('SELECT * FROM association_utilisateurs_projets WHERE projet=?');
     $st->execute(array($projet['id']));
     while($row = $st->fetch(PDO::FETCH_ASSOC))
@@ -71,7 +71,7 @@ if(isset($projet))
                 ':projet' => $projet['id']));
         }
 
-        // Mise à jour du rang
+        // Mise Ã  jour du rang
         if(isset($_POST['proj_mem_admin' . $row['utilisateur']]))
         {
             $admin = intval($_POST['proj_mem_admin' . $row['utilisateur']]);
@@ -114,7 +114,7 @@ if(isset($projet))
             if($st->rowCount() > 0)
             {
                 $template->assign_block_vars('MSG_ERREUR', array(
-                    'DESCR' => 'Un projet avec ce nom existe déjà - impossible de changer le nom'));
+                    'DESCR' => 'Un projet avec ce nom existe dÃ©jÃ  - impossible de changer le nom'));
                 $edited_ok = false;
             }
             else
@@ -128,7 +128,7 @@ if(isset($projet))
     }
     $_POST['proj_nom'] = ''; unset($_POST['proj_nom']);
 
-    // Mise à jour de la description
+    // Mise Ã  jour de la description
     if(isset($_POST['proj_description']) && ($_POST['proj_description'] != $projet['description']) )
     {
         $st = $db->prepare('UPDATE projets SET description=:description WHERE id=:projet');
@@ -145,7 +145,7 @@ if(isset($projet))
             header('Location: index.php?mod=projet&id=' . $projet['id']);
         }
         $template->assign_block_vars('MSG_INFO', array(
-            'DESCR' => 'Projet modifié ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
+            'DESCR' => 'Projet modifiÃ© ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
     }
 }
 // Ajout d'un projet
@@ -159,7 +159,7 @@ else
         if($st->rowCount() > 0)
         {
             $template->assign_block_vars('MSG_ERREUR', array(
-                'DESCR' => 'Un projet avec ce nom existe déjà - veuillez en choisir un autre'));
+                'DESCR' => 'Un projet avec ce nom existe dÃ©jÃ  - veuillez en choisir un autre'));
         }
         else
         {
@@ -172,7 +172,7 @@ else
             if($projet = $st->fetch(PDO::FETCH_ASSOC))
             {
                 $template->assign_block_vars('MSG_INFO', array(
-                    'DESCR' => 'Projet créé ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
+                    'DESCR' => 'Projet crÃ©Ã© ; <a href="index.php?mod=projet&amp;id=' . $projet['id'] . '">cliquez ici</a> pour le consulter'));
             }
         }
     }
@@ -181,7 +181,7 @@ else
 //------------------------------------------------------------------------------
 // Affichage du formulaire
 
-// Projet déjà existant : on ne peut pas changer le nom, les champs sont préremplis avec les données actuelles, et on peut éditer la liste des membres
+// Projet dÃ©jÃ  existant : on ne peut pas changer le nom, les champs sont prÃ©remplis avec les donnÃ©es actuelles, et on peut Ã©diter la liste des membres
 if(isset($projet))
 {
     // Nom et description
@@ -218,7 +218,7 @@ if(isset($projet))
                 'NOM' => 'Admin'));
             $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 2)?'_SELECTED':''), array(
                 'VALEUR' => PERM_CREATE_REQUEST | PERM_MANAGE_REQUESTS | PERM_ADD_COMMENT,
-                'NOM' => 'Développeur'));
+                'NOM' => 'DÃ©veloppeur'));
             $template->assign_block_vars('EDIT.MEMBRE.ROLE' . (($role == 3)?'_SELECTED':''), array(
                 'VALEUR' => PERM_CREATE_REQUEST | PERM_ADD_COMMENT,
                 'NOM' => 'Rapporteur'));
@@ -235,10 +235,10 @@ if(isset($projet))
             'PSEUDO' => $row['pseudo'],
             'PROMOTION' => $row['promotion']));
     }
-    // Développeur par défaut
+    // DÃ©veloppeur par dÃ©faut
     $template->assign_block_vars('EDIT.ROLE', array(
         'VALEUR' => PERM_MANAGE_REQUESTS | PERM_CREATE_REQUEST,
-        'NOM' => 'Développeur'));
+        'NOM' => 'DÃ©veloppeur'));
     $template->assign_block_vars('EDIT.ROLE', array(
         'VALEUR' => PERM_MANAGE_REQUESTS | PERM_CREATE_REQUEST | PERM_MANAGE_PROJECT,
         'NOM' => 'Admin'));
@@ -248,10 +248,10 @@ if(isset($projet))
 
     $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 0)?'_SELECTED':''), array(
         'VALEUR' => 0,
-        'NOM' => 'Utilisateurs autorisés'));
+        'NOM' => 'Utilisateurs autorisÃ©s'));
     $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 1)?'_SELECTED':''), array(
         'VALEUR' => 1,
-        'NOM' => 'Tous les utilisateurs enregistrés'));
+        'NOM' => 'Tous les utilisateurs enregistrÃ©s'));
     $template->assign_block_vars('EDIT.OPEN_DEMANDES' . (($projet['open_demandes'] == 2)?'_SELECTED':''), array(
         'VALEUR' => 2,
         'NOM' => 'Tout le monde (anonymes compris)'));

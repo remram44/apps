@@ -1,15 +1,15 @@
 <?php
 
-// mod/perso.inc.php : Permet de modifier les préférences (mot de passe, templates)
+// mod/perso.inc.php : Permet de modifier les prÃ©fÃ©rences (mot de passe, templates)
 
 if(!isset($template))
     die();
 
 if($utilisateur->estAnonyme())
-    erreur_fatale("Erreur : vous n'êtes pas connecté !");
+    erreur_fatale("Erreur : vous n'Ãªtes pas connectÃ© !");
 
 //------------------------------------------------------------------------------
-// Traitement des données reçues
+// Traitement des donnÃ©es reÃ§ues
 
 // Changement du design
 if(isset($_POST['chg_tpl']) && $_POST['chg_tpl'] != $utilisateur->template()
@@ -40,7 +40,7 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
         $template->assign_block_vars('ERREUR', array(
             'TEXTE' => 'Les mots de passe ne correspondent pas.'));
     }
-    // Vérification du nombre de caractères
+    // VÃ©rification du nombre de caractÃ¨res
     else if( (strlen($_POST['chg_mdp1']) < 4) || (strlen($_POST['chg_mdp1']) > 26) )
     {
         $template->assign_block_vars('ERREUR', array(
@@ -48,7 +48,7 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
     }
     else
     {
-        // Vérification de l'ancien mot de passe
+        // VÃ©rification de l'ancien mot de passe
         $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
         $st->execute(array($utilisateur->pseudo()));
         if( !($row = $st->fetch(PDO::FETCH_ASSOC)) || !password_verify($row['password'], $_POST['chg_mdp']) )
@@ -64,7 +64,7 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
                 ':pseudo' => $utilisateur->pseudo(),
                 ':mdp' => password_encrypt($_POST['chg_mdp1'])));
             $template->assign_block_vars('INFO', array(
-                'TEXTE' => 'Votre mot de passe a été changé.'));
+                'TEXTE' => 'Votre mot de passe a Ã©tÃ© changÃ©.'));
         }
     }
 }
@@ -72,7 +72,7 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
 //------------------------------------------------------------------------------
 // Affichage du formulaire
 
-// Variables générales
+// Variables gÃ©nÃ©rales
 $template->assign_vars(array(
     'PSEUDO' => $utilisateur->pseudo(),
     'NOM' => $utilisateur->nom(),

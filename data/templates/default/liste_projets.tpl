@@ -1,7 +1,7 @@
     <div class="box_recherche">
       <h1>Recherche</h1>
       <form action="index.php" method="get">
-        <p>Vous pouvez utiliser la boîte ci-dessous pour effectuer une recherche ou la laisser vide pour obtenir une liste de tous les projets. Le caractère * (étoile) remplace une chaîne de caractères quelconque.</p>
+        <p>Vous pouvez utiliser la boÃ®te ci-dessous pour effectuer une recherche ou la laisser vide pour obtenir une liste de tous les projets. Le caractÃ¨re * (Ã©toile) remplace une chaÃ®ne de caractÃ¨res quelconque.</p>
         <p><label>Rechercher : <input type="edit" name="filtre_nom" value="{FILTRE}" /></label>
         <input type="hidden" name="mod" value="liste_projets" />
         <input type="submit" value="Rechercher" /></p>
@@ -15,14 +15,14 @@
 <!-- END PROJET -->
 <!-- BEGIN ZERO_PROJETS -->
     <div class="box">
-      <h3>Aucun résultat</h3>
-      <p class="liste_vide">Il n'y a aucun projet à afficher.</p>
+      <h3>Aucun rÃ©sultat</h3>
+      <p class="liste_vide">Il n'y a aucun projet Ã  afficher.</p>
     </div>
 <!-- END ZERO_PROJETS -->
 
 <!-- BEGIN PREV_PAGE -->
     <div class="box_prev_page">
-      <p><a href="{PREV_PAGE.LIEN}">Page précédente</a></p>
+      <p><a href="{PREV_PAGE.LIEN}">Page prÃ©cÃ©dente</a></p>
     </div>
 <!-- END PREV_PAGE -->
 <!-- BEGIN NEXT_PAGE -->

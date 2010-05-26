@@ -71,5 +71,5 @@ CREATE TABLE IF NOT EXISTS commentaires (
   PRIMARY KEY (id)
 ) TYPE=INNODB;
 
-/* Utilisateur par défaut : "admin" "admin" */
+/* Utilisateur par dÃ©faut : "admin" "admin" */
 INSERT INTO utilisateurs(pseudo, password, template, nom, promotion, flags) VALUES("admin", "d033e22ae348aeb5660fc2140aec35850c4da997", "default", "L'Admin", 0, 31);

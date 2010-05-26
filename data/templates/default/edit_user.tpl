@@ -3,7 +3,7 @@
       <h1>Ajout d'un utilisateur</h1>
     </div>
     <div class="box">
-      <p>Après la création du nouvel utilisateur, vous pourrez modifier ses permissions via cette interface.</p>
+      <p>AprÃ¨s la crÃ©ation du nouvel utilisateur, vous pourrez modifier ses permissions via cette interface.</p>
       <form method="post" action="index.php?mod=edit_user">
         <table>
           <tr><th>Pseudo :</th><td><input type="text" name="user_pseudo" value="{AJOUT.PSEUDO}" /></td></tr>

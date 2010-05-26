@@ -1,5 +1,5 @@
     <div class="box">
-      <h1>Demande n°{DEMANDE_ID}</h1>
+      <h1>Demande nÂ°{DEMANDE_ID}</h1>
       <h2>{DEMANDE_TITRE}</h2>
     </div>
     <div class="box">

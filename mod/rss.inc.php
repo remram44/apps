@@ -5,7 +5,7 @@
 if(!isset($template))
     die();
 
-header('Content-Type: text/xml; charset=ISO-8859-15');
+header('Content-Type: text/xml; charset=utf-8');
 
 $template->assign_vars(array(
     'CHANNEL_LIEN' => $conf['base_url']));

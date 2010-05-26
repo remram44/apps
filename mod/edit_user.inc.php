@@ -5,13 +5,13 @@
 if(!isset($template))
     die();
 
-// Vérification des permissions
+// VÃ©rification des permissions
 if(!$utilisateur->autorise(PERM_MANAGE_USERS))
 {
-    erreur_fatale("Erreur : vous n'avez pas la permission de gérer les utilisateurs !");
+    erreur_fatale("Erreur : vous n'avez pas la permission de gÃ©rer les utilisateurs !");
 }
 
-// Récupération des données de l'utilisateur, si 'id' est spécifié
+// RÃ©cupÃ©ration des donnÃ©es de l'utilisateur, si 'id' est spÃ©cifiÃ©
 if(isset($_GET['id']))
 {
     // Nom et description
@@ -23,7 +23,7 @@ if(isset($_GET['id']))
 }
 
 //------------------------------------------------------------------------------
-// Traitement des données reçues
+// Traitement des donnÃ©es reÃ§ues
 
 // Utilisateur existant
 if(isset($user))
@@ -48,7 +48,7 @@ if(isset($user))
         if($st->rowCount() > 0)
         {
             $template->assign_block_vars('MSG_ERREUR', array(
-                'DESCR' => 'Un utilisateur avec ce pseudo existe déjà - impossible de changer le pseudo'));
+                'DESCR' => 'Un utilisateur avec ce pseudo existe dÃ©jÃ  - impossible de changer le pseudo'));
             $edited_ok = false;
         }
         else
@@ -77,7 +77,7 @@ if(isset($user))
         if($_POST['user_passwd1'] != $_POST['user_passwd2'])
         {
             $template->assign_block_vars('MSG_ERREUR', array(
-                'DESCR' => 'Les mots de passe entrés ne correspondent pas - mot de passe conservé'));
+                'DESCR' => 'Les mots de passe entrÃ©s ne correspondent pas - mot de passe conservÃ©'));
             $edited_ok = false;
         }
         else
@@ -90,9 +90,9 @@ if(isset($user))
     }
 
     // Changement des permissions
-    // Ici, on ne vérifie pas avec isset() que le champ existe ; s'il n'existe pas, la case n'est pas cochée
-    // user_submit permet de vérifier qu'on a validé le formulaire (sans cette vérification, l'affichage du formulaire ferait passer
-    // flags à 0 avant qu'on ne valide)
+    // Ici, on ne vÃ©rifie pas avec isset() que le champ existe ; s'il n'existe pas, la case n'est pas cochÃ©e
+    // user_submit permet de vÃ©rifier qu'on a validÃ© le formulaire (sans cette vÃ©rification, l'affichage du formulaire ferait passer
+    // flags Ã  0 avant qu'on ne valide)
     if(isset($_POST['user_submit']))
     {
         $perms = 0;
@@ -120,7 +120,7 @@ if(isset($user))
             header('Location: index.php?mod=edit_user&id=' . $user['id']);
         }
         $template->assign_block_vars('MSG_INFO', array(
-            'DESCR' => 'Utilisateur modifié'));
+            'DESCR' => 'Utilisateur modifiÃ©'));
     }
 }
 // Ajout d'un utilisateur
@@ -134,12 +134,12 @@ else
         if($st->rowCount() > 0)
         {
             $template->assign_block_vars('MSG_ERREUR', array(
-                'DESCR' => 'Un utilisateur avec ce pseudo existe déjà - veuillez en choisir un autre'));
+                'DESCR' => 'Un utilisateur avec ce pseudo existe dÃ©jÃ  - veuillez en choisir un autre'));
         }
         else if($_POST['user_passwd1'] != $_POST['user_passwd2'])
         {
             $template->assign_block_vars('MSG_ERREUR', array(
-                'DESCR' => "Les mots de passe entrés ne correspondent pas - l'utilisateur n'a pas été ajouté"));
+                'DESCR' => "Les mots de passe entrÃ©s ne correspondent pas - l'utilisateur n'a pas Ã©tÃ© ajoutÃ©"));
         }
         else
         {
@@ -155,7 +155,7 @@ else
             if($user = $st->fetch(PDO::FETCH_ASSOC))
             {
                 $template->assign_block_vars('MSG_INFO', array(
-                    'DESCR' => 'Utilisateur créé'));
+                    'DESCR' => 'Utilisateur crÃ©Ã©'));
             }
         }
     }
@@ -164,7 +164,7 @@ else
 //------------------------------------------------------------------------------
 // Affichage du formulaire
 
-// Utilisateur déjà existant : les champs sont préremplis avec les données actuelles, et on peut éditer les permissions
+// Utilisateur dÃ©jÃ  existant : les champs sont prÃ©remplis avec les donnÃ©es actuelles, et on peut Ã©diter les permissions
 if(isset($user))
 {
     // Nom et description
@@ -184,10 +184,10 @@ if(isset($user))
             'PSEUDO' => $row['pseudo'],
             'PROMOTION' => $row['promotion']));
     }
-    // Développeur par défaut
+    // DÃ©veloppeur par dÃ©faut
     $template->assign_block_vars('EDIT.ROLE', array(
         'VALEUR' => 12,
-        'NOM' => 'Développeur'));
+        'NOM' => 'DÃ©veloppeur'));
     $template->assign_block_vars('EDIT.ROLE', array(
         'VALEUR' => 14,
         'NOM' => 'Chef de projet'));

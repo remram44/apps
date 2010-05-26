@@ -1,6 +1,6 @@
 <?php
 
-// mod/demande.inc.php : Affiche les détails d'une demande et permet de voir/ajouter des commentaires
+// mod/demande.inc.php : Affiche les dÃ©tails d'une demande et permet de voir/ajouter des commentaires
 
 if(!isset($template))
     die();
@@ -29,7 +29,7 @@ if(isset($_POST['commentaire']) && $_POST['commentaire'] != '')
         ':demande' => $demande['id'],
         ':texte' => $_POST['commentaire']));
     $template->assign_block_vars('MSG_INFO', array(
-        'DESCR' => 'Commentaire ajouté.'));
+        'DESCR' => 'Commentaire ajoutÃ©.'));
 }
 
 $statut = 'inconnu';

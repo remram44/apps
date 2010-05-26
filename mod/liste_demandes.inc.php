@@ -1,6 +1,6 @@
 <?php
 
-// mod/liste_demandes.inc.php : Listes les demandes, avec différents filtres
+// mod/liste_demandes.inc.php : Listes les demandes, avec diffÃ©rents filtres
 
 if(!isset($template))
     die();
@@ -38,20 +38,20 @@ else
     $template->assign_block_vars('HEAD_BALISE', array(
         'HTML' => '<link rel="alternate" type="application/rss+xml" href="index.php?mod=rss" title="Flux RSS des demandes" />'));
 
-// Numéro de page
+// NumÃ©ro de page
 $page = 1;
 if(isset($_GET['page']))
 {
     if(intval($_GET['page']) > 0)
         $page = intval($_GET['page']);
     else
-        erreur_fatale('Erreur : numéro de page invalide');
+        erreur_fatale('Erreur : numÃ©ro de page invalide');
 }
 
-// Requête SQL
+// RequÃªte SQL
 $nb = $conf['demandes_nb_resultats'];
 
-// FIXME : requête pas jolie. Risques d'injection ?
+// FIXME : requÃªte pas jolie. Risques d'injection ?
 $st = $db->query(
 'SELECT d.id, d.titre, d.description, d.priorite, d.statut, d.creation, d.derniere_activite, d.projet AS projet_id, p.nom AS projet, v.nom AS version, u.pseudo, u.nom AS nom_auteur, u.promotion
 FROM demandes d
@@ -62,12 +62,12 @@ FROM demandes d
 ORDER BY d.priorite, d.derniere_activite DESC
 LIMIT ' . (($page-1)*$nb) . ', ' . ($nb+1));
 
-// Pas de résultat
+// Pas de rÃ©sultat
 if($st->rowCount() == 0)
 {
     $template->assign_block_vars('ZERO_DEMANDES', array());
 }
-// Résultats : on les affiche
+// RÃ©sultats : on les affiche
 else
 {
     $prev = $page > 1;

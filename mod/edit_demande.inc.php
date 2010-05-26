@@ -1,13 +1,13 @@
 <?php
 
-// mod/edit_demande.inc.php : Crée une nouvelle demande ou modifie les détails
+// mod/edit_demande.inc.php : CrÃ©e une nouvelle demande ou modifie les dÃ©tails
 
-// TODO 2 : choix de la priorité
+// TODO 2 : choix de la prioritÃ©
 
 if(!isset($template))
     die();
 
-// Récupération des données de la demande, si 'id' est spécifié
+// RÃ©cupÃ©ration des donnÃ©es de la demande, si 'id' est spÃ©cifiÃ©
 if(isset($_GET['id']))
 {
     $st = $db->prepare(
@@ -23,31 +23,31 @@ WHERE d.id=?');
 else
 {
     if(!isset($_GET['projet']) || intval($_GET['projet']) == 0)
-        erreur_fatale('Erreur : projet non spécifié');
+        erreur_fatale('Erreur : projet non spÃ©cifiÃ©');
     $st = $db->prepare('SELECT * FROM projets WHERE id=?');
     $st->execute(array($_GET['projet']));
     if(!($projet = $st->fetch(PDO::FETCH_ASSOC)))
         erreur_fatale('Erreur : projet invalide !');
 }
 
-// Vérification des permissions
+// VÃ©rification des permissions
 if( (isset($demande) && !$utilisateur->autorise(PERM_MANAGE_REQUESTS, $demande['projet']))
  || (!isset($demande) &&!$utilisateur->autorise(PERM_CREATE_REQUEST, $projet['id'])) )
 {
     if(isset($demande))
         erreur_fatale("Erreur : vous n'avez pas la permission de modifier cette demande !");
     else
-        erreur_fatale("Erreur : vous n'avez pas la permission de créer une demande sur ce projet !");
+        erreur_fatale("Erreur : vous n'avez pas la permission de crÃ©er une demande sur ce projet !");
 }
 
 //------------------------------------------------------------------------------
-// Traitement des données reçues
+// Traitement des donnÃ©es reÃ§ues
 
-// Mise à jour
+// Mise Ã  jour
 if(isset($demande))
 {
-    // 0 : rien de changé
-    // 1 : toutes modifications réussies
+    // 0 : rien de changÃ©
+    // 1 : toutes modifications rÃ©ussies
     // 2 : erreur
     $edited = 0;
     $modifs = '';
@@ -75,7 +75,7 @@ if(isset($demande))
                     ':id' => $demande['id'],
                     ':version' => $_POST['dem_version']));
                 $edited = 1;
-                $modifs .= '**version cible** changée en //' . $version['nom'] . "//\n";
+                $modifs .= '**version cible** changÃ©e en //' . $version['nom'] . "//\n";
             }
         }
         else
@@ -83,7 +83,7 @@ if(isset($demande))
             $st2 = $db->prepare('UPDATE demandes SET version=NULL WHERE id=?');
             $st2->execute(array($demande['id']));
             $edited = 1;
-            $modifs .= "**version cible** retirée\n";
+            $modifs .= "**version cible** retirÃ©e\n";
         }
     }
 
@@ -96,7 +96,7 @@ if(isset($demande))
             ':id' => $demande['id'],
             ':titre' => $_POST['dem_titre']));
         $edited = 1;
-        $modifs .= '**titre** changé en //' . $_POST['dem_titre'] . "//\n";
+        $modifs .= '**titre** changÃ© en //' . $_POST['dem_titre'] . "//\n";
     }
 
     // Changement de statut
@@ -108,7 +108,7 @@ if(isset($demande))
             ':id' => $demande['id'],
             ':statut' => $_POST['dem_statut']));
         $edited = 1;
-        $modifs .= '**statut** changé en //' . $conf['demande_statuts'][intval($_POST['dem_statut'])] . "//\n";
+        $modifs .= '**statut** changÃ© en //' . $conf['demande_statuts'][intval($_POST['dem_statut'])] . "//\n";
     }
 
     // Modification de la description
@@ -119,12 +119,12 @@ if(isset($demande))
             ':id' => $demande['id'],
             ':description' => $_POST['dem_descr']));
         $edited = 1;
-        $modifs .= "**description** modifiée\n";
+        $modifs .= "**description** modifiÃ©e\n";
     }
 
     if($edited == 1)
     {
-        // Ajout d'un commentaire résumant les modifications
+        // Ajout d'un commentaire rÃ©sumant les modifications
         $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation, resume) VALUES(:auteur, :demande, :texte, NOW(), 1)');
         $st->execute(array(
             ':auteur' => $utilisateur->userid(),
@@ -137,7 +137,7 @@ if(isset($demande))
             header('Location: index.php?mod=demande&id=' . $demande['id']);
         }
         $template->assign_block_vars('MSG_INFO', array(
-            'DESCR' => 'Demande modifiée ; <a href="index.php?mod=demande&amp;id=' . $demande['id'] . '">cliquez ici</a> pour la consulter'));
+            'DESCR' => 'Demande modifiÃ©e ; <a href="index.php?mod=demande&amp;id=' . $demande['id'] . '">cliquez ici</a> pour la consulter'));
     }
 }
 // Ajout
@@ -163,7 +163,7 @@ WHERE d.projet=:projet AND d.titre=:titre AND d.auteur=:auteur');
             ':auteur' => $utilisateur->userid()));
         if($demande = $st->fetch(PDO::FETCH_ASSOC))
             $template->assign_block_vars('MSG_INFO', array(
-                'DESCR' => 'Demande ajoutée ; <a href="index.php?mod=demande&amp;id=' . $demande['id'] . '">cliquez ici</a> pour la consulter'));
+                'DESCR' => 'Demande ajoutÃ©e ; <a href="index.php?mod=demande&amp;id=' . $demande['id'] . '">cliquez ici</a> pour la consulter'));
     }
 }
 

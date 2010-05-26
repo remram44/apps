@@ -1,6 +1,6 @@
 <?php
 
-// mod/index.inc.php : Page d'accueil, activité récente
+// mod/index.inc.php : Page d'accueil, activitÃ© rÃ©cente
 
 if(!isset($template))
     die();
@@ -8,7 +8,7 @@ if(!isset($template))
 // Description du site (globale, pas un projet)
 $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
 
-// Dernières demandes
+// DerniÃ¨res demandes
 {
     $st = $db->query('SELECT * FROM demandes ORDER BY id DESC LIMIT ' . $conf['index_nb_demandes']);
     if($st->rowCount() == 0)

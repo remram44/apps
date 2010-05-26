@@ -47,9 +47,9 @@ class Utilisateur {
                 return false;
             else if($perm == PERM_CREATE_REQUEST)
             {
-                // open_demandes : statut des créations de demandes sur le projet
-                // 0 : utilisateurs autorisés seulement
-                // 1 : tous les utilisateurs enregistrés
+                // open_demandes : statut des crÃ©ations de demandes sur le projet
+                // 0 : utilisateurs autorisÃ©s seulement
+                // 1 : tous les utilisateurs enregistrÃ©s
                 // 2 : tout le monde (possible anonymement)
                 if($row['open_demandes'] == 2)
                     return true;
@@ -59,8 +59,8 @@ class Utilisateur {
             else if($perm == PERM_ADD_COMMENT)
             {
                 // open_commentaires : statut des ajouts de commentaires sur le projet
-                // 0 : utilisateurs autorisés seulement
-                // 1 : tous les utilisateurs enregistrés
+                // 0 : utilisateurs autorisÃ©s seulement
+                // 1 : tous les utilisateurs enregistrÃ©s
                 // 2 : tout le monde (possible anonymement)
                 if($row['open_commentaires'] == 2)
                     return true;
@@ -85,7 +85,7 @@ class Utilisateur {
         global $db;
 
         session_start();
-        // Session déjà ouverte
+        // Session dÃ©jÃ  ouverte
         if(isset($_SESSION['pseudo']))
         {
             $this->pseudo   = $_SESSION['pseudo'];

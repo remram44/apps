@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{TITRE}</title>
     <link href="{TEMPLATE_URL}/style.css" rel="stylesheet" type="text/css" />
 <!-- BEGIN HEAD_BALISE -->
@@ -19,7 +19,7 @@
           <li class="right"><a href="index.php?mod=connexion">Connexion</a></li>
 <!-- END MENU2_CONN -->
 <!-- BEGIN MENU2_DECO -->
-          <li class="right">Identifié comme <a href="index.php?mod=perso">{MENU2_DECO.PSEUDO}</a> <a href="index.php?mod=deconnexion">(déconnexion)</a></li>
+          <li class="right">IdentifiÃ© comme <a href="index.php?mod=perso">{MENU2_DECO.PSEUDO}</a> <a href="index.php?mod=deconnexion">(dÃ©connexion)</a></li>
 <!-- END MENU2_DECO -->
 <!-- BEGIN LIEN_ADMIN -->
           <li class="right admin"><a href="index.php?mod=admin">Page d'administration</a></li>
@@ -42,7 +42,7 @@
     <hr class="clear" />
 <!-- BEGIN DEBUG -->
     <div class="box" style="font-size: 60%;">
-      <h2>Debug ({DEBUG.NB_REQUETES} requêtes) ({DEBUG.TEMPS} secondes)</h2>
+      <h2>Debug ({DEBUG.NB_REQUETES} requÃªtes) ({DEBUG.TEMPS} secondes)</h2>
       <ul>
 <!-- BEGIN REQ -->
         <li>{DEBUG.REQ.SQL}</li>

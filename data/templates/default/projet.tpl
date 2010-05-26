@@ -5,16 +5,16 @@
       </div>
       <div class="box">
         <h3>Suivi des demandes</h3>
-        <p>Dernières activités sur les demandes :</p>
+        <p>DerniÃ¨res activitÃ©s sur les demandes :</p>
         <ul>
 <!-- BEGIN DEMANDE -->
           <li><a href="index.php?mod=demande&amp;id={DEMANDE.ID}" class="demande_{DEMANDE.STATUT}">{DEMANDE.ID}</a> : {DEMANDE.TITRE}</li>
 <!-- END DEMANDE -->
 <!-- BEGIN ZERO_DEMANDES -->
-          <li class="liste_vide">Il n'y a aucune demande à afficher.</li>
+          <li class="liste_vide">Il n'y a aucune demande Ã  afficher.</li>
 <!-- END ZERO_DEMANDES -->
         </ul>
-        <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Détails</a>
+        <p><a href="index.php?mod=liste_demandes&amp;projet={PROJ_ID}">Lister les demandes</a>
 <!-- BEGIN NOUVELLE_DEMANDE -->
           - <a href="index.php?mod=edit_demande&amp;projet={PROJ_ID}">Nouvelle demande</a>
 <!-- END NOUVELLE_DEMANDE -->
@@ -28,16 +28,16 @@
           <li>{VERSION.NOM}</li>
 <!-- END VERSION -->
 <!-- BEGIN ZERO_VERSIONS -->
-          <li class="liste_vide">Ce projet n'a défini aucune version.</li>
+          <li class="liste_vide">Ce projet n'a dÃ©fini aucune version.</li>
 <!-- END ZERO_VERSIONS -->
         </ul>
-        <p><a href="index.php?mod=versions&amp;id={PROJ_ID}">Détails</a></p>
+        <p><a href="index.php?mod=versions&amp;id={PROJ_ID}">DÃ©tail des versions</a></p>
       </div>
     </div>
     <div class="mainsplit">
       <div class="box">
         <h3>Membres</h3>
-        <p>Les utilisateurs participants à ce projet sont :</p>
+        <p>Les utilisateurs participant Ã  ce projet sont :</p>
         <ul>
 <!-- BEGIN MEMBRE -->
           <li>{MEMBRE.PSEUDO} ({MEMBRE.NOM}, promo {MEMBRE.PROMOTION})</li>
@@ -48,7 +48,7 @@
         </ul>
       </div>
       <div class="box">
-        <h3>Dernières modifications</h3>
+        <h3>DerniÃ¨res modifications</h3>
         <p>Liste des derniers commits :</p>
         <ul>
           <li>Demande inutile</li>
