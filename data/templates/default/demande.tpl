@@ -6,7 +6,7 @@
       <table id="demande">
         <tr>
           <th>Statut</th><td>{STATUT_NOM}</td>
-          <th>Reporter</th><td>{AUT_NOM} ({AUT_PSEUDO})</td>
+          <th>Rapporteur</th><td>{AUT_NOM} ({AUT_PSEUDO})</td>
         </tr>
         <tr>
           <th>Priorite</th><td>{PRIORITE}</td>

@@ -10,7 +10,11 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
 
 // Dernières demandes
 {
-    $st = $db->query('SELECT * FROM demandes ORDER BY id DESC LIMIT ' . $conf['index_nb_demandes']);
+    $st = $db->query(
+'SELECT d.id, d.titre, d.auteur, d.statut, d.projet AS projet_id, p.nom AS projet
+FROM demandes d
+    INNER JOIN projets p ON p.id=d.projet 
+ORDER BY id DESC LIMIT ' . $conf['index_nb_demandes']);
     if($st->rowCount() == 0)
     {
         $template->assign_block_vars('ZERO_DEMANDES', array());
@@ -23,7 +27,9 @@ $template->assign_var('HTML_DESCRIPTION', $conf['html_description']);
                 'ID' => $row['id'],
                 'TITRE' => htmlentities($row['titre'], ENT_COMPAT, 'UTF-8'),
                 'AUTEUR' => $row['auteur'],
-                'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert'));
+                'STATUT' => ($row['statut'] == 0)?'ferme':'ouvert',
+                'PROJET_ID' => $row['projet_id'],
+                'PROJET' => $row['projet']));
         }
     }
 }
