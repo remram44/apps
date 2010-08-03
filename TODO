@@ -1,5 +1,16 @@
-A faire :
-  - après ajout demande -> retour à la demande ajoutée
+v0.1 : fonctionnalités de base, pas de versions
+  - après ajout demande -> retour à la demande ajoutée si pas le droit de la modifier
+  - mod/edit_demande : priorité wtf ? (aussi autres modules : champs inutilisables mais affichés)
+  - mod/liste_projets : afficher date de dernière activité par projet
+  - ordre des permissions des utilisateurs qui changent
+  - état du projet (stable, développement, fini, cassé, ...) + tri, dernière modification
+  - mod/index : projets actifs
+  - mod/demande : affichage du projet concerné, à coté du titre (et dans le titre de la page ?)
+  - mod/liste_demandes : lien de retour au projet
+  - mod/admin : bouton de suppression d'un projet...
+v0.2 : Mercurial
   - interface avec les dépôts
-  - (cookie d'authentification, sans mot de passe ?)
-  - (mod/edit_projet : ajouter/modifier les versions)
+
+v1.0
+  - cookie d'authentification, sans mot de passe ?
+  - mod/edit_projet : ajouter/modifier les versions

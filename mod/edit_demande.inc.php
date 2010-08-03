@@ -156,14 +156,21 @@ else
 FROM demandes d
     INNER JOIN projets p ON p.id=d.projet
     LEFT OUTER JOIN versions v ON v.id=d.version
-WHERE d.projet=:projet AND d.titre=:titre AND d.auteur=:auteur');
+WHERE d.projet=:projet AND d.titre=:titre');
         $st->execute(array(
             ':projet' => $projet['id'],
-            ':titre' => $_POST['dem_titre'],
-            ':auteur' => $utilisateur->userid()));
+            ':titre' => $_POST['dem_titre']));
+        // Si la demande a été ajoutée correctement, on l'affiche (on quitte donc la page d'édition)
         if($demande = $st->fetch(PDO::FETCH_ASSOC))
+        {
+            if(!$conf['debug'])
+            {
+                header('HTTP/1.1 302 Moved Temporarily');
+                header('Location: index.php?mod=demande&id=' . $demande['id']);
+            }
             $template->assign_block_vars('MSG_INFO', array(
                 'DESCR' => 'Demande ajoutée ; <a href="index.php?mod=demande&amp;id=' . $demande['id'] . '">cliquez ici</a> pour la consulter'));
+        }
     }
 }
 

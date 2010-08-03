@@ -38,7 +38,6 @@ if(isset($user))
             ':utilisateur' => $user['id'],
             ':nom' => htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8')));
     }
-    $_POST['user_nom'] = ''; unset($_POST['user_nom']);
 
     // Changement du pseudo
     if(isset($_POST['user_pseudo']) && $_POST['user_pseudo'] != '' && htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8') != $user['pseudo'])
@@ -59,7 +58,6 @@ if(isset($user))
                 ':pseudo' => htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8')));
         }
     }
-    $_POST['user_pseudo'] = ''; unset($_POST['user_pseudo']);
 
     // Changement de la promotion
     if(isset($_POST['user_promo']) && intval($_POST['user_promo']) > 0 && $_POST['user_promo'] != $user['promotion'])
@@ -69,7 +67,6 @@ if(isset($user))
             ':utilisateur' => $user['id'],
             ':promotion' => intval($_POST['user_promo'])));
     }
-    $_POST['user_promo'] = ''; unset($_POST['user_promo']);
 
     // Changement du mot de passe
     if(isset($_POST['user_passwd1']) && isset($_POST['user_passwd2']) && $_POST['user_passwd1'] != '')

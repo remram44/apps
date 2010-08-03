@@ -126,7 +126,6 @@ if(isset($projet))
             }
         }
     }
-    $_POST['proj_nom'] = ''; unset($_POST['proj_nom']);
 
     // Mise à jour de la description
     if(isset($_POST['proj_description']) && ($_POST['proj_description'] != $projet['description']) )
