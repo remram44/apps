@@ -72,7 +72,13 @@
 <!-- END OPEN_DEMANDES -->
             </select></td>
           </tr>
-          <tr><td></td><td><input type="submit" name="proj_submit" value="Modifier" /></td></tr>
+          <tr>
+            <td></td>
+            <td>
+              <input type="submit" name="proj_submit" value="Modifier" />
+              <a href="index.php?mod=projet&amp;id={EDIT.PROJ_ID}">Annuler</a>
+            </td>
+          </tr>
         </table>
       </form>
     </div>

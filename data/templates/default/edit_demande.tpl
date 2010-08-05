@@ -60,7 +60,10 @@
             </select></td>
           </tr>
         </table>
-        <p><input type="submit" name="dem_submit" value="Modifier" /></p>
+        <p>
+          <input type="submit" name="dem_submit" value="Modifier" />
+          <a href="index.php?mod=demande&amp;id={EDIT.DEM_ID}">Annuler</a>
+        </p>
 <!-- END EDIT -->
       </form>
     </div>
