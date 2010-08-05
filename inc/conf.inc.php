@@ -1,5 +1,9 @@
 <?php
 
+// Ne modifiez pas ce fichier ! Faites-en une copie dans /data/conf.php et
+// listez les paramètres que vous souhaitez modifier là-bas
+// Cf le README
+
 $conf['titre'] = 'Projets du Rézo';
 $conf['default_template'] = 'default';
 $conf['html_description'] = '<h1>It works !</h1>

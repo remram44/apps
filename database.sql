@@ -72,4 +72,4 @@ CREATE TABLE IF NOT EXISTS commentaires (
 ) TYPE=INNODB;
 
 /* Utilisateur par défaut : "admin" "admin" */
-INSERT INTO utilisateurs(pseudo, password, template, nom, promotion, flags) VALUES("admin", "d033e22ae348aeb5660fc2140aec35850c4da997", "default", "L'Admin", 0, 31);
+INSERT INTO utilisateurs(pseudo, password, template, nom, promotion, flags) VALUES("admin", "3e5ecb4766d8e4a7b7a0bd5c82dfffaf68e4e7f7b131c7be9", "default", "L'Admin", 0, 31);
