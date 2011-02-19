@@ -53,7 +53,7 @@ if(isset($demande))
     $modifs = '';
 
     // Changement de la version cible
-    if($edited != 2 && isset($_POST['dem_version']) && ($_POST['dem_version'] != '0' || $demande['version'] != NULL) && $_POST['dem_version'] != $demande['version'])
+    if($edited != 2 && isset($_POST['dem_version']) && ($_POST['dem_version'] != '0' || $demande['version'] != NULL) && $_POST['dem_version'] != $demande['version'] && check_token())
     {
         if($_POST['dem_version'] != '0')
         {
@@ -89,7 +89,7 @@ if(isset($demande))
 
     // Changement de titre
     if($edited != 2 && isset($_POST['dem_titre']) && $_POST['dem_titre'] != $demande['titre']
-     && $_POST['dem_titre'] != '')
+     && $_POST['dem_titre'] != '' && check_token(false))
     {
         $st = $db->prepare('UPDATE demandes SET titre=:titre WHERE id=:id');
         $st->execute(array(
@@ -101,7 +101,7 @@ if(isset($demande))
 
     // Changement de statut
     if($edited != 2 && isset($_POST['dem_statut']) && $_POST['dem_statut'] != $demande['statut']
-     && $_POST['dem_statut'] != '' && isset($conf['demande_statuts'][intval($_POST['dem_statut'])]))
+     && $_POST['dem_statut'] != '' && isset($conf['demande_statuts'][intval($_POST['dem_statut'])]) && check_token(false))
     {
         $st = $db->prepare('UPDATE demandes SET statut=:statut WHERE id=:id');
         $st->execute(array(
@@ -112,7 +112,7 @@ if(isset($demande))
     }
 
     // Modification de la description
-    if($edited != 2 && isset($_POST['dem_descr']) && $_POST['dem_descr'] != $demande['description'] && $_POST['dem_descr'] != '')
+    if($edited != 2 && isset($_POST['dem_descr']) && $_POST['dem_descr'] != $demande['description'] && $_POST['dem_descr'] != '' && check_token(false))
     {
         $st = $db->prepare('UPDATE demandes SET description=:description WHERE id=:id');
         $st->execute(array(
@@ -124,6 +124,9 @@ if(isset($demande))
 
     if($edited == 1)
     {
+        // Suppression du token délayée jusqu'à ici
+        check_token(true);
+
         // Ajout d'un commentaire résumant les modifications
         $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation, resume) VALUES(:auteur, :demande, :texte, NOW(), 1)');
         $st->execute(array(
@@ -143,7 +146,7 @@ if(isset($demande))
 // Ajout
 else
 {
-    if(isset($_POST['dem_titre']) && $_POST['dem_titre'] != '' && isset($_POST['dem_descr']) && $_POST['dem_descr'] != '')
+    if(isset($_POST['dem_titre']) && $_POST['dem_titre'] != '' && isset($_POST['dem_descr']) && $_POST['dem_descr'] != '' && check_token())
     {
         $st = $db->prepare('INSERT INTO demandes(projet, titre, auteur, description, priorite, statut, creation, derniere_activite) VALUES(:projet, :titre, :auteur, :description, 1, 1, NOW(), NOW())');
         $st->execute(array(
@@ -176,6 +179,8 @@ WHERE d.projet=:projet AND d.titre=:titre');
 
 //------------------------------------------------------------------------------
 // Affichage du formulaire
+
+$template->assign_var('FORM_TOKEN', validity_token());
 
 $template->assign_vars(array(
     'DEM_PROJET' => isset($demande)?$demande['projet_nom']:htmlentities($projet['nom'], ENT_COMPAT, 'UTF-8'),

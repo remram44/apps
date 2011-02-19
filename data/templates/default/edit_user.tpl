@@ -5,6 +5,7 @@
     <div class="box">
       <p>Après la création du nouvel utilisateur, vous pourrez modifier ses permissions via cette interface.</p>
       <form method="post" action="index.php?mod=edit_user">
+        {FORM_TOKEN}
         <table>
           <tr><th>Pseudo :</th><td><input type="text" name="user_pseudo" value="{AJOUT.PSEUDO}" /></td></tr>
           <tr><th>Nom :</th><td><input type="text" name="user_nom" value="{AJOUT.NOM}" /></td></tr>
@@ -22,6 +23,7 @@
     </div>
     <div class="box">
       <form method="post" action="index.php?mod=edit_user&amp;id={EDIT.USERID}">
+        {FORM_TOKEN}
         <table>
           <tr><th>Pseudo :</th><td><input type="text" name="user_pseudo" value="{EDIT.PSEUDO}" /></td></tr>
           <tr><th>Nom :</th><td><input type="text" name="user_nom" value="{EDIT.NOM}" /></td></tr>

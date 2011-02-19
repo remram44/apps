@@ -4,12 +4,14 @@
     </div>
     <div class="box">
       <form method="post" action="index.php?mod=edit_demande&amp;projet={DEM_PROJET_ID}">
+        {FORM_TOKEN}
 <!-- END AJOUT -->
 <!-- BEGIN EDIT -->
-       <h1>Demande n°{EDIT.DEM_ID}</h1>
+        <h1>Demande n°{EDIT.DEM_ID}</h1>
     </div>
     <div class="box">
       <form method="post" action="index.php?mod=edit_demande&amp;id={EDIT.DEM_ID}">
+        {FORM_TOKEN}
 <!-- BEGIN VERSION_COURANTE -->
 <!-- END VERSION_COURANTE -->
 <!-- BEGIN VERSION -->

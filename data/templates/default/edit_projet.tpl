@@ -5,6 +5,7 @@
     <div class="box">
       <p>Après la création du nouveau projet, vous pourrez y ajouter des membres via cette interface.</p>
       <form method="post" action="index.php?mod=edit_projet">
+        {FORM_TOKEN}
         <table>
           <tr><th>Nom du projet :</th><td><input type="text" name="proj_nom" value="{AJOUT.NOM}" /></td></tr>
           <tr><th>Description :</th><td><textarea name="proj_description" rows="8" cols="60">{AJOUT.DESCRIPTION}</textarea></td></tr>
@@ -19,6 +20,7 @@
     </div>
     <div class="box">
       <form method="post" action="index.php?mod=edit_projet&amp;id={EDIT.PROJ_ID}">
+        {FORM_TOKEN}
         <table>
           <tr><th>Nom du projet :</th><td><input type="text" name="proj_nom" value="{EDIT.NOM}" /></td></tr>
           <tr><th>Description :</th><td><textarea name="proj_description" rows="8" cols="60">{EDIT.DESCRIPTION}</textarea></td></tr>

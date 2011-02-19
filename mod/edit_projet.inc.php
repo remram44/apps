@@ -34,7 +34,7 @@ if(isset($projet))
     $edited_ok = true;
 
     // Ajout d'un membre
-    if(isset($_POST['proj_mem_add_sub']) && isset($_POST['proj_mem_add']))
+    if(isset($_POST['proj_mem_add_sub']) && isset($_POST['proj_mem_add']) && check_token(false))
     {
         $new_utilisateur = intval($_POST['proj_mem_add'], 10);
         $admin = isset($_POST['proj_mem_add_admin'])?intval($_POST['proj_mem_add_admin']):0;
@@ -58,37 +58,40 @@ if(isset($projet))
     }
 
     // Mise à jour des membres
-    $st = $db->prepare('SELECT * FROM association_utilisateurs_projets WHERE projet=?');
-    $st->execute(array($projet['id']));
-    while($row = $st->fetch(PDO::FETCH_ASSOC))
+    if(check_token(false))
     {
-        // Suppression
-        if(isset($_POST['proj_mem_rem' . $row['utilisateur']]))
+        $st = $db->prepare('SELECT * FROM association_utilisateurs_projets WHERE projet=?');
+        $st->execute(array($projet['id']));
+        while($row = $st->fetch(PDO::FETCH_ASSOC))
         {
-            $st2 = $db->prepare('DELETE FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
-            $st2->execute(array(
-                ':utilisateur' => $row['utilisateur'],
-                ':projet' => $projet['id']));
-        }
-
-        // Mise à jour du rang
-        if(isset($_POST['proj_mem_admin' . $row['utilisateur']]))
-        {
-            $admin = intval($_POST['proj_mem_admin' . $row['utilisateur']]);
-            if($row['flags'] != $admin)
+            // Suppression
+            if(isset($_POST['proj_mem_rem' . $row['utilisateur']]))
             {
-                $st2 = $db->prepare('UPDATE association_utilisateurs_projets SET flags=:admin WHERE utilisateur=:utilisateur AND projet=:projet');
+                $st2 = $db->prepare('DELETE FROM association_utilisateurs_projets WHERE utilisateur=:utilisateur AND projet=:projet');
                 $st2->execute(array(
                     ':utilisateur' => $row['utilisateur'],
-                    ':projet' => $projet['id'],
-                    ':admin' => $admin));
-                $row['flags'] = $admin;
+                    ':projet' => $projet['id']));
+            }
+
+            // Mise à jour du rang
+            if(isset($_POST['proj_mem_admin' . $row['utilisateur']]))
+            {
+                $admin = intval($_POST['proj_mem_admin' . $row['utilisateur']]);
+                if($row['flags'] != $admin)
+                {
+                    $st2 = $db->prepare('UPDATE association_utilisateurs_projets SET flags=:admin WHERE utilisateur=:utilisateur AND projet=:projet');
+                    $st2->execute(array(
+                        ':utilisateur' => $row['utilisateur'],
+                        ':projet' => $projet['id'],
+                        ':admin' => $admin));
+                    $row['flags'] = $admin;
+                }
             }
         }
     }
 
     // Changement du statut de l'ajout de demandes
-    if(isset($_POST['proj_open_demandes']) && $_POST['proj_open_demandes'] != '' && $_POST['proj_open_demandes'] != $projet['open_demandes'])
+    if(isset($_POST['proj_open_demandes']) && $_POST['proj_open_demandes'] != '' && $_POST['proj_open_demandes'] != $projet['open_demandes'] && check_token(false))
     {
         $st = $db->prepare('UPDATE projets SET open_demandes=:open_demandes WHERE id=:projet');
         $st->execute(array(
@@ -98,7 +101,7 @@ if(isset($projet))
 
     // Changement du nom
     if(isset($_POST['proj_nom']) && $_POST['proj_nom'] != $projet['nom']
-     && $_POST['proj_nom'] != '' && strlen($_POST['proj_nom']) < 50)
+     && $_POST['proj_nom'] != '' && strlen($_POST['proj_nom']) < 50 && check_token(false))
     {
         if(!$utilisateur->autorise(PERM_MANAGE_PROJECT))
         {
@@ -128,13 +131,16 @@ if(isset($projet))
     }
 
     // Mise à jour de la description
-    if(isset($_POST['proj_description']) && ($_POST['proj_description'] != $projet['description']) )
+    if(isset($_POST['proj_description']) && ($_POST['proj_description'] != $projet['description']) && check_token(false))
     {
         $st = $db->prepare('UPDATE projets SET description=:description WHERE id=:projet');
         $st->execute(array(
             ':projet' => $projet['id'],
             ':description' => $_POST['proj_description']));
     }
+
+    // Suppression du token délayée jusqu'à ici
+    check_token(true);
 
     if($edited_ok && isset($_POST['proj_submit']))
     {
@@ -151,7 +157,7 @@ if(isset($projet))
 else
 {
     if(isset($_POST['proj_nom']) && isset($_POST['proj_description'])
-     && $_POST['proj_nom'] != "" && strlen($_POST['proj_nom']) < 50)
+     && $_POST['proj_nom'] != "" && strlen($_POST['proj_nom']) < 50 && check_token())
     {
         $st = $db->prepare('SELECT * FROM projets WHERE nom=?');
         $st->execute(array($_POST['proj_nom']));
@@ -179,6 +185,8 @@ else
 
 //------------------------------------------------------------------------------
 // Affichage du formulaire
+
+$template->assign_var('FORM_TOKEN', validity_token());
 
 // Projet déjà existant : on ne peut pas changer le nom, les champs sont préremplis avec les données actuelles, et on peut éditer la liste des membres
 if(isset($projet))

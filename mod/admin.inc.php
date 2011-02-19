@@ -13,6 +13,8 @@ if(!$aff_projets && !$aff_users)
     erreur_fatale("Erreur : vous n'avez pas la permission de voir cette page !");
 }
 
+$template->assign_var('FORM_TOKEN', validity_token());
+
 $st = $db->query(
 'SELECT p.id, p.nom, p.open_demandes, COUNT(d.id) AS nb_demandes, COUNT(up.utilisateur) AS nb_membres
 FROM projets p
@@ -30,7 +32,7 @@ if($aff_projets)
     // TODO : Suppression d'un projet ?
     for($i = 0; $i < count($projets); $i++)
     {
-        if(isset($_POST['proj_del' . $projets[$i]['id']]))
+        if(isset($_POST['proj_del' . $projets[$i]['id']]) && check_token())
             ;
     }
 

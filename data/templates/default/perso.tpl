@@ -13,6 +13,7 @@
 <!-- END INFO -->
     <div class="box">
       <form method="post" action="index.php?mod=perso">
+        {FORM_TOKEN}
         <p>Utilisez cette page pour modifier vos préférences.</p>
         <div style="text-align: center;">
           <p><label>Nom d'utilisateur : <input type="text" disabled value="{PSEUDO}" /></label></p>

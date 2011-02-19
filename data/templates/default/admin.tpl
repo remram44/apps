@@ -2,6 +2,7 @@
       <h1>Page d'administration</h1>
     </div>
     <form method="post" action="index.php?mod=admin">
+      {FORM_TOKEN}
 <!-- BEGIN ADMIN_PROJETS -->
       <div class="box">
         <h2>Projets</h2>

@@ -32,6 +32,7 @@
     <div class="box">
       <h2>Commenter cette demande</h2>
       <form method="post" action="index.php?mod=demande&amp;id={DEMANDE_ID}">
+        {FORM_TOKEN}
         <p><textarea cols="80" rows="3" name="commentaire"></textarea><br />
         <input type="submit" value="Poster un commentaire" /></p>
       </form>

@@ -13,7 +13,7 @@ if($utilisateur->estAnonyme())
 
 // Changement du design
 if(isset($_POST['chg_tpl']) && $_POST['chg_tpl'] != $utilisateur->template()
- && preg_match('/^[a-zA-Z0-9_.-]+$/', $_POST['chg_tpl']))
+ && preg_match('/^[a-zA-Z0-9_.-]+$/', $_POST['chg_tpl']) && check_token(false))
 {
     if( ($dir = @opendir('data/templates/' . $_POST['chg_tpl'])) !== false)
     {
@@ -31,7 +31,7 @@ if(isset($_POST['chg_tpl']) && $_POST['chg_tpl'] != $utilisateur->template()
 
 // Changement de mot de passe
 if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
- || (isset($_POST['chg_mdp2']) && $_POST['chg_mdp2'] != '') )
+ || (isset($_POST['chg_mdp2']) && $_POST['chg_mdp2'] != '') && check_token(false))
 {
     // Confirmation du nouveau mot de passe
     if(!isset($_POST['chg_mdp1']) || !isset($_POST['chg_mdp2'])
@@ -69,8 +69,13 @@ if( (isset($_POST['chg_mdp1']) && $_POST['chg_mdp1'] != '')
     }
 }
 
+// Suppression du token délayée jusqu'à ici
+check_token(true);
+
 //------------------------------------------------------------------------------
 // Affichage du formulaire
+
+$template->assign_var('FORM_TOKEN', validity_token());
 
 // Variables générales
 $template->assign_vars(array(

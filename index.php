@@ -5,6 +5,7 @@ define('START_TIME', microtime());
 include 'inc/session.inc.php';
 include 'inc/template.inc.php';
 include 'inc/conf.inc.php';
+include 'inc/anti-csrf.inc.php';
 
 function wikicode2html($code)
 {

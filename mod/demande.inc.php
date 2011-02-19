@@ -21,7 +21,7 @@ if(!($demande = $st->fetch(PDO::FETCH_ASSOC)))
     erreur_fatale('Erreur : Demande inconnue !');
 
 // Ajout d'un commentaire
-if(isset($_POST['commentaire']) && $_POST['commentaire'] != '')
+if(isset($_POST['commentaire']) && $_POST['commentaire'] != '' && check_token())
 {
     $st = $db->prepare('INSERT INTO commentaires(auteur, demande, texte, creation, resume) VALUES(:auteur, :demande, :texte, NOW(), 0)');
     $st->execute(array(
@@ -66,6 +66,7 @@ if($utilisateur->autorise(PERM_MANAGE_REQUESTS, $demande['projet_id']))
 if($utilisateur->autorise(PERM_ADD_COMMENT, $demande['projet_id']))
 {
     $template->assign_block_vars('AJOUT_COMMENTAIRE', array());
+    $template->assign_var('FORM_TOKEN', validity_token());
 }
 
 // Affichage des commentaires

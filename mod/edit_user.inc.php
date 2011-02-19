@@ -31,7 +31,7 @@ if(isset($user))
     $edited_ok = true;
 
     // Changement du nom
-    if(isset($_POST['user_nom']) && $_POST['user_nom'] != '' && htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8') != $user['nom'])
+    if(isset($_POST['user_nom']) && $_POST['user_nom'] != '' && htmlentities($_POST['user_nom'], ENT_COMPAT, 'UTF-8') != $user['nom'] && check_token(false))
     {
         $st = $db->prepare('UPDATE utilisateurs SET nom=:nom WHERE id=:utilisateur');
         $st->execute(array(
@@ -40,7 +40,7 @@ if(isset($user))
     }
 
     // Changement du pseudo
-    if(isset($_POST['user_pseudo']) && $_POST['user_pseudo'] != '' && htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8') != $user['pseudo'])
+    if(isset($_POST['user_pseudo']) && $_POST['user_pseudo'] != '' && htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8') != $user['pseudo'] && check_token(false))
     {
         $st = $db->prepare('SELECT * FROM utilisateurs where PSEUDO=?');
         $st->execute(array($user['id']));
@@ -60,7 +60,7 @@ if(isset($user))
     }
 
     // Changement de la promotion
-    if(isset($_POST['user_promo']) && intval($_POST['user_promo']) > 0 && $_POST['user_promo'] != $user['promotion'])
+    if(isset($_POST['user_promo']) && intval($_POST['user_promo']) > 0 && $_POST['user_promo'] != $user['promotion'] && check_token(false))
     {
         $st = $db->prepare('UPDATE utilisateurs SET promotion=:promotion WHERE id=:utilisateur');
         $st->execute(array(
@@ -69,7 +69,7 @@ if(isset($user))
     }
 
     // Changement du mot de passe
-    if(isset($_POST['user_passwd1']) && isset($_POST['user_passwd2']) && $_POST['user_passwd1'] != '')
+    if(isset($_POST['user_passwd1']) && isset($_POST['user_passwd2']) && $_POST['user_passwd1'] != '' && check_token(false))
     {
         if($_POST['user_passwd1'] != $_POST['user_passwd2'])
         {
@@ -90,7 +90,7 @@ if(isset($user))
     // Ici, on ne vérifie pas avec isset() que le champ existe ; s'il n'existe pas, la case n'est pas cochée
     // user_submit permet de vérifier qu'on a validé le formulaire (sans cette vérification, l'affichage du formulaire ferait passer
     // flags à 0 avant qu'on ne valide)
-    if(isset($_POST['user_submit']))
+    if(isset($_POST['user_submit']) && check_token(false))
     {
         $perms = 0;
         if(isset($_POST['user_perm' . PERM_MANAGE_USERS]))
@@ -111,6 +111,9 @@ if(isset($user))
 
     if($edited_ok && isset($_POST['proj_submit']))
     {
+        // Suppression du token délayée jusqu'à ici
+        check_token(true);
+
         if(!$conf['debug'])
         {
             header('HTTP/1.1 302 Moved Temporarily');
@@ -124,7 +127,8 @@ if(isset($user))
 else
 {
     if(isset($_POST['user_nom']) && isset($_POST['user_pseudo']) && isset($_POST['user_promo']) && isset($_POST['user_passwd1']) && isset($_POST['user_passwd2'])
-     && $_POST['user_nom'] != '' && $_POST['user_pseudo'] != '' && intval($_POST['user_promo']) > 0 && $_POST['user_passwd1'] != '' && $_POST['user_passwd2'] != '')
+     && $_POST['user_nom'] != '' && $_POST['user_pseudo'] != '' && intval($_POST['user_promo']) > 0 && $_POST['user_passwd1'] != '' && $_POST['user_passwd2'] != ''
+     && check_token())
     {
         $st = $db->prepare('SELECT * FROM utilisateurs WHERE pseudo=?');
         $st->execute(array(htmlentities($_POST['user_pseudo'], ENT_COMPAT, 'UTF-8')));
@@ -160,6 +164,8 @@ else
 
 //------------------------------------------------------------------------------
 // Affichage du formulaire
+
+$template->assign_var('FORM_TOKEN', validity_token());
 
 // Utilisateur déjà existant : les champs sont préremplis avec les données actuelles, et on peut éditer les permissions
 if(isset($user))
